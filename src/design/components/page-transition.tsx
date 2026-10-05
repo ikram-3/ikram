@@ -6,7 +6,7 @@ import { EASE } from "../motion";
 
 interface PageTransitionProps {
   /** Unique key per page view — drives enter/exit on route change. */
-  pageKey: string;
+  pageKey?: string;
   children: ReactNode;
 }
 

@@ -29,11 +29,17 @@ export function ProjectsPage() {
   const { category, query, setCategory, setQuery } = useFilterStore();
 
   const featured = useMemo(() => getFeaturedProjects(), []);
+  const liveCount = useMemo(() => projects.filter((p) => Boolean(p.links.live)).length, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return projects.filter((p) => {
-      const inCategory = category === "all" || p.category === category;
+      const inCategory =
+        category === "all"
+          ? true
+          : category === "live"
+          ? Boolean(p.links.live)
+          : p.category === category;
       const inQuery =
         q.length === 0 ||
         p.name.toLowerCase().includes(q) ||
@@ -98,6 +104,12 @@ export function ProjectsPage() {
               label="All"
               count={projects.length}
             />
+            <FilterTab
+              active={category === "live"}
+              onClick={() => setCategory("live")}
+              label="⚡ Live Deployments"
+              count={liveCount}
+            />
             {categories.map((c) => (
               <FilterTab
                 key={c.id}
@@ -128,7 +140,7 @@ export function ProjectsPage() {
 
         <p className="mb-5 text-xs text-muted-foreground" aria-live="polite">
           Showing {filtered.length} of {projects.length} projects
-          {category !== "all" ? ` in ${categories.find((c) => c.id === category)?.label}` : ""}
+          {category === "live" ? " with live deployments" : category !== "all" ? ` in ${categories.find((c) => c.id === category)?.label}` : ""}
           {query.trim() ? ` matching “${query.trim()}”` : ""}
         </p>
 

@@ -53,7 +53,7 @@ export function CountUp({ value, suffix = "", duration = 0.6, className }: Count
           run();
         }
       },
-      { margin: "-40px" }
+      { rootMargin: "-40px" }
     );
     observer.observe(node);
 

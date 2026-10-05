@@ -135,7 +135,7 @@ export const projects: Project[] = [
       "Conversion-focused luxury e-commerce: interactive 3D hero (glass spheres, golden torus, mouse parallax), faceted search with 6-mode sorting, 360° product views, 4-step checkout with Stripe/EasyPaisa/JazzCash/COD, coupons, wishlist, order tracking, and a full analytics admin.",
     tech: ["Next.js 16", "React 19", "TypeScript", "React Three Fiber", "Framer Motion", "Prisma", "SQLite/PostgreSQL", "Stripe", "NextAuth", "Recharts"],
     featured: true,
-    links: { live: null, repo: null },
+    links: { live: "https://e-commerce-ikraminfo.vercel.app", repo: null },
     whatIDid:
       "Built a conversion-focused luxury storefront: a 3D hero with React Three Fiber glass spheres, a golden torus, and mouse parallax; faceted search with 6-mode sorting; a 360° product view; and a 4-step checkout accepting Stripe, EasyPaisa, JazzCash, and COD. Coupons, wishlist, order tracking, and full admin analytics complete the retail loop.",
     whyItMatters: "A high-end brand experience that actually converts.",
@@ -696,7 +696,12 @@ export function getFeaturedProjects(): Project[] {
 }
 
 export function getProjectImage(id: number): { src: string; alt: string } | null {
-  return PROJECT_IMAGES[id] ?? null;
+  const item = PROJECT_IMAGES[id];
+  if (!item) return null;
+  return {
+    ...item,
+    src: item.src.replace("/images/project/", "/images/project/v2/"),
+  };
 }
 
 export function getDeployNote(id: number): string {

@@ -28,7 +28,7 @@ import { ProjectCard } from "./project-card";
 
 const HERO_STATS = [
   { value: 35, suffix: "+", label: "Projects shipped" },
-  { value: 4, suffix: "", label: "Live deployments" },
+  { value: stats.liveDeployments, suffix: "", label: "Live deployments" },
   { value: 3, suffix: "", label: "Certifications" },
 ] as const;
 
@@ -197,7 +197,7 @@ export function HomePage() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
                   <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
                 </span>
-                4 live deployments
+                {stats.liveDeployments} live deployments
               </motion.span>
             </div>
             <p className="mt-5 text-center text-xs text-muted-foreground">{identity.affiliations}</p>

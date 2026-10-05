@@ -225,7 +225,7 @@ export function AccountPage() {
           <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
             {error}
           </p>
-        ) : quotes.length === 0 ? (
+        ) : !quotes || quotes.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-card/60 p-10 text-center">
             <Inbox size={26} aria-hidden="true" className="mx-auto mb-3 text-muted-foreground/60" />
             <p className="text-sm font-medium">No requests yet</p>
@@ -241,7 +241,7 @@ export function AccountPage() {
           </div>
         ) : (
           <ul className="space-y-3" aria-label="My quotation requests">
-            {quotes.map((q, i) => {
+            {(quotes || []).map((q, i) => {
               const badge = STATUS_STYLES[q.status] ?? STATUS_STYLES.new;
               return (
                 <motion.li

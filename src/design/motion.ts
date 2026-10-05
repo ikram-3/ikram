@@ -3,67 +3,72 @@
 // MOTION_CONTEXT rules: transform/opacity only, ease [0.22, 1, 0.36, 1],
 // always honor prefers-reduced-motion.
 
-import type { Variants } from "framer-motion";
+import type { Variants, TargetAndTransition, Transition } from "framer-motion";
 
 /** Signature brand ease (MOTION_CONTEXT §2). */
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
 interface MotionProps {
-  initial: Record<string, unknown>;
-  whileInView: Record<string, unknown>;
+  initial: TargetAndTransition;
+  whileInView: TargetAndTransition;
   viewport: { once: boolean; margin: string };
-  transition: Record<string, unknown>;
+  transition: Transition;
 }
 
 interface EnterProps {
-  initial: Record<string, unknown>;
-  animate: Record<string, unknown>;
-  transition: Record<string, unknown>;
+  initial: TargetAndTransition;
+  animate: TargetAndTransition;
+  transition: Transition;
 }
 
 /** Scroll-reveal props (whileInView). Pass `reduce` from useReducedMotion(). */
-export function revealProps(reduce: boolean, delay = 0, y = 16): MotionProps {
+export function revealProps(reduce: boolean | null | undefined, delay = 0, y = 16): MotionProps {
+  const isReduced = Boolean(reduce);
   return {
-    initial: reduce ? { opacity: 0 } : { opacity: 0, y },
+    initial: isReduced ? { opacity: 0 } : { opacity: 0, y },
     whileInView: { opacity: 1, y: 0 },
     viewport: { once: true, margin: "-80px" },
-    transition: reduce
+    transition: isReduced
       ? { duration: 0.15, ease: "easeOut" }
       : { duration: 0.45, delay, ease: EASE },
   };
 }
 
 /** Mount animation props (animate on render, e.g. after page switch). */
-export function enterProps(reduce: boolean, delay = 0, y = 14): EnterProps {
+export function enterProps(reduce: boolean | null | undefined, delay = 0, y = 14): EnterProps {
+  const isReduced = Boolean(reduce);
   return {
-    initial: reduce ? { opacity: 0 } : { opacity: 0, y },
+    initial: isReduced ? { opacity: 0 } : { opacity: 0, y },
     animate: { opacity: 1, y: 0 },
-    transition: reduce
+    transition: isReduced
       ? { duration: 0.15, ease: "easeOut" }
       : { duration: 0.45, delay, ease: EASE },
   };
 }
 
 /** Staggered parent container — pair with `staggerItem`. */
-export function staggerContainer(reduce: boolean, stagger = 0.06): Variants {
+export function staggerContainer(reduce: boolean | null | undefined, stagger = 0.06): Variants {
+  const isReduced = Boolean(reduce);
   return {
     hidden: {},
-    show: { transition: { staggerChildren: reduce ? 0 : stagger } },
+    show: { transition: { staggerChildren: isReduced ? 0 : stagger } },
   };
 }
 
 /** Staggered child item — pair with `staggerContainer`. */
-export function staggerItem(reduce: boolean, y = 14): Variants {
+export function staggerItem(reduce: boolean | null | undefined, y = 14): Variants {
+  const isReduced = Boolean(reduce);
   return {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, y },
+    hidden: isReduced ? { opacity: 0 } : { opacity: 0, y },
     show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: EASE } },
   };
 }
 
-/** Chip-scale variant for tiny elements (skill chips, badges). */
-export function staggerChip(reduce: boolean): Variants {
+/** Stagger chips for skill pills, tech tags, etc. */
+export function staggerChip(reduce: boolean | null | undefined): Variants {
+  const isReduced = Boolean(reduce);
   return {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.94 },
-    show: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
+    hidden: isReduced ? { opacity: 0 } : { opacity: 0, scale: 0.95 },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.25, ease: EASE } },
   };
 }

@@ -40,7 +40,7 @@ export const identity = {
 export const stats = {
   projectsTotal: 35,
   projectsFeatured: 8,
-  liveDeployments: 4,
+  liveDeployments: 6,
   certifications: 3,
 } as const;
 

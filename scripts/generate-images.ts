@@ -73,7 +73,7 @@ async function main() {
     for (let attempt = 1; attempt <= 3 && !ok; attempt++) {
       try {
         console.log(`[gen] ${name} (${size}) attempt ${attempt}`);
-        const res = await zai.images.generations.create({ prompt, size });
+        const res = await zai.images.generations.create({ prompt, size: size as any });
         const b64 = res.data?.[0]?.base64;
         if (!b64) throw new Error("empty base64");
         fs.writeFileSync(out, Buffer.from(b64, "base64"));
