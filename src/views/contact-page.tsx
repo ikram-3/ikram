@@ -117,17 +117,17 @@ export function ContactPage() {
             className="flex flex-col justify-center rounded-xl border border-gold/40 bg-gradient-to-br from-gold/15 via-card to-card p-6 shadow-sm md:p-8"
           >
             <div className="mb-5 flex items-center gap-3.5">
-              <span className="relative block size-14 shrink-0 overflow-hidden rounded-full border border-gold/50 shadow-sm">
+              <span className="relative block size-14 shrink-0 overflow-hidden rounded-full ring-2 ring-emerald-500/70 shadow-lg shadow-emerald-500/20 bg-background/50">
                 <Image
-                  src="/images/profile/A01-circle-minimal.png"
-                  alt=""
+                  src="/logo.png"
+                  alt={identity.name}
                   fill
                   sizes="56px"
                   className="object-cover"
                 />
               </span>
               <div>
-                <p className="text-sm font-semibold">{identity.name}</p>
+                <p className="text-sm font-bold">{identity.name}</p>
                 <p className="text-xs text-muted-foreground">{identity.role} · {identity.location}</p>
               </div>
             </div>

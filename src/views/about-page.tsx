@@ -37,14 +37,21 @@ export function AboutPage() {
           {/* Portrait card — user-supplied avatar (A05), Identity Lock honored */}
           <motion.aside {...enterProps(reduce, 0.05)}>
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-              <div className="relative aspect-[4/5] w-full overflow-hidden border-b border-border/60">
-                <Image
-                  src={identity.avatarAbout.src}
-                  alt={identity.avatarAbout.alt}
-                  fill
-                  sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover"
+              <div className="relative aspect-[4/5] w-full overflow-hidden border-b border-border/60 bg-gradient-to-b from-card via-card/95 to-background flex items-center justify-center p-4">
+                {/* 3D ambient spotlight glow */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-10 bg-[radial-gradient(circle_at_50%_40%,rgba(23,168,83,0.18),transparent_65%)] pointer-events-none"
                 />
+                <div className="relative w-full h-full">
+                  <Image
+                    src={identity.avatarAbout.src}
+                    alt={identity.avatarAbout.alt}
+                    fill
+                    sizes="(min-width: 1024px) 420px, 100vw"
+                    className="object-contain drop-shadow-3d-character"
+                  />
+                </div>
               </div>
               <div className="space-y-3 p-5">
                 <div>

@@ -22,17 +22,38 @@ import {
 } from "@/components/ui/sheet";
 import { ACCOUNT_NAV_ITEMS, NAV_ITEMS, isActivePage } from "@/design/tokens";
 import { identity } from "@/profile";
+import Image from "next/image";
 import { useRouterStore } from "@/store/router";
 
 const subscribeNoop = () => () => {};
 
-function Monogram() {
+function SiteLogo({ size = 38 }: { size?: number }) {
   return (
-    <span
-      aria-hidden="true"
-      className="grid size-9 place-items-center rounded-md border border-gold/50 bg-gold/10 font-mono text-sm font-bold tracking-tight text-gold"
-    >
-      MI
+    <span className="relative flex items-center justify-center">
+      {/* Outer ambient glow */}
+      <span
+        aria-hidden="true"
+        className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-500/40 via-gold/30 to-emerald-500/40 blur-[3px] opacity-75 group-hover:opacity-100 transition-opacity"
+      />
+      {/* Circular Logo Container with A06 emerald badge */}
+      <span
+        className="relative block overflow-hidden rounded-full ring-2 ring-emerald-500/80 shadow-md shadow-emerald-500/25 transition-transform duration-300 group-hover:scale-105"
+        style={{ width: size, height: size }}
+      >
+        <Image
+          src="/logo.png"
+          alt="Muhammad Ikram Logo"
+          width={size}
+          height={size}
+          priority
+          className="h-full w-full object-cover"
+        />
+      </span>
+      {/* Live availability indicator dot */}
+      <span className="absolute -bottom-0.5 -right-0.5 flex size-2.5" aria-hidden="true">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex size-2.5 rounded-full border border-background bg-emerald-500" />
+      </span>
     </span>
   );
 }
@@ -166,13 +187,18 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <button
           onClick={() => go("/")}
-          className="flex items-center gap-2.5 rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
+          className="group flex items-center gap-3 rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
           aria-label="Muhammad Ikram — home"
         >
-          <Monogram />
-          <span className="hidden flex-col leading-tight sm:flex">
-            <span className="text-sm font-semibold tracking-tight">{identity.name}</span>
-            <span className="text-[11px] text-muted-foreground">{identity.role}</span>
+          <SiteLogo size={38} />
+          <span className="hidden flex-col leading-tight sm:flex text-left">
+            <span className="text-sm font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
+              {identity.name}
+            </span>
+            <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+              <span className="inline-block size-1.5 rounded-full bg-emerald-500" />
+              {identity.role}
+            </span>
           </span>
         </button>
 
@@ -240,9 +266,9 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="right" aria-describedby={undefined} className="w-72">
               <SheetHeader>
-                <SheetTitle className="flex items-center gap-2.5">
-                  <Monogram />
-                  <span>{identity.name}</span>
+                <SheetTitle className="flex items-center gap-3">
+                  <SiteLogo size={36} />
+                  <span className="text-left font-bold">{identity.name}</span>
                 </SheetTitle>
               </SheetHeader>
               <nav aria-label="Mobile" className="mt-2 overflow-y-auto px-4 pb-6" style={{ maxHeight: "calc(100dvh - 6rem)" }}>

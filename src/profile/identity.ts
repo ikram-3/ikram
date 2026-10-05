@@ -23,17 +23,22 @@ export const identity = {
   /** Affiliation line shown under portrait — both facts from PERSONAL_PROFILE.md. */
   affiliations: "KPITB Generative AI Fellow · University of Swat",
   /**
-   * Portrait: user-supplied avatar (avatars.zip → A02-gold-ring).
-   * Identity Lock: never generated, never edited — used as provided.
+   * Primary 3D avatar (A07) with transparent PNG support.
+   * Rendered on Home & About pages with enhanced 3D lighting.
    */
   avatar: {
-    src: "/images/profile/A02-gold-ring.png",
-    alt: "Portrait of Muhammad Ikram, software engineer",
+    src: "/images/profile/A07-3d-character-transparent.png",
+    alt: "3D Character Portrait of Muhammad Ikram, software engineer",
   },
-  /** Secondary provided avatar used on the About page. */
+  /** Secondary 3D portrait used on the About page. */
   avatarAbout: {
-    src: "/images/profile/A01-circle-minimal.png",
-    alt: "Portrait of Muhammad Ikram in an office setting with soft bokeh background",
+    src: "/images/profile/A07-3d-character-transparent.png",
+    alt: "3D Character Portrait of Muhammad Ikram in office setting",
+  },
+  /** Official brand logo badge (A06) flat vector in vibrant emerald ring. */
+  logo: {
+    src: "/logo.png",
+    alt: "Muhammad Ikram Logo Badge",
   },
 } as const;
 

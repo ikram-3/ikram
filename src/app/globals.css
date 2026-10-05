@@ -19,6 +19,8 @@
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
   --color-charcoal: var(--charcoal);
+  --color-emerald-brand: var(--emerald-brand);
+  --color-emerald-light: var(--emerald-light);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -50,6 +52,8 @@
   --radius: 0.625rem;
   --gold: #C9A227;
   --gold-light: #E3C566;
+  --emerald-brand: #17A853;
+  --emerald-light: #22C55E;
   --charcoal: #1C1C1C;
   --background: oklch(0.972 0.011 85);
   --foreground: oklch(0.205 0.005 85);
@@ -160,6 +164,34 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.text-gradient-emerald {
+  background: linear-gradient(120deg, #34D399, #10B981 50%, #059669);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-emerald-gold {
+  background: linear-gradient(120deg, #34D399 0%, #10B981 40%, #E3C566 80%, #C9A227 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── 3D Character presentation filters & lighting ───────────────────────── */
+.drop-shadow-3d-character {
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.65))
+         drop-shadow(0 4px 12px rgba(16, 185, 129, 0.22))
+         drop-shadow(0 0 45px rgba(201, 162, 39, 0.15));
+  transition: filter 0.4s ease, transform 0.4s ease;
+}
+
+.drop-shadow-3d-character:hover {
+  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.75))
+         drop-shadow(0 6px 20px rgba(16, 185, 129, 0.35))
+         drop-shadow(0 0 55px rgba(201, 162, 39, 0.25));
 }
 
 .bg-grid-fade {

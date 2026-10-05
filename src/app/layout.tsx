@@ -45,6 +45,14 @@ export const metadata: Metadata = {
       "Production AI agents & complete business platforms. Ships end-to-end, deploys one-click.",
     images: ["/images/project/og-image.png"],
   },
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
 
 export const viewport: Viewport = {

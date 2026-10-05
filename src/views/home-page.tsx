@@ -67,8 +67,12 @@ export function HomePage() {
           <div>
             <motion.p
               {...enterProps(reduce, 0)}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-medium tracking-wide text-gold"
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold tracking-wide text-emerald-400 shadow-sm shadow-emerald-500/10"
             >
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+              </span>
               {identity.title}
             </motion.p>
 
@@ -78,7 +82,7 @@ export function HomePage() {
               className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-[3.4rem] lg:leading-[1.1]"
             >
               <span className="text-foreground">{identity.name.split(" ")[0]} </span>
-              <span className="text-gradient-gold">{identity.name.split(" ").slice(1).join(" ")}</span>
+              <span className="text-gradient-emerald-gold">{identity.name.split(" ").slice(1).join(" ")}</span>
             </motion.h1>
 
             <motion.p
@@ -147,60 +151,92 @@ export function HomePage() {
             </motion.dl>
           </div>
 
-          {/* Portrait — user-supplied avatar (A02-gold-ring), circular per design brief.
-              Identity Lock: never generated, never edited — used as provided. */}
+          {/* 3D Character Showcase (A07 transparent PNG) with enhanced spatial depth */}
           <motion.div
             initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={reduce ? { duration: 0.15 } : { duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-[320px] md:max-w-none"
+            className="relative mx-auto w-full max-w-[360px] md:max-w-[420px]"
           >
-            <div className="relative mx-auto aspect-square w-full max-w-[300px] sm:max-w-[340px]">
-              {/* Rotating dashed gold ring */}
+            <div className="relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[390px] flex items-center justify-center">
+              {/* Layer 1: Ambient 3D Volumetric Lighting (Emerald + Gold) */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/25 via-emerald-500/10 to-gold/25 blur-3xl opacity-70 pointer-events-none"
+              />
+
+              {/* Layer 2: Rotating 3D Tech Orbit Ring (concentric emerald & gold) */}
               <span
                 aria-hidden="true"
-                className="absolute -inset-3 rounded-full border border-dashed border-gold/40 animate-spin-slow"
+                className="absolute -inset-4 rounded-full border border-dashed border-emerald-500/35 animate-spin-slow pointer-events-none"
               />
-              {/* Static glow ring */}
               <span
                 aria-hidden="true"
-                className="absolute -inset-1.5 rounded-full bg-gradient-to-br from-gold/50 via-gold/10 to-gold/50 p-[2px] shadow-xl shadow-gold/20"
+                className="absolute -inset-1 rounded-full border border-gold/30 animate-spin-slow pointer-events-none"
+                style={{ animationDirection: "reverse", animationDuration: "35s" }}
               />
-              {/* The circle portrait */}
-              <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-gold/60 shadow-2xl shadow-gold/25 animate-float">
-                <Image
-                  src={identity.avatar.src}
-                  alt={identity.avatar.alt}
-                  fill
-                  priority
-                  sizes="(min-width: 768px) 340px, 300px"
-                  className="object-cover"
-                />
+
+              {/* Layer 3: 3D Pedestal Platform Backdrop Ring */}
+              <div
+                aria-hidden="true"
+                className="absolute bottom-4 inset-x-6 h-48 rounded-[50%] bg-gradient-to-b from-emerald-500/15 via-card/70 to-background/90 border border-emerald-500/30 backdrop-blur-md shadow-2xl shadow-emerald-950/50"
+              />
+
+              {/* Layer 4: The 3D Character Cutout (Transparent PNG with realistic depth) */}
+              <div className="relative z-10 w-full h-full flex items-center justify-center animate-float">
+                <div className="relative w-[92%] h-[92%]">
+                  <Image
+                    src={identity.avatar.src}
+                    alt={identity.avatar.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 768px) 400px, 320px"
+                    className="object-contain drop-shadow-3d-character select-none pointer-events-none transition-transform duration-500 hover:scale-[1.03]"
+                  />
+                </div>
               </div>
 
-              {/* Floating proof badges */}
-              <motion.span
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={reduce ? { duration: 0.2, delay: 0.5 } : { duration: 0.5, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -left-4 top-6 flex items-center gap-1.5 rounded-full border border-gold/40 bg-background/90 px-3 py-1.5 text-[11px] font-semibold text-gold shadow-md backdrop-blur-sm animate-float-delayed"
+              {/* Layer 5: Floating 3D Spatial Glass Badges */}
+              {/* Badge 1: Top Left - AI & Full Stack */}
+              <motion.div
+                initial={reduce ? { opacity: 0 } : { opacity: 0, x: -12, y: -6 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: 0.45 }}
+                className="absolute -left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-emerald-500/40 bg-card/85 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-xl shadow-emerald-950/30 backdrop-blur-md transition-transform duration-300 hover:scale-105 animate-float-delayed"
               >
-                <Sparkles size={12} aria-hidden="true" /> 35+ projects
-              </motion.span>
-              <motion.span
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={reduce ? { duration: 0.2, delay: 0.65 } : { duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute -right-3 bottom-10 flex items-center gap-1.5 rounded-full border border-gold/40 bg-background/90 px-3 py-1.5 text-[11px] font-semibold text-gold shadow-md backdrop-blur-sm animate-float"
+                <Sparkles size={13} className="text-emerald-400" aria-hidden="true" />
+                <span>Applied AI × Full-Stack</span>
+              </motion.div>
+
+              {/* Badge 2: Top Right - 35+ Projects */}
+              <motion.div
+                initial={reduce ? { opacity: 0 } : { opacity: 0, x: 12, y: -6 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: 0.55 }}
+                className="absolute -right-5 top-12 z-20 flex items-center gap-2 rounded-full border border-gold/45 bg-card/85 px-3.5 py-1.5 text-xs font-semibold text-gold shadow-xl shadow-gold/10 backdrop-blur-md transition-transform duration-300 hover:scale-105 animate-float"
               >
-                <span className="relative flex size-1.5" aria-hidden="true">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-                  <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+                <Rocket size={13} className="text-gold" aria-hidden="true" />
+                <span>35+ Projects Shipped</span>
+              </motion.div>
+
+              {/* Badge 3: Bottom Right - Live Deployments */}
+              <motion.div
+                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: 0.65 }}
+                className="absolute -right-4 bottom-8 z-20 flex items-center gap-2 rounded-full border border-emerald-500/50 bg-card/85 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-xl shadow-emerald-950/30 backdrop-blur-md transition-transform duration-300 hover:scale-105 animate-float-delayed"
+              >
+                <span className="relative flex size-2" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
                 </span>
-                {stats.liveDeployments} live deployments
-              </motion.span>
+                <span>{stats.liveDeployments} Live Deployments</span>
+              </motion.div>
             </div>
-            <p className="mt-5 text-center text-xs text-muted-foreground">{identity.affiliations}</p>
+            <p className="mt-6 text-center text-xs font-medium text-muted-foreground flex items-center justify-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-500" />
+              {identity.affiliations}
+            </p>
           </motion.div>
         </div>
       </section>

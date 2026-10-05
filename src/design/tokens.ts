@@ -133,4 +133,7 @@ export const BRAND = {
   charcoal: "#1C1C1C",
   /** Gold from DESIGN_SYSTEM.md. */
   gold: "#C9A227",
+  /** Signature emerald green from A06 vector badge (#17A853). */
+  emerald: "#17A853",
+  emeraldLight: "#22C55E",
 } as const;
