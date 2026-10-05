@@ -1,0 +1,52 @@
+// Prisma schema — Ikram portfolio (PostgreSQL / Vercel Postgres / Neon).
+// Auth (credentials) + RBAC + quotation request pipeline.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// Site account. role drives RBAC: "user" | "admin".
+model User {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  passwordHash  String
+  role          String         @default("user")
+  company       String?
+  quoteRequests QuoteRequest[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([role])
+}
+
+/// Quotation request submitted from the public "Get a Quote" page.
+/// Guests may submit (userId null); registered accounts get it linked.
+model QuoteRequest {
+  id            String   @id @default(cuid())
+  reference     String   @unique // human-friendly ref, e.g. Q-XXXXXX
+  userId        String?
+  user          User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name          String
+  email         String
+  phone         String?
+  company       String?
+  projectType   String   // website | webapp | ai-agent | automation | mobile | other
+  budget        String   // under-1k | 1k-3k | 3k-10k | 10k-plus | flexible
+  timeline      String   // asap | 1-month | 1-3-months | flexible
+  message       String   @db.Text
+  status        String   @default("new") // new | reviewing | quoted | closed
+  adminNotes    String?  @db.Text
+  estimatedCost String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([userId])
+  @@index([createdAt])
+}
