@@ -87,7 +87,7 @@ export const projects: Project[] = [
       "Full-stack trading platform for selling indicators, managing tiered subscriptions, offering educational courses, and automating sales/engagement workflows. Integrates TradingView webhook alerts and Telegram community access, with API-key licensing, payment verification, and a real-time admin dashboard.",
     tech: ["Laravel", "PHP", "React", "Inertia.js", "Vite", "Tailwind CSS", "Stripe API", "Telegram Bot API", "Puppeteer", "MySQL/PostgreSQL"],
     featured: true,
-    links: { live: null, repo: null },
+    links: { live: "https://alnafialgo.com", repo: null },
     whatIDid:
       "Built a full-stack platform pairing a public marketing website with indicator sales, tiered subscriptions, and educational courses. TradingView webhooks execute signals automatically, the Telegram Bot API gates community access, and a licensing system with API keys plus payment verification runs the business rules. A real-time admin dashboard keeps sales and engagement workflows observable end-to-end.",
     whyItMatters: "Complete SaaS + e-commerce + automation in one platform — the kind of build usually split across a whole team.",
