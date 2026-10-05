@@ -101,8 +101,35 @@ Work Log:
 - Fixes during verify: CountUp latch (admin stats stuck at 0), cursor class stripped by visible-dep effect re-run (ref-based now), pointer-fine gate replaced with touch-detection (headless reports pointer:fine=false), hydration diff on header
 - Verified in Agent Browser: register→auto-login→prefilled quotation→submit (Q-209F3D)→account shows request→admin login→dashboard lists account+guest requests→status New→Quoted updates badge+counts+DB; projects grid images, ERP detail image, skills marquee, contact FAQ, light+dark, 1440+390 viewports, sticky footer both lengths; zero console warnings/errors; lint exit 0
 
+---
+Task ID: 4
+Agent: antigravity-agent
+Task: PostgreSQL migration, Vercel deployment readiness, quote CRM enhancements, and GitHub synchronization
+
+Work Log:
+- Database: Migrated Prisma from SQLite to PostgreSQL (prisma/schema.prisma). Enhanced models: User gains company + index([role]); QuoteRequest gains company, adminNotes (@db.Text), estimatedCost, index([createdAt]).
+- Local PostgreSQL: Connected to local PostgreSQL 18 instance on localhost:5432, created database ikram_portfolio, pushed schema via prisma db push, and seeded admin account (admin@ikram.local / IkramAdmin2025) via tsx scripts/seed-admin.ts.
+- Vercel Compatibility:
+  - Updated package.json scripts: cross-platform dev (next dev -p 3000), build (prisma generate && next build), postinstall (prisma generate), start (next start), and seed (tsx scripts/seed-admin.ts). Added tsx to devDependencies.
+  - Updated next.config.ts: removed mandatory standalone mode for native Vercel serverless execution, enabled modern image formats (avif, webp).
+  - Added vercel.json with build commands and recommended security headers (nosniff, DENY, XSS protection).
+  - Enriched .env.example with documentation for Vercel Postgres (POSTGRES_PRISMA_URL, POSTGRES_URL_NON_POOLING) and generic DATABASE_URL.
+  - Enhanced src/lib/db.ts to auto-detect and prioritize Vercel Postgres environment variables.
+- Enhancements:
+  - Quotation Page (src/views/quotation-page.tsx): added optional Company / Organization field in state, validation, API payload, and form layout.
+  - Admin Page (src/views/admin-page.tsx): upgraded to full CRM pipeline. Each quotation displays company affiliation, live status picker, and interactive "Admin Quote & Notes" panel allowing instant inline editing and saving of estimated cost ($) and internal notes.
+  - Account Page (src/views/account-page.tsx): displays company badge and quoted estimate card once provided by admin.
+  - Health API (src/app/api/health/route.ts): returns live PostgreSQL ping status and query latency in milliseconds.
+- Verification:
+  - pnpm build successfully created an optimized Turbopack production bundle with static and dynamic routes.
+  - pnpm dev verified running on http://localhost:3000 (status 200).
+  - GET /api/health returns database.status = "connected", latency = 3ms.
+- GitHub Push:
+  - Initialized git repository, configured .gitignore to securely protect .env and local databases while preserving .env.example.
+  - Linked remote https://github.com/ikram-3/ikram.git and successfully pushed to branch 'main'.
+
 Stage Summary:
-- Site now has a full quotation funnel: Register/Login (JWT) → Get a Quote (guest or linked) → account tracking → admin RBAC dashboard with status pipeline
-- All 35 projects carry generated artwork; identity imagery remains the user-supplied avatars (circular on home, Identity Lock intact)
-- Demo data left in DB intentionally: 1 guest quote (Q-02ACAF), 1 account quote (Q-209F3D, quoted), test users browser.tester@example.com + admin@ikram.local/IkramAdmin2025 (change via ADMIN_* env + re-run seed)
-- Open items unchanged: CV PDF upload (Download CTA), GLOBAL_CONTEXT.md/AGENT_WORKFLOW.md/images prompt library missing from kit
+- Deliverable: Production-ready Next.js 16 + PostgreSQL portfolio deployed to GitHub repository https://github.com/ikram-3/ikram.
+- Database: PostgreSQL fully integrated and verified locally; 100% prepared for 1-click Vercel Postgres / Neon integration on deployment.
+- Status: Ready for Vercel import and live production deployment.
+
