@@ -131,9 +131,9 @@ export const BRAND = {
   monogram: "MI",
   /** Charcoal from DESIGN_SYSTEM.md. */
   charcoal: "#1C1C1C",
-  /** Gold from DESIGN_SYSTEM.md. */
-  gold: "#C9A227",
-  /** Signature emerald green from A06 vector badge (#17A853). */
-  emerald: "#17A853",
+  /** Logo brand color: vibrant emerald green (#16A34A). */
+  gold: "#16A34A",
+  /** Signature emerald green from A06 vector badge (#16A34A). */
+  emerald: "#16A34A",
   emeraldLight: "#22C55E",
 } as const;

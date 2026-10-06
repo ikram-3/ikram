@@ -34,24 +34,22 @@ export function AboutPage() {
       {/* ── Portrait + story ───────────────────────────────────────────── */}
       <Section ariaLabel="About Muhammad Ikram">
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
-          {/* Portrait card — user-supplied avatar (A05), Identity Lock honored */}
+          {/* Portrait card — 3D Persona (A07) properly arranged in studio frame */}
           <motion.aside {...enterProps(reduce, 0.05)}>
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-              <div className="relative aspect-[4/5] w-full overflow-hidden border-b border-border/60 bg-gradient-to-b from-card via-card/95 to-background flex items-center justify-center p-4">
-                {/* 3D ambient spotlight glow */}
-                <div
-                  aria-hidden="true"
-                  className="absolute -inset-10 bg-[radial-gradient(circle_at_50%_40%,rgba(23,168,83,0.18),transparent_65%)] pointer-events-none"
+              <div className="relative aspect-square w-full overflow-hidden border-b border-border/60 bg-muted/20">
+                <Image
+                  src={identity.avatarAbout.src}
+                  alt={identity.avatarAbout.alt}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 420px, 100vw"
+                  className="object-cover object-top transition-transform duration-500 hover:scale-105"
                 />
-                <div className="relative w-full h-full">
-                  <Image
-                    src={identity.avatarAbout.src}
-                    alt={identity.avatarAbout.alt}
-                    fill
-                    sizes="(min-width: 1024px) 420px, 100vw"
-                    className="object-contain drop-shadow-3d-character"
-                  />
-                </div>
+                {/* 3D Persona badge */}
+                <span className="absolute top-3 right-3 z-10 inline-flex items-center rounded-full border border-border/80 bg-background/90 px-2.5 py-1 text-[11px] font-semibold text-foreground shadow-sm backdrop-blur-md">
+                  3D Persona
+                </span>
               </div>
               <div className="space-y-3 p-5">
                 <div>

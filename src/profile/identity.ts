@@ -23,17 +23,20 @@ export const identity = {
   /** Affiliation line shown under portrait — both facts from PERSONAL_PROFILE.md. */
   affiliations: "KPITB Generative AI Fellow · University of Swat",
   /**
-   * Primary 3D avatar (A07) with transparent PNG support.
-   * Rendered on Home & About pages with enhanced 3D lighting.
+   * Primary authentic portrait (A01) used on the Home page.
+   * Original photo and natural background preserved, presented in a clean circle.
    */
   avatar: {
-    src: "/images/profile/A07-3d-character-transparent.png",
-    alt: "3D Character Portrait of Muhammad Ikram, software engineer",
+    src: "/images/profile/A01-circle-minimal.png",
+    alt: "Portrait of Muhammad Ikram, Software Engineer",
   },
-  /** Secondary 3D portrait used on the About page. */
+  /**
+   * 3D Character portrait (A07) used on the About page.
+   * High-fidelity 3D studio render with complete background, properly arranged.
+   */
   avatarAbout: {
-    src: "/images/profile/A07-3d-character-transparent.png",
-    alt: "3D Character Portrait of Muhammad Ikram in office setting",
+    src: "/images/profile/A07-3d-character.png",
+    alt: "3D Digital Character of Muhammad Ikram, Applied AI Engineer",
   },
   /** Official brand logo badge (A06) flat vector in vibrant emerald ring. */
   logo: {

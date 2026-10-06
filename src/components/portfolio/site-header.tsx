@@ -29,31 +29,18 @@ const subscribeNoop = () => () => {};
 
 function SiteLogo({ size = 38 }: { size?: number }) {
   return (
-    <span className="relative flex items-center justify-center">
-      {/* Outer ambient glow */}
-      <span
-        aria-hidden="true"
-        className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-500/40 via-gold/30 to-emerald-500/40 blur-[3px] opacity-75 group-hover:opacity-100 transition-opacity"
+    <span
+      className="relative block overflow-hidden rounded-full ring-2 ring-emerald-500/80 shadow-md shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105"
+      style={{ width: size, height: size }}
+    >
+      <Image
+        src="/logo.png"
+        alt="Muhammad Ikram Logo"
+        width={size}
+        height={size}
+        priority
+        className="h-full w-full object-cover"
       />
-      {/* Circular Logo Container with A06 emerald badge */}
-      <span
-        className="relative block overflow-hidden rounded-full ring-2 ring-emerald-500/80 shadow-md shadow-emerald-500/25 transition-transform duration-300 group-hover:scale-105"
-        style={{ width: size, height: size }}
-      >
-        <Image
-          src="/logo.png"
-          alt="Muhammad Ikram Logo"
-          width={size}
-          height={size}
-          priority
-          className="h-full w-full object-cover"
-        />
-      </span>
-      {/* Live availability indicator dot */}
-      <span className="absolute -bottom-0.5 -right-0.5 flex size-2.5" aria-hidden="true">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-        <span className="relative inline-flex size-2.5 rounded-full border border-background bg-emerald-500" />
-      </span>
     </span>
   );
 }
@@ -195,8 +182,7 @@ export function SiteHeader() {
             <span className="text-sm font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
               {identity.name}
             </span>
-            <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-              <span className="inline-block size-1.5 rounded-full bg-emerald-500" />
+            <span className="text-[11px] text-muted-foreground">
               {identity.role}
             </span>
           </span>

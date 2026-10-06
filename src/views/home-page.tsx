@@ -9,13 +9,19 @@ import {
   BrainCircuit,
   Briefcase,
   ChartBarBig,
+  Download,
+  FolderGit2,
   Globe,
+  HeartHandshake,
   Mail,
   ReceiptText,
   Rocket,
+  ShieldCheck,
   Smartphone,
   Sparkles,
+  Target,
   Wrench,
+  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { enterProps, staggerContainer, staggerItem, StatCard } from "@/design";
@@ -25,11 +31,37 @@ import { getFeaturedProjects } from "@/profile/projects";
 import { useRouterStore } from "@/store/router";
 import { CountUp } from "@/design/components/count-up";
 import { ProjectCard } from "./project-card";
+import { HERO_TECH_STACK } from "@/components/portfolio/tech-badges";
 
-const HERO_STATS = [
-  { value: 35, suffix: "+", label: "Projects shipped" },
-  { value: stats.liveDeployments, suffix: "", label: "Live deployments" },
-  { value: 3, suffix: "", label: "Certifications" },
+const LANDING_METRICS = [
+  {
+    icon: Target,
+    value: 3,
+    suffix: "+",
+    label: "Years Learning & Building",
+    iconBg: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+  },
+  {
+    icon: FolderGit2,
+    value: 6,
+    suffix: "+",
+    label: "Real Projects",
+    iconBg: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+  },
+  {
+    icon: ShieldCheck,
+    value: 3,
+    suffix: "",
+    label: "Certifications",
+    iconBg: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+  },
+  {
+    icon: HeartHandshake,
+    value: 100,
+    suffix: "%",
+    label: "Passion & Dedication",
+    iconBg: "bg-cyan-500/10 text-cyan-400 border-cyan-500/30",
+  },
 ] as const;
 
 const SERVICE_ICONS = {
@@ -48,208 +80,153 @@ export function HomePage() {
 
   return (
     <>
-      {/* ── Hero ───────────────────────────────────────────────────────── */}
-      <section aria-labelledby="hero-heading" className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10" aria-hidden="true">
-          <Image
-            src="/images/project/hero-glow.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover opacity-25 dark:opacity-35"
-          />
-          <div className="absolute inset-0 bg-grid-fade" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/60 to-background" />
+      {/* ── Hero matching reference design (Theme-aware, crisp, and properly proportioned) ── */}
+      <section
+        aria-labelledby="hero-heading"
+        className="relative overflow-hidden bg-background text-foreground transition-colors duration-300 pt-6 pb-12 sm:pb-16 lg:pb-20 border-b border-border/40"
+      >
+        {/* Subtle background ambient mesh */}
+        <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.04] via-transparent to-background dark:from-emerald-950/20 dark:via-background dark:to-background" />
+          <div className="absolute right-0 top-1/4 size-96 rounded-full bg-emerald-500/[0.07] dark:bg-emerald-500/10 blur-3xl" />
         </div>
 
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-14 pt-10 sm:px-6 md:grid-cols-[1.2fr_0.8fr] md:pb-20 md:pt-16">
-          <div>
-            <motion.p
-              {...enterProps(reduce, 0)}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold tracking-wide text-emerald-400 shadow-sm shadow-emerald-500/10"
-            >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              {identity.title}
-            </motion.p>
-
-            <motion.h1
-              {...enterProps(reduce, 0.05)}
-              id="hero-heading"
-              className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-[3.4rem] lg:leading-[1.1]"
-            >
-              <span className="text-foreground">{identity.name.split(" ")[0]} </span>
-              <span className="text-gradient-emerald-gold">{identity.name.split(" ").slice(1).join(" ")}</span>
-            </motion.h1>
-
-            <motion.p
-              {...enterProps(reduce, 0.1)}
-              className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
-            >
-              {summary.headline}
-            </motion.p>
-
-            <motion.p
-              {...enterProps(reduce, 0.15)}
-              className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground/90 md:text-base"
-            >
-              {summary.subheadline}
-            </motion.p>
-
-            <motion.div {...enterProps(reduce, 0.2)} className="mt-7 flex flex-wrap items-center gap-3">
-              <Button
-                size="lg"
-                onClick={() => navigate("/quotation")}
-                className="h-11 rounded-md bg-gold px-6 font-bold text-charcoal shadow-md shadow-gold/25 transition-transform duration-200 hover:scale-[1.02] hover:bg-gold-light active:scale-[0.98]"
+        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12 pt-4 lg:pt-8">
+            
+            {/* Left Content Column */}
+            <div className="max-w-xl">
+              {/* Eyebrow Pill */}
+              <motion.div
+                {...enterProps(reduce, 0)}
+                className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 dark:bg-emerald-950/60 px-3.5 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-400 backdrop-blur-md shadow-sm"
               >
-                <ReceiptText size={16} aria-hidden="true" /> Get a Quote
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => navigate("/projects")}
-                className="h-11 rounded-md border-gold/50 px-6 font-semibold text-foreground transition-colors duration-200 hover:bg-gold/10 hover:text-gold"
-              >
-                View Projects <ArrowRight size={16} aria-hidden="true" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                onClick={() => navigate("/contact")}
-                className="h-11 rounded-md px-5 font-semibold text-muted-foreground transition-colors duration-200 hover:bg-gold/10 hover:text-gold"
-              >
-                <Mail size={16} aria-hidden="true" /> Contact
-              </Button>
-            </motion.div>
+                <span className="size-2 rounded-full bg-emerald-500 dark:bg-emerald-400" aria-hidden="true" />
+                <span>Available for Opportunities</span>
+              </motion.div>
 
-            <motion.dl {...enterProps(reduce, 0.25)} className="mt-10 flex flex-wrap gap-x-10 gap-y-5">
-              {HERO_STATS.map((s) => (
-                <div key={s.label}>
-                  <dt className="sr-only">{s.label}</dt>
-                  <dd className="font-mono text-2xl font-bold text-gold md:text-3xl">
-                    <CountUp value={s.value} suffix={s.suffix} />
-                  </dd>
-                  <dd className="mt-0.5 text-xs text-muted-foreground">{s.label}</dd>
-                </div>
-              ))}
-              <div className="max-w-44">
-                <dt className="sr-only">Domains</dt>
-                <dd className="flex flex-wrap gap-1.5 pt-1">
-                  {domains.map((d) => (
-                    <span
-                      key={d}
-                      className="rounded-full border border-border bg-secondary/60 px-2 py-0.5 text-[11px] font-medium text-secondary-foreground"
+              {/* Title / Name */}
+              <motion.div {...enterProps(reduce, 0.05)} className="space-y-1">
+                <p className="text-base sm:text-lg font-medium text-muted-foreground">
+                  Hello, I&apos;m
+                </p>
+                <h1
+                  id="hero-heading"
+                  className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-[3.8rem] text-foreground"
+                >
+                  Muhammad{" "}
+                  <span className="bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-600 dark:from-emerald-400 dark:via-emerald-300 dark:to-green-400 bg-clip-text text-transparent">
+                    Ikram
+                  </span>
+                </h1>
+                <p className="pt-1 text-lg sm:text-xl font-semibold text-foreground/90 md:text-2xl">
+                  Project Based Software Engineer
+                </p>
+              </motion.div>
+
+              {/* Bio Paragraph */}
+              <motion.p
+                {...enterProps(reduce, 0.1)}
+                className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base md:text-[15px]"
+              >
+                I build modern web applications, work with AI &amp; data, and love creating scalable systems.
+                I turn ideas into real products using clean code, smart design and problem-solving skills.
+              </motion.p>
+
+              {/* Tech Stack Horizontal Pills */}
+              <motion.div
+                {...enterProps(reduce, 0.15)}
+                className="mt-6 flex flex-wrap items-center gap-2"
+                aria-label="Core Tech Stack"
+              >
+                {HERO_TECH_STACK.map((tech) => {
+                  const Icon = tech.icon;
+                  return (
+                    <div
+                      key={tech.name}
+                      className={`inline-flex items-center gap-1.5 rounded-full border ${tech.border} ${tech.bg} px-3 py-1 text-xs font-medium ${tech.color} backdrop-blur-md shadow-sm transition-transform hover:scale-105`}
                     >
-                      {d}
-                    </span>
-                  ))}
-                </dd>
-              </div>
-            </motion.dl>
-          </div>
-
-          {/* 3D Character Showcase (A07 transparent PNG) with enhanced spatial depth */}
-          <motion.div
-            initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={reduce ? { duration: 0.15 } : { duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-[360px] md:max-w-[420px]"
-          >
-            <div className="relative mx-auto aspect-square w-full max-w-[340px] sm:max-w-[390px] flex items-center justify-center">
-              {/* Layer 1: Ambient 3D Volumetric Lighting (Emerald + Gold) */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-emerald-500/25 via-emerald-500/10 to-gold/25 blur-3xl opacity-70 pointer-events-none"
-              />
-
-              {/* Layer 2: Rotating 3D Tech Orbit Ring (concentric emerald & gold) */}
-              <span
-                aria-hidden="true"
-                className="absolute -inset-4 rounded-full border border-dashed border-emerald-500/35 animate-spin-slow pointer-events-none"
-              />
-              <span
-                aria-hidden="true"
-                className="absolute -inset-1 rounded-full border border-gold/30 animate-spin-slow pointer-events-none"
-                style={{ animationDirection: "reverse", animationDuration: "35s" }}
-              />
-
-              {/* Layer 3: 3D Pedestal Platform Backdrop Ring */}
-              <div
-                aria-hidden="true"
-                className="absolute bottom-4 inset-x-6 h-48 rounded-[50%] bg-gradient-to-b from-emerald-500/15 via-card/70 to-background/90 border border-emerald-500/30 backdrop-blur-md shadow-2xl shadow-emerald-950/50"
-              />
-
-              {/* Layer 4: The 3D Character Cutout (Transparent PNG with realistic depth) */}
-              <div className="relative z-10 w-full h-full flex items-center justify-center animate-float">
-                <div className="relative w-[92%] h-[92%]">
-                  <Image
-                    src={identity.avatar.src}
-                    alt={identity.avatar.alt}
-                    fill
-                    priority
-                    sizes="(min-width: 768px) 400px, 320px"
-                    className="object-contain drop-shadow-3d-character select-none pointer-events-none transition-transform duration-500 hover:scale-[1.03]"
-                  />
-                </div>
-              </div>
-
-              {/* Layer 5: Floating 3D Spatial Glass Badges */}
-              {/* Badge 1: Top Left - AI & Full Stack */}
-              <motion.div
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: -12, y: -6 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: 0.45 }}
-                className="absolute -left-6 top-6 z-20 flex items-center gap-2 rounded-full border border-emerald-500/40 bg-card/85 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-xl shadow-emerald-950/30 backdrop-blur-md transition-transform duration-300 hover:scale-105 animate-float-delayed"
-              >
-                <Sparkles size={13} className="text-emerald-400" aria-hidden="true" />
-                <span>Applied AI × Full-Stack</span>
+                      <Icon className="size-3.5 shrink-0" />
+                      <span>{tech.name}</span>
+                    </div>
+                  );
+                })}
               </motion.div>
 
-              {/* Badge 2: Top Right - 35+ Projects */}
-              <motion.div
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: 12, y: -6 }}
-                animate={{ opacity: 1, x: 0, y: 0 }}
-                transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: 0.55 }}
-                className="absolute -right-5 top-12 z-20 flex items-center gap-2 rounded-full border border-gold/45 bg-card/85 px-3.5 py-1.5 text-xs font-semibold text-gold shadow-xl shadow-gold/10 backdrop-blur-md transition-transform duration-300 hover:scale-105 animate-float"
-              >
-                <Rocket size={13} className="text-gold" aria-hidden="true" />
-                <span>35+ Projects Shipped</span>
-              </motion.div>
-
-              {/* Badge 3: Bottom Right - Live Deployments */}
-              <motion.div
-                initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: 0.65 }}
-                className="absolute -right-4 bottom-8 z-20 flex items-center gap-2 rounded-full border border-emerald-500/50 bg-card/85 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-xl shadow-emerald-950/30 backdrop-blur-md transition-transform duration-300 hover:scale-105 animate-float-delayed"
-              >
-                <span className="relative flex size-2" aria-hidden="true">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-                </span>
-                <span>{stats.liveDeployments} Live Deployments</span>
+              {/* Action Buttons */}
+              <motion.div {...enterProps(reduce, 0.2)} className="mt-8 flex flex-wrap items-center gap-3.5">
+                <Button
+                  size="lg"
+                  onClick={() => navigate("/projects")}
+                  className="h-12 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white dark:bg-emerald-500 dark:hover:bg-emerald-400 dark:text-neutral-950 px-6 text-sm font-bold shadow-lg shadow-emerald-500/20 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                >
+                  View My Projects <ArrowRight size={16} aria-hidden="true" className="ml-1" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  onClick={() => window.open("/cv", "_blank")}
+                  className="h-12 rounded-xl border border-border/80 hover:border-emerald-500/50 bg-card/80 hover:bg-muted text-foreground px-6 text-sm font-semibold backdrop-blur-md transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                >
+                  <Download size={16} aria-hidden="true" className="mr-1.5" /> Download CV
+                </Button>
               </motion.div>
             </div>
-            <p className="mt-6 text-center text-xs font-medium text-muted-foreground flex items-center justify-center gap-1.5">
-              <span className="size-1.5 rounded-full bg-emerald-500" />
-              {identity.affiliations}
-            </p>
+
+            {/* Right Column: Featured Visual Showcase Card (Crisp, properly framed, never stretched) */}
+            <motion.div
+              {...enterProps(reduce, 0.15)}
+              className="relative mx-auto w-full max-w-[520px] lg:max-w-none flex items-center justify-center"
+            >
+              {/* Subtle ambient emerald backlight */}
+              <div
+                aria-hidden="true"
+                className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-emerald-500/20 via-transparent to-emerald-500/10 blur-xl opacity-70 pointer-events-none"
+              />
+
+              {/* Framed Graphic Showcase Card */}
+              <div className="relative aspect-[16/9.5] w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-emerald-500/30 bg-card shadow-xl shadow-emerald-950/15 transition-all duration-300 hover:scale-[1.01] hover:shadow-emerald-500/20">
+                <Image
+                  src="/images/hero/hero-mountains-enhanced.webp"
+                  alt="Muhammad Ikram in Swat Valley"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 540px, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Bottom Metric Stats Bar (spans across the entire bottom) */}
+          <motion.div
+            {...enterProps(reduce, 0.25)}
+            className="mt-12 rounded-2xl border border-border/80 bg-card/80 p-5 shadow-lg backdrop-blur-md dark:border-emerald-500/20 dark:bg-card/40 dark:shadow-2xl"
+          >
+            <div className="grid grid-cols-2 gap-4 divide-y divide-border/20 sm:grid-cols-4 sm:divide-x sm:divide-y-0 sm:gap-6">
+              {LANDING_METRICS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.label} className="flex items-center gap-3.5 pt-3 sm:pt-0 sm:px-3">
+                    <span
+                      className={`grid size-11 shrink-0 place-items-center rounded-xl border ${item.iconBg} shadow-inner`}
+                    >
+                      <Icon size={20} />
+                    </span>
+                    <div>
+                      <p className="font-mono text-2xl font-extrabold text-white">
+                        <CountUp value={item.value} suffix={item.suffix} />
+                      </p>
+                      <p className="text-xs text-muted-foreground">{item.label}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </motion.div>
         </div>
       </section>
-
-      {/* ── Numbers ────────────────────────────────────────────────────── */}
-      <Section ariaLabel="Portfolio numbers">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <StatCard value={stats.projectsTotal} suffix="+" label="Projects shipped" icon={Briefcase} delay={0} />
-          <StatCard value={stats.projectsFeatured} suffix="" label="Featured case studies" icon={Rocket} delay={0.05} />
-          <StatCard value={stats.liveDeployments} suffix="" label="Live deployments" icon={ArrowRight} delay={0.1} />
-          <StatCard value={stats.certifications} suffix="" label="Certifications" icon={Award} delay={0.15} />
-        </div>
-      </Section>
 
       {/* ── What I build (services) ────────────────────────────────────── */}
       <Section ariaLabel="Services" className="pt-0 md:pt-0">

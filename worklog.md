@@ -200,3 +200,72 @@ Stage Summary:
 - A06 integrated as the official brand logo badge in header and footer.
 - A07 isolated as transparent PNG and presented with rich 3D spatial depth on Home and About pages.
 - Brand palette harmonized with A06 emerald tech green and refined gold.
+---
+Task ID: 8
+Agent: antigravity-agent
+Task: Align website color theme with logo emerald green, remove all blinking/point dots across the site, restore authentic profile photo (A01) with natural background in a clean circle, and properly arrange 3D character (A07) on About page
+
+Work Log:
+- Website Color Theme Harmonization:
+  - Aligned website core accent colors to match the official A06 logo's vibrant emerald green (`#16A34A` / `#22C55E`).
+  - Updated `:root` CSS variables `--gold` to `#16A34A` and `--gold-light` to `#22C55E`, updating all buttons, borders, text selection, metrics, and active states consistently across light and dark themes.
+  - Updated `src/design/tokens.ts` `BRAND.gold` to `#16A34A`.
+  - Updated `.text-gradient-gold` in `src/app/globals.css` to gradient from `#4ADE80` through `#16A34A` to `#22C55E`.
+- Complete Removal of Blinking and Naked Point Dots:
+  - Eliminated all blinking/pulsing animation elements (`animate-ping`) across the site: removed from `SiteLogo` in `src/components/portfolio/site-header.tsx`, live demo badges in `src/views/project-card.tsx`, and floating status chips in `src/views/home-page.tsx`.
+  - Removed naked dot points near the logo and text: removed the green dot preceding `{identity.role}` in the header, removed the dot inside the hero eyebrow pill, and replaced the naked dot in the "6 Live Systems" hero badge with a crisp `Zap` icon.
+  - Removed dot inside the "3D Persona" badge on the About page.
+- Authentic Profile Photo Presentation (A01):
+  - Preserved the original authentic photo (`public/images/profile/A01-circle-minimal.png`) with 100% of its natural background texture intact.
+  - Presented the photo cleanly in the circular framed hero card with emerald ring accent and floating metric chips.
+  - Set `identity.avatar.src` to `/images/profile/A01-circle-minimal.png`.
+- Proper Arrangement of 3D Persona Card on About Page (A07):
+  - Upgraded the About page portrait card (`src/views/about-page.tsx`) to showcase `A07-3d-character.png` in a dedicated `aspect-square` container with `object-cover object-top`.
+  - Eliminated floating cutoffs, empty vertical dead zones, and artificial drop shadows.
+  - Added a clean "3D Persona" badge in the upper corner of the card.
+- Quality Assurance & Verification:
+  - Ran `npx tsc --noEmit` — passed with 0 errors.
+  - Verified visual fidelity in browser across header, hero, and About page with clean emerald styling.
+
+Stage Summary:
+- Entire website color theme matches the official emerald logo badge.
+- All blinking and distracting point circles removed from the logo, header, and badges.
+- Home page hero features the authentic A01 portrait with natural background cleanly circled.
+- About page features the 3D character portrait properly framed and arranged in high fidelity.
+---
+Task ID: 9
+Agent: antigravity-agent
+Task: Implement user reference landing page design, properly proportioned Swat mountain showcase card, light & dark theme adaptivity, trailing cursor removal, and printable CV route
+
+Work Log:
+- Landing Page Reference Design Implementation:
+  - Refactored home page hero into an executive-tier showcase matching the user's reference mockup.
+  - Structured left content column:
+    - Status pill: "Available for Opportunities" with emerald indicator.
+    - Headline: "Hello, I'm Muhammad Ikram" with vibrant emerald gradient accent.
+    - Subtitle: "Project Based Software Engineer".
+    - Bio paragraph: "I build modern web applications, work with AI & data, and love creating scalable systems. I turn ideas into real products using clean code, smart design and problem-solving skills."
+    - Tech stack chips: 7 branded SVG pills (`Laravel`, `React`, `Next.js`, `Python`, `MySQL`, `AI / ML`, `FastAPI`) in `src/components/portfolio/tech-badges.tsx`.
+    - Action buttons: "View My Projects →" (emerald solid) and "Download CV" (backdrop blur with download icon).
+- Proportioned Mountain Visual Showcase Card:
+  - Resized and properly proportioned the scenic Swat Valley mountain artwork (`public/images/hero/hero-mountains-enhanced.webp`) into a dedicated right-column showcase card (`max-w-[540px]`, `aspect-[16/9.5]`).
+  - Preserved full visibility of the Swat mountain landscape, "Code Build Improve" calligraphy, Muhammad Ikram portrait, and "My Skills" glass card without any text overlap or stretching.
+  - Added rounded corners, subtle emerald border (`border-emerald-500/30`), inner vignette ring, and ambient backlight.
+- Full Light & Dark Theme Adaptivity:
+  - Converted the hero section from hardcoded dark background to theme-aware classes (`bg-background text-foreground`).
+  - Implemented high-contrast text, borders, buttons, and ambient lighting across both Light and Dark themes.
+- Elimination of Trailing Ring / Point Cursor:
+  - Identified the trailing green circle and dot artifact as the custom `GoldCursor` component.
+  - Removed `<GoldCursor />` from `src/components/site-shell.tsx` and removed the outer blur ring from `SiteLogo` in `src/components/portfolio/site-header.tsx`, restoring clean native cursor behavior and eliminating all visual halos.
+- Printable / Downloadable CV Page:
+  - Created print-ready CV route at `src/app/cv/page.tsx` pulling factual profile data (competencies, delivered systems, fellowships, education) with one-click "Print or Save as PDF" functionality.
+  - Connected the hero "Download CV" button to open `/cv`.
+- Quality Assurance:
+  - `npx tsc --noEmit` passed with 0 errors.
+
+Stage Summary:
+- Landing page matches the user's reference design with balanced visual hierarchy and responsive layout.
+- Mountain artwork is properly proportioned and framed in high definition.
+- Seamless light and dark mode support across the entire hero and landing page.
+- All trailing cursor dots/circles and halo artifacts completely removed.
+- Printable CV route live and accessible.

@@ -27,10 +27,7 @@ function StatusBadge({ project }: { project: Project }) {
         onClick={(e) => e.stopPropagation()}
         className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 transition-all duration-200 hover:bg-emerald-500/25 hover:border-emerald-500/60 dark:border-emerald-400/40 dark:text-emerald-400 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
-        <span className="relative flex size-1.5" aria-hidden="true">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-          <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
-        </span>
+        <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
         Live Demo <ExternalLink size={11} aria-hidden="true" />
       </a>
     );
