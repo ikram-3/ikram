@@ -34,7 +34,7 @@ export function AboutPage() {
       {/* ── Portrait + story ───────────────────────────────────────────── */}
       <Section ariaLabel="About Muhammad Ikram">
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12">
-          {/* Portrait card — 3D Persona (A07) properly arranged in studio frame */}
+          {/* Portrait card — Official portrait matching Home showcase */}
           <motion.aside {...enterProps(reduce, 0.05)}>
             <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
               <div className="relative aspect-square w-full overflow-hidden border-b border-border/60 bg-muted/20">
@@ -44,11 +44,12 @@ export function AboutPage() {
                   fill
                   priority
                   sizes="(min-width: 1024px) 420px, 100vw"
-                  className="object-cover object-top transition-transform duration-500 hover:scale-105"
+                  className="object-cover object-center transition-transform duration-500 hover:scale-105"
                 />
-                {/* 3D Persona badge */}
-                <span className="absolute top-3 right-3 z-10 inline-flex items-center rounded-full border border-border/80 bg-background/90 px-2.5 py-1 text-[11px] font-semibold text-foreground shadow-sm backdrop-blur-md">
-                  3D Persona
+                {/* Official Portrait badge */}
+                <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-background/90 px-3 py-1 text-[11px] font-semibold text-foreground shadow-sm backdrop-blur-md">
+                  <span className="size-1.5 rounded-full bg-orange-500" />
+                  Official Portrait
                 </span>
               </div>
               <div className="space-y-3 p-5">
@@ -57,14 +58,14 @@ export function AboutPage() {
                   <p className="text-sm text-muted-foreground">{identity.role}</p>
                 </div>
                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <MapPin size={13} className="shrink-0 text-gold" aria-hidden="true" /> {identity.location}
+                  <MapPin size={13} className="shrink-0 text-orange-500" aria-hidden="true" /> {identity.location}
                 </p>
                 <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                  <GraduationCap size={13} className="shrink-0 text-gold" aria-hidden="true" /> {identity.affiliations}
+                  <GraduationCap size={13} className="shrink-0 text-orange-500" aria-hidden="true" /> {identity.affiliations}
                 </p>
                 <a
                   href={`mailto:${identity.email}`}
-                  className="flex items-center gap-1.5 break-all text-xs font-medium text-gold transition-colors duration-200 hover:text-gold-light focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                  className="flex items-center gap-1.5 break-all text-xs font-medium text-orange-600 dark:text-orange-400 transition-colors duration-200 hover:text-orange-500 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
                 >
                   <Mail size={13} className="shrink-0" aria-hidden="true" /> {identity.email}
                 </a>

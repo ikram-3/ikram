@@ -401,5 +401,37 @@ Stage Summary:
 - Floating dark pill navigation bar deployed matching reference mockup.
 - Warm sunset orange and amber color palette active across the entire site.
 
+---
+Task ID: 14
+Agent: antigravity-agent
+Task: Borderless realistic hero image integration, site-wide avatar and favicon synchronization, and cleanup of unused assets
+
+Work Log:
+- Hero Image Background & Border Removal (`src/views/home-page.tsx`, `public/images/profile/modern-tech-hero-portrait.*`):
+  - Extracted transparent alpha mask for `modern-tech-hero-portrait.png` and `modern-tech-hero-portrait.webp` using flood fill with smooth alpha antialiasing, completely removing the outer solid cream box while preserving the portrait, orange organic backdrop, badges (< /> Clean Code, Web Development / AI / System Design), and "Build Innovate Grow" calligraphy.
+  - Removed `overflow-hidden`, `rounded-3xl`, and container drop-shadow from the hero image showcase in `home-page.tsx` so the artwork blends seamlessly and realistically directly into the website background without any artificial card border.
+- Site-Wide Avatar & Favicon Synchronization:
+  - Extracted clean, centered circular avatar headshot from the modern tech portrait: `avatar-headshot-circle.webp` and `avatar-headshot-circle.png`.
+  - Generated official studio portrait: `avatar-headshot.png`.
+  - Updated `src/profile/identity.ts`:
+    - `avatar`: `/images/profile/avatar-headshot-circle.webp`
+    - `avatarAbout`: `/images/profile/avatar-headshot.png`
+    - `logo`: `/images/profile/avatar-headshot-circle.webp`
+  - Updated `src/components/portfolio/site-header.tsx`: navbar SiteLogo now displays the clean circular headshot within the orange ring.
+  - Updated `src/components/portfolio/site-footer.tsx`: footer avatar now displays the clean circular headshot.
+  - Updated `src/views/about-page.tsx`: replaced legacy 3D character with authentic studio portrait and updated badge to "Official Portrait".
+  - Updated all site favicons and app icons using the new circular headshot: `public/favicon.ico`, `public/favicon-32x32.png`, `public/icon.png`, `public/icon-192.png`, `public/icon-512.png`, `public/apple-icon.png`, `src/app/favicon.ico`, `src/app/icon.png`, and `src/app/apple-icon.png`.
+- Asset Deletion & Cleanup:
+  - Deleted all unused legacy profile assets and temporary tests: `A01-circle-minimal.png`, `A01-portrait-enhanced.png`, `A01-portrait-transparent.png`, `A02-gold-ring.png`, `A03-gradient-pop.png`, `A04-monochrome-ink.png`, `A05-office-bokeh.png`, `A06-flat-vector-transparent.png`, `A06-flat-vector.png`, `A06-logo.png`, `A07-3d-character-transparent.png`, `A07-3d-character.png`, `A08-pixel-art.png`, `ikram-executive-sitting.png`, `ikram-executive-sitting.webp`, `public/images/profile/image.png`, and test files.
+  - Kept only the 5 active, optimized production assets in `public/images/profile/`.
+- Verification:
+  - `npx tsc --noEmit` verified clean with 0 errors.
+
+Stage Summary:
+- Hero graphic now floats borderless and blends realistically into the page canvas.
+- Consistent authentic portrait and avatar active across Home, About, Header, Footer, and Favicon.
+- Unused legacy avatar files deleted.
+
+
 
 

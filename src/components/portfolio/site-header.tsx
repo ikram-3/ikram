@@ -34,12 +34,12 @@ function SiteLogo({ size = 36 }: { size?: number }) {
       style={{ width: size, height: size }}
     >
       <Image
-        src="/images/profile/modern-tech-hero-portrait.webp"
+        src="/images/profile/avatar-headshot-circle.webp"
         alt="Muhammad Ikram"
         width={size}
         height={size}
         priority
-        className="h-full w-full object-cover object-top"
+        className="h-full w-full object-cover"
       />
     </span>
   );

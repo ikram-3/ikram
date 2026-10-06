@@ -232,15 +232,15 @@ export function HomePage() {
                 className="absolute -inset-4 rounded-full bg-gradient-to-tr from-orange-500/25 via-amber-500/15 to-transparent blur-3xl opacity-80 pointer-events-none"
               />
 
-              {/* Hero Image Showcase */}
-              <div className="relative aspect-square w-full overflow-hidden rounded-3xl transition-transform duration-300 hover:scale-[1.01]">
+              {/* Hero Image Artwork - seamless, borderless, blends realistically with background */}
+              <div className="relative aspect-square w-full transition-transform duration-300 hover:scale-[1.01]">
                 <Image
                   src="/images/profile/modern-tech-hero-portrait.webp"
                   alt="Muhammad Ikram — Software Engineer"
                   fill
                   priority
-                  sizes="(min-width: 1024px) 520px, 100vw"
-                  className="object-contain object-center drop-shadow-[0_20px_40px_rgba(0,0,0,0.15)] dark:drop-shadow-[0_25px_50px_rgba(0,0,0,0.6)]"
+                  sizes="(min-width: 1024px) 560px, 100vw"
+                  className="object-contain object-center select-none pointer-events-none"
                 />
               </div>
             </motion.div>
