@@ -114,7 +114,7 @@ export function ProjectDetailPage({ slug }: { slug: string | null }) {
 
           <motion.div {...enterProps(reduce, 0.18, 10)} className="mt-5 flex flex-wrap items-center gap-2.5">
             {live ? (
-              <Button asChild size="lg" className="h-11 rounded-lg bg-gold px-6 font-bold text-charcoal shadow-md shadow-gold/25 transition-all duration-200 hover:scale-[1.02] hover:bg-gold-light active:scale-[0.98]">
+              <Button asChild size="lg" className="h-10 rounded-md bg-primary px-5 font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90">
                 <a href={live} target="_blank" rel="noopener noreferrer">
                   <ExternalLink size={16} aria-hidden="true" /> Open Live Deployment
                 </a>

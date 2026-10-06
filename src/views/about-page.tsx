@@ -88,7 +88,7 @@ export function AboutPage() {
               <Button
                 size="lg"
                 onClick={() => navigate("/projects")}
-                className="h-11 rounded-md bg-primary px-6 font-semibold text-primary-foreground shadow-md transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                className="h-10 rounded-md bg-primary px-6 font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90"
               >
                 See the projects <Rocket size={16} aria-hidden="true" />
               </Button>
@@ -96,7 +96,7 @@ export function AboutPage() {
                 variant="outline"
                 size="lg"
                 onClick={() => navigate("/contact")}
-                className="h-11 rounded-md border-gold/50 px-6 font-semibold text-foreground transition-colors duration-200 hover:bg-gold/10 hover:text-gold"
+                className="h-10 rounded-md border-border px-6 font-semibold text-foreground transition-colors duration-200 hover:bg-muted"
               >
                 Work with me
               </Button>

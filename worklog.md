@@ -303,4 +303,44 @@ Stage Summary:
 - Contact form fully interactive with Google SMTP email dispatching and auto-confirmation.
 - `ikram.is-great.net` completely removed across all code, metadata, and views.
 - Front page hero upgraded with executive sitting portrait showcase.
+---
+Task ID: 11
+Agent: antigravity-agent
+Task: Corporate-minimal redesign across landing page, quotation flow, contact page, and site-wide button/color tokens
+
+Work Log:
+- Design Tokens & Theme Neutralization:
+  - Switched CSS variables in `src/app/globals.css` from green-tinted background surfaces to clean, neutral corporate surfaces (`#FAFAF9` light, `#0E1013` dark) with crisp `#E5E7EB` / `#262A30` borders.
+  - Converted `.text-gradient-gold` and `.text-gradient-emerald` to solid, restrained emerald accent text instead of distracting rainbow gradients.
+  - Simplified shared `PageHero` and `SectionHeading` primitives: removed mesh grids, glow overlays, decorative rules, and pill chips in favor of clean typographic hierarchy.
+- Landing Page Redesign (`src/views/home-page.tsx`):
+  - Hero image updated to studio sitting portrait (`ikram-executive-sitting.webp`) inside a clean 4:5 frame with a soft, grounded floor shadow (no badges, floating pills, or green halos).
+  - Clean typographic layout for headline, intro, and call-to-actions ("View my work", "Request a quote", "Download CV").
+  - Neutral core tech stack pill list without neon gradients.
+  - Factual metric strip cleanly divided across 4 columns tracking verified stats from `identity.ts`.
+  - Services section presented as a clean grid with high-contrast text and direct case study links.
+  - Four-step process breakdown cleanly framed with top border accents.
+  - High-contrast, clean CTA band.
+- Quotation Page Redesign (`src/views/quotation-page.tsx`):
+  - Restructured into a clean 4-step progressive flow: 1. Project Type & Brief → 2. Budget & Timeline → 3. Contact Details → 4. Review & Submit.
+  - Added option cards with radio selection states and step-by-step validation.
+  - Integrated sticky sidebar with live request summary, progress bar, process explanation, and direct contact options.
+  - Connected seamlessly to existing `/api/quotes` endpoint and Zod schema.
+- Contact Page Redesign (`src/views/contact-page.tsx`):
+  - Streamlined direct message form with clean input fields, validation, and real-time submission feedback.
+  - Removed artificial badges and technical SMTP status chips.
+  - Cleaned up contact channels list and two-column FAQ layout.
+- Site-Wide Button Contrast & Cleanup:
+  - Eliminated `bg-gold text-charcoal` low-contrast styling across header, footer, project cards, detail pages, skills, and about pages.
+  - Standardized on accessible `bg-primary text-primary-foreground` and clean outline buttons.
+  - Removed aggressive hover zoom/scale gimmicks.
+- Verification:
+  - `npx tsc --noEmit` passed with 0 errors.
+
+Stage Summary:
+- Entire website converted to a credible, corporate-minimal aesthetic.
+- Landing page features clean studio sitting portrait with realistic floor shadow and restrained emerald accents.
+- Quotation page upgraded to a 4-step progressive builder with live sidebar summary.
+- Contact page polished with clean layout and instant confirmation feedback.
+- All buttons meet WCAG accessibility standards with readable contrast.
 

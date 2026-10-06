@@ -77,14 +77,14 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-gold px-3.5 py-2 text-xs font-bold text-charcoal shadow-lg shadow-gold/30 transition-transform duration-200 hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90"
                 >
                   <ExternalLink size={14} aria-hidden="true" /> Open Live Project
                 </a>
               ) : null}
               <button
                 onClick={open}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-white/30 bg-background/90 px-3.5 py-2 text-xs font-semibold text-foreground shadow-lg backdrop-blur-md transition-transform duration-200 hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-background/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm backdrop-blur-md transition-colors duration-200 hover:bg-background"
               >
                 Case Study <ArrowRight size={14} aria-hidden="true" />
               </button>
@@ -137,7 +137,7 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-gold px-4 py-2 text-xs font-bold text-charcoal shadow-sm shadow-gold/25 transition-all duration-200 hover:bg-gold-light hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
                 <ExternalLink size={14} aria-hidden="true" /> Visit Live Project
               </a>
@@ -145,10 +145,10 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
 
             <button
               onClick={open}
-              className={`inline-flex items-center gap-1.5 rounded-lg border px-3.5 py-2 text-xs font-semibold transition-all duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+              className={`inline-flex items-center gap-1.5 rounded-md border px-3.5 py-1.5 text-xs font-semibold transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
                 live
-                  ? "border-border/80 text-foreground/90 hover:border-gold/50 hover:bg-gold/10 hover:text-gold"
-                  : "bg-gold text-charcoal font-bold hover:bg-gold-light hover:scale-[1.02]"
+                  ? "border-border text-foreground hover:bg-muted"
+                  : "bg-primary text-primary-foreground hover:bg-primary/90"
               }`}
               aria-label={`View case study: ${project.name}`}
             >
@@ -199,14 +199,14 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1 rounded-md bg-gold px-3 py-1.5 text-xs font-bold text-charcoal shadow-md transition-transform duration-200 hover:scale-105 active:scale-95"
+                className="inline-flex items-center gap-1 rounded-md bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90"
               >
                 <ExternalLink size={12} aria-hidden="true" /> Open Live
               </a>
             ) : null}
             <button
               onClick={open}
-              className="inline-flex items-center gap-1 rounded-md border border-white/30 bg-background/90 px-3 py-1.5 text-xs font-semibold text-foreground shadow-md backdrop-blur-md transition-transform duration-200 hover:scale-105 active:scale-95"
+              className="inline-flex items-center gap-1 rounded-md border border-white/20 bg-background/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur-md transition-colors duration-200 hover:bg-background"
             >
               Details <ArrowRight size={12} aria-hidden="true" />
             </button>

@@ -33,7 +33,7 @@ export function SiteFooter() {
             <MapPin size={12} className="text-emerald-500" aria-hidden="true" /> {identity.location}
           </p>
           <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">
-            © {year} Muhammad Ikram. Built end-to-end with Next.js, TypeScript & Tailwind CSS.
+            © {year} Muhammad Ikram.
           </p>
         </div>
 
@@ -41,7 +41,7 @@ export function SiteFooter() {
           {/* Quotation CTA — mirrors the header entry point */}
           <button
             onClick={() => navigate("/quotation")}
-            className="flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-xs font-bold text-charcoal shadow-md transition-all duration-200 hover:scale-[1.03] hover:bg-gold-light active:scale-[0.98]"
+            className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90"
           >
             <ReceiptText size={13} aria-hidden="true" /> Request a quotation
           </button>

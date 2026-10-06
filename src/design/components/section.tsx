@@ -31,14 +31,13 @@ interface SectionHeadingProps {
 export function SectionHeading({ id, eyebrow, title, description, className }: SectionHeadingProps) {
   return (
     <Reveal className={`mb-10 max-w-2xl md:mb-12 ${className ?? ""}`}>
-      <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-gold">{eyebrow}</p>
-      <h2 id={id} className="text-2xl font-bold tracking-tight text-foreground md:text-4xl">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">{eyebrow}</p>
+      <h2 id={id} className="text-2xl font-bold tracking-tight text-foreground md:text-[2.1rem] md:leading-tight">
         {title}
       </h2>
       {description ? (
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground md:text-base">{description}</p>
       ) : null}
-      <div className="mt-5 h-px w-16 bg-gold/60" aria-hidden="true" />
     </Reveal>
   );
 }

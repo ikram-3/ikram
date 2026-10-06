@@ -29,14 +29,8 @@ export function PageHero({ eyebrow, title, description, breadcrumb, children }: 
   const navigate = useRouterStore((s) => s.navigate);
 
   return (
-    <section aria-labelledby="page-hero-title" className="relative overflow-hidden">
-      {/* Ambient brand backdrop */}
-      <div className="absolute inset-0 -z-10" aria-hidden="true">
-        <div className="absolute inset-0 bg-grid-fade opacity-70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
-      </div>
-
-      <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 md:pb-14 md:pt-16">
+    <section aria-labelledby="page-hero-title" className="relative border-b border-border bg-card/40">
+      <div className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 md:pb-14 md:pt-14">
         {breadcrumb && breadcrumb.length > 0 ? (
           <motion.nav
             {...enterProps(reduce, 0, 8)}
@@ -70,7 +64,7 @@ export function PageHero({ eyebrow, title, description, breadcrumb, children }: 
 
         <motion.p
           {...enterProps(reduce, 0.02, 10)}
-          className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3 py-1 text-xs font-medium tracking-wide text-gold"
+          className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold"
         >
           {eyebrow}
         </motion.p>
@@ -92,7 +86,6 @@ export function PageHero({ eyebrow, title, description, breadcrumb, children }: 
           </motion.p>
         ) : null}
 
-        <motion.div {...enterProps(reduce, 0.14, 10)} className="mt-6 h-px w-16 bg-gold/60" aria-hidden="true" />
 
         {children ? <motion.div {...enterProps(reduce, 0.18, 10)} className="mt-8">{children}</motion.div> : null}
       </div>

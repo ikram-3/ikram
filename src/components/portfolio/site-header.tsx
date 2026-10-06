@@ -222,7 +222,7 @@ export function SiteHeader() {
             size="sm"
             onClick={() => go("/quotation")}
             aria-label="Request a project quotation"
-            className="hidden h-9 rounded-md bg-gold px-4 text-sm font-bold text-charcoal shadow-md shadow-gold/25 transition-all duration-200 hover:scale-[1.03] hover:bg-gold-light active:scale-[0.98] md:inline-flex"
+            className="hidden h-9 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 md:inline-flex"
           >
             <ReceiptText size={15} aria-hidden="true" /> Get a Quote
           </Button>
@@ -261,7 +261,7 @@ export function SiteHeader() {
                 {/* Quotation CTA first on mobile */}
                 <button
                   onClick={() => go("/quotation")}
-                  className={`mb-3 flex w-full items-center justify-center gap-2 rounded-md bg-gold px-4 py-3 text-sm font-bold text-charcoal shadow-md transition-all duration-200 hover:bg-gold-light ${
+                  className={`mb-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 ${
                     isActivePage(page, "/quotation") ? "ring-2 ring-gold ring-offset-2" : ""
                   }`}
                 >
