@@ -343,4 +343,26 @@ Stage Summary:
 - Quotation page upgraded to a 4-step progressive builder with live sidebar summary.
 - Contact page polished with clean layout and instant confirmation feedback.
 - All buttons meet WCAG accessibility standards with readable contrast.
+---
+Task ID: 12
+Agent: antigravity-agent
+Task: Corporate-minimal redesign for login and register authentication pages
+
+Work Log:
+- Auth Shell Redesign (`src/views/auth-page.tsx`):
+  - Removed outdated gold gradient backgrounds and rainbow text gradient classes.
+  - Aligned the layout with the corporate-minimal aesthetic: clean bordered cards (`border-border bg-card shadow-sm`), structured two-column grid (`[1fr_340px]`), and refined typographic hierarchy.
+  - Upgraded the benefits sidebar with clear factual value props (quotation tracking, pre-filled forms, real-time status updates) and clean icon badges.
+- Login & Register Form Polish:
+  - Preserved the fixed `PasswordInput` structure with internal `Lock` positioning and non-overlapping `pl-9 pr-10` clearance.
+  - Standardized primary action buttons to accessible `bg-primary text-primary-foreground` with subtle hover states.
+  - Refined error alerts to clean subtle banners with clear icons.
+  - Polished the `AlreadyAuthed` session state card with clean neutral borders and primary navigation buttons.
+- Verification:
+  - `npx tsc --noEmit` passed with 0 errors.
+
+Stage Summary:
+- Login and Register authentication pages fully match the corporate-minimal design system.
+- Accessible, clean, and distraction-free experience for client quotation tracking.
+
 

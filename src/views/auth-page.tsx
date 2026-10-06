@@ -8,7 +8,21 @@ import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { z } from "zod";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { AlertCircle, ArrowRight, CheckCircle2, Eye, EyeOff, Lock, LogIn, Mail, ShieldCheck, User, UserPlus } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle2,
+  Eye,
+  EyeOff,
+  FolderGit2,
+  Lock,
+  LogIn,
+  Mail,
+  ReceiptText,
+  ShieldCheck,
+  User,
+  UserPlus,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,73 +53,96 @@ function AuthShell({
   const perks =
     kind === "register"
       ? [
-          { Icon: ShieldCheck, text: "Track every quotation request in one place" },
-          { Icon: User, text: "Your details pre-filled on every new quote" },
-          { Icon: CheckCircle2, text: "Status updates as your request moves forward" },
+          { Icon: ShieldCheck, title: "Track Quotations", text: "Follow every quotation from submission to scoped and closed in one place." },
+          { Icon: User, title: "Pre-filled Scope Forms", text: "Your contact details automatically populate any future quotation request." },
+          { Icon: CheckCircle2, title: "Real-time Updates", text: "Receive timeline and milestone notifications directly on your dashboard." },
         ]
       : [
-          { Icon: ShieldCheck, text: "Pick up where you left off — requests and statuses" },
-          { Icon: User, text: "One account across quotations and updates" },
-          { Icon: CheckCircle2, text: "Admins land directly on the request dashboard" },
+          { Icon: FolderGit2, title: "Quotation History", text: "Access all your previous inquiries, scopes, and project proposals." },
+          { Icon: ReceiptText, title: "Direct Proposal Review", text: "Review itemized deliverables, budgets, and milestones." },
+          { Icon: ShieldCheck, title: "Secure Account", text: "Protected by industry-standard credential hashing and encrypted sessions." },
         ];
 
   return (
     <>
       <PageHero
-        eyebrow={kind === "register" ? "Create Account" : "Sign In"}
+        eyebrow={kind === "register" ? "Create Account" : "Client Portal"}
         title={title}
         description={description}
         breadcrumb={[{ label: "Home", path: "/" }, { label: kind === "register" ? "Register" : "Login" }]}
       />
 
-      <Section ariaLabel={kind === "register" ? "Registration form" : "Sign in form"} className="pt-0 md:pt-0">
-        <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12">
-          <motion.div {...enterProps(reduce, 0.05)} className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+      <Section ariaLabel={kind === "register" ? "Registration form" : "Sign in form"}>
+        <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-[1fr_340px] lg:gap-10">
+          {/* Main Form Card */}
+          <motion.div
+            {...enterProps(reduce, 0.05)}
+            className="rounded-xl border border-border bg-card p-6 shadow-sm md:p-8"
+          >
+            <div className="mb-6 border-b border-border pb-4">
+              <h2 className="text-lg font-semibold tracking-tight text-foreground">
+                {kind === "register" ? "Create your client account" : "Sign in to your account"}
+              </h2>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {kind === "register"
+                  ? "Takes less than a minute. Guest submissions can also be linked later."
+                  : "Enter your registered credentials to access your dashboard."}
+              </p>
+            </div>
+
             {children}
           </motion.div>
 
-          <motion.div
+          {/* Sidebar / Context Card */}
+          <motion.aside
             {...enterProps(reduce, 0.1)}
-            className="flex flex-col justify-between gap-8 rounded-2xl border border-gold/40 bg-gradient-to-br from-gold/15 via-card to-card p-6 shadow-sm md:p-8"
+            className="space-y-5 lg:self-start"
+            aria-label="Account benefits"
           >
-            <div>
-              <h2 className="text-lg font-bold tracking-tight md:text-xl">
-                Why <span className="text-gradient-gold">register?</span>
-              </h2>
-              <ul className="mt-5 space-y-4">
-                {perks.map(({ Icon, text }) => (
+            <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+              <h3 className="text-sm font-semibold tracking-tight text-foreground">
+                {kind === "register" ? "Why create an account?" : "Client Portal Features"}
+              </h3>
+              <ul className="mt-4 space-y-4">
+                {perks.map(({ Icon, title: pTitle, text }) => (
                   <li key={text} className="flex items-start gap-3">
-                    <span className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-md bg-gold/10 text-gold" aria-hidden="true">
-                      <Icon size={15} />
+                    <span
+                      className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-md border border-border bg-muted/60 text-gold"
+                      aria-hidden="true"
+                    >
+                      <Icon size={14} />
                     </span>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{text}</p>
+                    <div>
+                      <p className="text-xs font-semibold text-foreground">{pTitle}</p>
+                      <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{text}</p>
+                    </div>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="rounded-xl border border-border bg-background/60 p-4">
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                Prefer email? Reach out directly at{" "}
+            <div className="rounded-xl border border-border bg-muted/40 p-5">
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                Prefer direct communication? You can always email{" "}
                 <a
                   href={`mailto:${identity.email}`}
-                  className="font-medium text-gold transition-colors duration-200 hover:text-gold-light"
+                  className="font-medium text-foreground hover:text-gold hover:underline"
                 >
                   {identity.email}
                 </a>{" "}
-                — but a registered quote is tracked end-to-end.
+                with your requirements.
               </p>
             </div>
-          </motion.div>
+          </motion.aside>
         </div>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground">
+        <p className="mt-8 text-center text-xs text-muted-foreground">
           {switchTo.prompt}{" "}
           <button
             onClick={() => navigate(switchTo.path)}
-            className="font-semibold text-gold underline-offset-4 transition-colors duration-200 hover:text-gold-light hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="font-semibold text-gold transition-colors duration-200 hover:text-gold-light hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
-            {switchTo.label} <ArrowRight size={13} className="inline" aria-hidden="true" />
+            {switchTo.label} <ArrowRight size={12} className="inline ml-0.5" aria-hidden="true" />
           </button>
         </p>
       </Section>
@@ -155,7 +192,7 @@ function PasswordInput({
         type="button"
         onClick={() => setShow((s) => !s)}
         aria-label={show ? "Hide password" : "Show password"}
-        className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-sm p-1 text-muted-foreground transition-colors duration-200 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-sm p-1 text-muted-foreground transition-colors duration-200 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
       >
         {show ? <EyeOff size={15} aria-hidden="true" /> : <Eye size={15} aria-hidden="true" />}
       </button>
@@ -165,7 +202,6 @@ function PasswordInput({
 
 /* ── Register page ───────────────────────────────────────────────────────── */
 
-// Local Zod schema kept beside the form (mirrors the API boundary).
 const registerSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(80),
   email: z.string().trim().toLowerCase().email("Enter a valid email address"),
@@ -177,7 +213,6 @@ const registerSchema = z.object({
 });
 
 export function RegisterPage() {
-  const reduce = useReducedMotion();
   const navigate = useRouterStore((s) => s.navigate);
   const { status } = useSession();
 
@@ -237,15 +272,11 @@ export function RegisterPage() {
   return (
     <AuthShell
       kind="register"
-      title={
-        <>
-          Create your <span className="text-gradient-gold">account</span>
-        </>
-      }
-      description="Register to submit quotation requests and follow each one from 'new' to 'quoted'."
+      title="Create your account"
+      description="Register to submit quotation requests and track project scopes from review to delivery."
       switchTo={{ prompt: "Already have an account?", label: "Sign in", path: "/login" }}
     >
-      <form onSubmit={onSubmit} noValidate className="space-y-5">
+      <form onSubmit={onSubmit} noValidate className="space-y-4">
         <div>
           <Label htmlFor="register-name">Full name</Label>
           <div className="relative mt-1.5">
@@ -256,16 +287,17 @@ export function RegisterPage() {
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
               required
-              placeholder="Your name"
+              placeholder="e.g. Alex Morgan"
               aria-invalid={Boolean(fieldErrors.name)}
               className="pl-9"
+              disabled={submitting}
             />
           </div>
           <FieldError message={fieldErrors.name} />
         </div>
 
         <div>
-          <Label htmlFor="register-email">Email</Label>
+          <Label htmlFor="register-email">Email address</Label>
           <div className="relative mt-1.5">
             <Mail size={15} aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -275,9 +307,10 @@ export function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               required
-              placeholder="you@example.com"
+              placeholder="you@company.com"
               aria-invalid={Boolean(fieldErrors.email)}
               className="pl-9"
+              disabled={submitting}
             />
           </div>
           <FieldError message={fieldErrors.email} />
@@ -311,20 +344,21 @@ export function RegisterPage() {
           ) : null}
         </AnimatePresence>
 
-        <Button
-          type="submit"
-          disabled={submitting}
-          size="lg"
-          className="h-11 w-full rounded-md bg-primary font-semibold text-primary-foreground shadow-md transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
-        >
-          {submitting ? (
-            "Creating account…"
-          ) : (
-            <>
-              <UserPlus size={16} aria-hidden="true" /> Create account
-            </>
-          )}
-        </Button>
+        <div className="pt-2">
+          <Button
+            type="submit"
+            disabled={submitting}
+            className="h-10 w-full rounded-md bg-primary font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60"
+          >
+            {submitting ? (
+              "Creating account…"
+            ) : (
+              <>
+                <UserPlus size={15} className="mr-1.5" aria-hidden="true" /> Create account
+              </>
+            )}
+          </Button>
+        </div>
       </form>
     </AuthShell>
   );
@@ -382,17 +416,13 @@ export function LoginPage() {
   return (
     <AuthShell
       kind="login"
-      title={
-        <>
-          Welcome <span className="text-gradient-gold">back</span>
-        </>
-      }
-      description="Sign in to submit quotation requests and track the ones already in motion."
+      title="Welcome back"
+      description="Sign in to submit quotation requests and track project scopes in motion."
       switchTo={{ prompt: "New here?", label: "Create an account", path: "/register" }}
     >
-      <form onSubmit={onSubmit} noValidate className="space-y-5">
+      <form onSubmit={onSubmit} noValidate className="space-y-4">
         <div>
-          <Label htmlFor="login-email">Email</Label>
+          <Label htmlFor="login-email">Email address</Label>
           <div className="relative mt-1.5">
             <Mail size={15} aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <Input
@@ -402,9 +432,10 @@ export function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               required
-              placeholder="you@example.com"
+              placeholder="you@company.com"
               aria-invalid={Boolean(fieldErrors.email)}
               className="pl-9"
+              disabled={submitting}
             />
           </div>
           <FieldError message={fieldErrors.email} />
@@ -437,24 +468,25 @@ export function LoginPage() {
           ) : null}
         </AnimatePresence>
 
-        <Button
-          type="submit"
-          disabled={submitting}
-          size="lg"
-          className="h-11 w-full rounded-md bg-primary font-semibold text-primary-foreground shadow-md transition-transform duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
-        >
-          {submitting ? (
-            "Signing in…"
-          ) : (
-            <>
-              <LogIn size={16} aria-hidden="true" /> Sign in
-            </>
-          )}
-        </Button>
+        <div className="pt-2">
+          <Button
+            type="submit"
+            disabled={submitting}
+            className="h-10 w-full rounded-md bg-primary font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 disabled:opacity-60"
+          >
+            {submitting ? (
+              "Signing in…"
+            ) : (
+              <>
+                <LogIn size={15} className="mr-1.5" aria-hidden="true" /> Sign in
+              </>
+            )}
+          </Button>
+        </div>
 
-        <p className="text-center text-xs text-muted-foreground">
+        <p className="pt-2 text-center text-xs text-muted-foreground">
           New here? Register first —{" "}
-          <Link href="#/register" className="font-medium text-gold hover:text-gold-light">
+          <Link href="#/register" className="font-semibold text-gold hover:underline">
             it takes a minute
           </Link>
           .
@@ -469,27 +501,30 @@ export function LoginPage() {
 function AlreadyAuthed({ kind }: { kind: "register" | "login" }) {
   const navigate = useRouterStore((s) => s.navigate);
   return (
-    <Section ariaLabel="Already signed in" className="pt-0 md:pt-0">
-      <div className="mx-auto max-w-md rounded-2xl border border-gold/40 bg-gradient-to-br from-gold/15 via-card to-card p-8 text-center shadow-sm">
-        <span className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-gold/10 text-gold" aria-hidden="true">
-          <CheckCircle2 size={22} />
+    <Section ariaLabel="Already signed in">
+      <div className="mx-auto max-w-md rounded-xl border border-border bg-card p-8 text-center shadow-sm">
+        <span className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-accent text-gold" aria-hidden="true">
+          <CheckCircle2 size={24} />
         </span>
-        <h2 className="text-lg font-bold tracking-tight">You&apos;re already signed in</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <h2 className="text-lg font-bold tracking-tight text-foreground">You&apos;re already signed in</h2>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
           {kind === "register"
-            ? "This browser already has an active account — head to your dashboard or start a new quotation."
-            : "No need to sign in again — your dashboard is one click away."}
+            ? "Your account is active — head to your dashboard or submit a new project quotation."
+            : "No need to sign in again — your dashboard is ready."}
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Button onClick={() => navigate("/account")} className="h-10 rounded-md bg-primary font-semibold text-primary-foreground shadow-md">
+          <Button
+            onClick={() => navigate("/account")}
+            className="h-10 rounded-md bg-primary px-5 font-semibold text-primary-foreground shadow-sm hover:bg-primary/90"
+          >
             My account
           </Button>
           <Button
             variant="outline"
             onClick={() => navigate("/quotation")}
-            className="h-10 rounded-md border-gold/50 font-semibold text-foreground hover:bg-gold/10 hover:text-gold"
+            className="h-10 rounded-md border-border px-5 font-semibold text-foreground hover:bg-muted"
           >
-            Get a quote
+            Request a quote
           </Button>
         </div>
       </div>
