@@ -5,7 +5,7 @@
 export interface Socials {
   linkedin: string;
   github: string;
-  website: string;
+  website?: string;
 }
 
 export const identity = {
@@ -18,7 +18,6 @@ export const identity = {
   socials: {
     linkedin: "https://linkedin.com/in/ikramds",
     github: "https://github.com/ikram-3",
-    website: "https://ikram.is-great.net",
   } satisfies Socials,
   /** Affiliation line shown under portrait — both facts from PERSONAL_PROFILE.md. */
   affiliations: "KPITB Generative AI Fellow · University of Swat",

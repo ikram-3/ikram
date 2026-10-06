@@ -71,7 +71,6 @@ export function SiteFooter() {
           {[
             { href: identity.socials.github, label: "GitHub", Icon: Github },
             { href: identity.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
-            { href: identity.socials.website, label: "Website", Icon: Globe },
             { href: `mailto:${identity.email}`, label: "Email", Icon: Mail },
             { href: `tel:${identity.phone.replace(/-/g, "")}`, label: `Phone ${identity.phone}`, Icon: Phone },
           ].map(({ href, label, Icon }) => (

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ikram.is-great.net"),
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "http://localhost:3000"),
   title: "Muhammad Ikram — Software Engineer · Full-Stack × Applied AI × Automation",
   description:
     "Software Engineer building production AI agents & complete business platforms — RAG chatbots with citations, POS, CMS, hospital & ERP systems. Python · Next.js · FastAPI · Laravel. KPITB Generative AI Fellow.",

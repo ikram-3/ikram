@@ -173,28 +173,44 @@ export function HomePage() {
               </motion.div>
             </div>
 
-            {/* Right Column: Featured Visual Showcase Card (Crisp, properly framed, never stretched) */}
+            {/* Right Column: Executive Portrait Showcase (image.png transparent cutout) */}
             <motion.div
               {...enterProps(reduce, 0.15)}
-              className="relative mx-auto w-full max-w-[520px] lg:max-w-none flex items-center justify-center"
+              className="relative mx-auto flex w-full max-w-[420px] lg:max-w-[460px] items-center justify-center"
             >
               {/* Subtle ambient emerald backlight */}
               <div
                 aria-hidden="true"
-                className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-emerald-500/20 via-transparent to-emerald-500/10 blur-xl opacity-70 pointer-events-none"
+                className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-emerald-500/25 via-emerald-400/10 to-transparent blur-2xl opacity-70 pointer-events-none"
               />
 
               {/* Framed Graphic Showcase Card */}
-              <div className="relative aspect-[16/9.5] w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-emerald-500/30 bg-card shadow-xl shadow-emerald-950/15 transition-all duration-300 hover:scale-[1.01] hover:shadow-emerald-500/20">
+              <div className="relative aspect-[3/3.6] w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-emerald-500/30 bg-gradient-to-b from-card/90 via-card/50 to-emerald-950/20 shadow-2xl shadow-emerald-950/25 transition-all duration-300 hover:scale-[1.01] hover:shadow-emerald-500/20 flex items-end justify-center pt-6">
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(16,185,129,0.12),transparent_70%)]"
+                />
+
                 <Image
-                  src="/images/hero/hero-mountains-enhanced.webp"
-                  alt="Muhammad Ikram in Swat Valley"
+                  src="/images/profile/image.png"
+                  alt="Muhammad Ikram — Software Engineer"
                   fill
                   priority
-                  sizes="(min-width: 1024px) 540px, 100vw"
-                  className="object-cover object-center"
+                  sizes="(min-width: 1024px) 460px, 100vw"
+                  className="object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)] transition-transform duration-300 hover:scale-[1.02]"
                 />
-                <div className="pointer-events-none absolute inset-0 rounded-2xl sm:rounded-3xl ring-1 ring-inset ring-black/10 dark:ring-white/10" />
+
+                {/* Bottom subtle edge blend */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-card/60 to-transparent" />
+
+                {/* Floating identity badge */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-xl border border-emerald-500/30 bg-background/85 px-3.5 py-2 backdrop-blur-md shadow-lg">
+                  <div className="flex items-center gap-2">
+                    <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-xs font-semibold text-foreground">Muhammad Ikram</span>
+                  </div>
+                  <span className="text-[11px] font-medium text-emerald-400">Software Engineer</span>
+                </div>
               </div>
             </motion.div>
           </div>

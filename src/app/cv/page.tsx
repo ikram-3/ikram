@@ -54,8 +54,8 @@ export default function CvPage() {
               </p>
               <p className="flex items-center gap-2">
                 <Globe size={14} className="text-emerald-400 print:text-emerald-700" />
-                <a href={identity.socials.website} target="_blank" rel="noreferrer" className="hover:underline">
-                  {identity.socials.website}
+                <a href={identity.socials.linkedin} target="_blank" rel="noreferrer" className="hover:underline">
+                  linkedin.com/in/ikramds
                 </a>
               </p>
             </div>

@@ -136,6 +136,11 @@ function PasswordInput({
   const [show, setShow] = useState(false);
   return (
     <div className="relative">
+      <Lock
+        size={15}
+        aria-hidden="true"
+        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground z-10"
+      />
       <Input
         id={id}
         type={show ? "text" : "password"}
@@ -144,7 +149,7 @@ function PasswordInput({
         autoComplete={autoComplete}
         required
         placeholder={autoComplete === "new-password" ? "At least 8 characters" : "Your password"}
-        className="pr-10"
+        className="pl-9 pr-10"
       />
       <button
         type="button"
@@ -280,8 +285,7 @@ export function RegisterPage() {
 
         <div>
           <Label htmlFor="register-password">Password</Label>
-          <div className="relative mt-1.5">
-            <Lock size={15} aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <div className="mt-1.5">
             <PasswordInput
               value={password}
               onChange={setPassword}
@@ -408,8 +412,7 @@ export function LoginPage() {
 
         <div>
           <Label htmlFor="login-password">Password</Label>
-          <div className="relative mt-1.5">
-            <Lock size={15} aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <div className="mt-1.5">
             <PasswordInput
               value={password}
               onChange={setPassword}

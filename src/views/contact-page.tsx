@@ -1,16 +1,24 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import {
+  AlertCircle,
   ArrowUpRight,
-  Globe,
+  CheckCircle2,
+  FileText,
   Github,
   Linkedin,
+  Loader2,
   Mail,
   MapPin,
+  MessageSquare,
   Phone,
   ReceiptText,
+  Send,
+  Sparkles,
+  User,
 } from "lucide-react";
 import {
   Accordion,
@@ -19,6 +27,9 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { enterProps, PageHero, Section, SectionHeading } from "@/design";
 import { identity } from "@/profile";
 import { useRouterStore } from "@/store/router";
@@ -39,11 +50,11 @@ const FAQ = [
   },
   {
     q: "Can you deploy as well as build?",
-    a: "Yes — four systems are live right now, and the rest of the registry is packaged for one-click Docker/Vercel deployment. Handover includes the repository and a walkthrough.",
+    a: "Yes — systems are packaged for one-click Docker and Vercel deployment. Handover includes the repository, environment documentation, and a personal walkthrough.",
   },
   {
     q: "How do I share project details safely?",
-    a: "Send the outline through the quote form; anything sensitive — credentials, data samples, private specs — moves over email or a call once the engagement starts.",
+    a: "Send the high-level scope through this contact form or the quote form; anything sensitive — credentials, proprietary datasets, or private API keys — moves over secure email or a direct call once the NDA/engagement begins.",
   },
 ] as const;
 
@@ -51,18 +62,67 @@ export function ContactPage() {
   const reduce = useReducedMotion();
   const navigate = useRouterStore((s) => s.navigate);
 
+  // Form states
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !message.trim()) return;
+
+    setStatus("submitting");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          subject: subject.trim() || undefined,
+          message: message.trim(),
+        }),
+      });
+
+      const json = await res.json();
+
+      if (!res.ok || !json.success) {
+        throw new Error(json.error?.message || "Failed to send message. Please try again.");
+      }
+
+      setStatus("success");
+      setName("");
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (err: unknown) {
+      console.error("Contact submit error:", err);
+      setStatus("error");
+      setErrorMessage(
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred while sending your message. Please reach out directly via email."
+      );
+    }
+  };
+
   const channels = [
     {
       Icon: Mail,
-      label: "Email",
+      label: "Direct Email",
       value: identity.email,
       href: `mailto:${identity.email}`,
       external: false,
     },
     {
       Icon: Phone,
-      label: "Phone",
-      value: identity.phone,
+      label: "Phone / WhatsApp",
+      value: "+92 349 9934605",
       href: `tel:${identity.phone.replace(/-/g, "")}`,
       external: false,
     },
@@ -81,13 +141,6 @@ export function ContactPage() {
       external: true,
     },
     {
-      Icon: Globe,
-      label: "Website",
-      value: "ikram.is-great.net",
-      href: identity.socials.website,
-      external: true,
-    },
-    {
       Icon: MapPin,
       label: "Location",
       value: identity.location,
@@ -99,107 +152,282 @@ export function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Contact"
+        eyebrow="Get In Touch"
         title={
           <>
-            Have a system that needs building <span className="text-gradient-gold">end-to-end?</span>
+            Let&apos;s build something <span className="text-gradient-gold">production-grade</span>.
           </>
         }
-        description="One developer, entire product: frontend, backend, payments, deployment. Let's talk."
+        description="Have a system that needs building end-to-end? Drop a message here to receive a prompt reply and an instant email confirmation."
         breadcrumb={[{ label: "Home", path: "/" }, { label: "Contact" }]}
       />
 
-      <Section ariaLabel="Contact channels">
-        <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-          {/* CTA card — includes user-supplied avatar chip (A01), Identity Lock honored */}
+      <Section ariaLabel="Contact form and channels">
+        <div className="grid gap-8 lg:grid-cols-12">
+          {/* Contact Form Column (7 cols) */}
           <motion.div
             {...enterProps(reduce, 0.05)}
-            className="flex flex-col justify-center rounded-xl border border-gold/40 bg-gradient-to-br from-gold/15 via-card to-card p-6 shadow-sm md:p-8"
+            className="rounded-2xl border border-border/80 bg-card/90 p-6 shadow-sm backdrop-blur-sm md:p-8 lg:col-span-7"
           >
-            <div className="mb-5 flex items-center gap-3.5">
-              <span className="relative block size-14 shrink-0 overflow-hidden rounded-full ring-2 ring-emerald-500/70 shadow-lg shadow-emerald-500/20 bg-background/50">
-                <Image
-                  src="/logo.png"
-                  alt={identity.name}
-                  fill
-                  sizes="56px"
-                  className="object-cover"
-                />
-              </span>
+            <div className="mb-6 flex items-center justify-between border-b border-border/60 pb-4">
               <div>
-                <p className="text-sm font-bold">{identity.name}</p>
-                <p className="text-xs text-muted-foreground">{identity.role} · {identity.location}</p>
+                <h2 className="text-lg font-bold tracking-tight text-foreground md:text-xl">
+                  Send a Direct Message
+                </h2>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Delivered directly to Muhammad Ikram with an automated copy to your inbox.
+                </p>
               </div>
+              <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
+                <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                SMTP Online
+              </span>
             </div>
-            <h2 className="text-xl font-bold tracking-tight md:text-2xl">
-              Let&apos;s build something <span className="text-gradient-gold">production-grade</span>.
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Full-stack platforms, grounded AI agents, or automation that removes repetitive work — shipped
-              end-to-end and deployable in one click.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="h-11 rounded-md bg-gold px-6 font-bold text-charcoal shadow-md shadow-gold/25 transition-transform duration-200 hover:scale-[1.02] hover:bg-gold-light active:scale-[0.98]"
+
+            {status === "success" ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex flex-col items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-8 text-center"
               >
-                <a href={`mailto:${identity.email}?subject=Project%20inquiry`}>
-                  <Mail size={16} aria-hidden="true" /> Email me
-                </a>
-              </Button>
-              <Button
-                size="lg"
-                onClick={() => navigate("/quotation")}
-                className="h-11 rounded-md bg-primary px-6 font-semibold text-primary-foreground shadow-md transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
-              >
-                <ReceiptText size={16} aria-hidden="true" /> Get a quote
-              </Button>
-            </div>
+                <div className="grid size-14 place-items-center rounded-full bg-emerald-500/20 text-emerald-400 shadow-inner">
+                  <CheckCircle2 size={32} />
+                </div>
+                <h3 className="mt-4 text-lg font-bold text-foreground">Message Sent Successfully!</h3>
+                <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                  Thank you for reaching out. A confirmation email has been dispatched to your inbox. Muhammad Ikram will review your details and respond within 24 hours.
+                </p>
+                <Button
+                  onClick={() => setStatus("idle")}
+                  variant="outline"
+                  className="mt-6 border-emerald-500/40 text-emerald-400 hover:bg-emerald-500/10"
+                >
+                  Send Another Message
+                </Button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} noValidate className="space-y-4">
+                {status === "error" ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-start gap-3 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-xs font-medium text-destructive"
+                  >
+                    <AlertCircle size={16} className="shrink-0 mt-0.5" />
+                    <p>{errorMessage}</p>
+                  </motion.div>
+                ) : null}
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <Label htmlFor="contact-name" className="text-xs font-medium text-foreground">
+                      Your Name <span className="text-destructive">*</span>
+                    </Label>
+                    <div className="relative mt-1.5">
+                      <User
+                        size={15}
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                      />
+                      <Input
+                        id="contact-name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        placeholder="e.g. Alex Morgan"
+                        className="pl-9"
+                        disabled={status === "submitting"}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="contact-email" className="text-xs font-medium text-foreground">
+                      Email Address <span className="text-destructive">*</span>
+                    </Label>
+                    <div className="relative mt-1.5">
+                      <Mail
+                        size={15}
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                      />
+                      <Input
+                        id="contact-email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        placeholder="you@company.com"
+                        className="pl-9"
+                        disabled={status === "submitting"}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="contact-subject" className="text-xs font-medium text-foreground">
+                    Subject / Topic (Optional)
+                  </Label>
+                  <div className="relative mt-1.5">
+                    <FileText
+                      size={15}
+                      className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                    />
+                    <Input
+                      id="contact-subject"
+                      value={subject}
+                      onChange={(e) => setSubject(e.target.value)}
+                      placeholder="e.g. AI Integration / Full-Stack System Scope"
+                      className="pl-9"
+                      disabled={status === "submitting"}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="contact-message" className="text-xs font-medium text-foreground">
+                    Project Brief or Message <span className="text-destructive">*</span>
+                  </Label>
+                  <div className="relative mt-1.5">
+                    <MessageSquare
+                      size={15}
+                      className="pointer-events-none absolute left-3 top-3 text-muted-foreground"
+                    />
+                    <Textarea
+                      id="contact-message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      required
+                      rows={5}
+                      placeholder="Describe your project, timeline, deliverables, or questions in detail…"
+                      className="pl-9 resize-y min-h-[120px]"
+                      disabled={status === "submitting"}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                  <p className="text-[11px] text-muted-foreground text-center sm:text-left">
+                    Protected by secure TLS Gmail SMTP relay.
+                  </p>
+                  <Button
+                    type="submit"
+                    disabled={status === "submitting" || !name.trim() || !email.trim() || !message.trim()}
+                    className="h-11 w-full sm:w-auto px-8 bg-gold hover:bg-gold-light text-charcoal font-bold shadow-md shadow-gold/20 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                  >
+                    {status === "submitting" ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin mr-2" />
+                        Sending Message…
+                      </>
+                    ) : (
+                      <>
+                        <Send size={16} className="mr-2" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            )}
           </motion.div>
 
-          <motion.ul
-            {...enterProps(reduce, 0.1)}
-            className="grid content-start gap-3 sm:grid-cols-2"
-            aria-label="Contact channels"
-          >
-            {channels.map(({ Icon, label, value, href, external }) => {
-              const content = (
-                <>
-                  <span className="grid size-9 shrink-0 place-items-center rounded-md bg-gold/10 text-gold" aria-hidden="true">
-                    <Icon size={17} />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                      {label}
-                    </span>
-                    <span className="block truncate text-sm font-medium text-foreground">{value}</span>
-                  </span>
-                  {external ? (
-                    <ArrowUpRight size={14} className="ml-auto shrink-0 text-muted-foreground/60" aria-hidden="true" />
-                  ) : null}
-                </>
-              );
-              return (
-                <li key={label}>
-                  {href ? (
-                    <a
-                      href={href}
-                      target={external ? "_blank" : undefined}
-                      rel={external ? "noopener noreferrer" : undefined}
-                      className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-gold/40 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+          {/* Identity & Direct Channels Column (5 cols) */}
+          <div className="space-y-6 lg:col-span-5">
+            {/* Quick Profile Card */}
+            <motion.div
+              {...enterProps(reduce, 0.08)}
+              className="rounded-2xl border border-gold/40 bg-gradient-to-br from-gold/15 via-card to-card p-6 shadow-sm"
+            >
+              <div className="flex items-center gap-4">
+                <span className="relative block size-14 shrink-0 overflow-hidden rounded-full ring-2 ring-emerald-500/70 shadow-lg shadow-emerald-500/20 bg-background/50">
+                  <Image
+                    src="/logo.png"
+                    alt={identity.name}
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
+                </span>
+                <div>
+                  <h3 className="text-base font-bold text-foreground">{identity.name}</h3>
+                  <p className="text-xs text-muted-foreground">{identity.role}</p>
+                  <p className="text-[11px] text-emerald-400 font-medium mt-0.5 flex items-center gap-1">
+                    <Sparkles size={11} /> Open for new projects & contracts
+                  </p>
+                </div>
+              </div>
+
+              <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                One developer for your entire system: modern web frontends, high-performance backends, AI agents with RAG, database architectures, and automated cloud deployments.
+              </p>
+
+              <div className="mt-5 pt-4 border-t border-border/60 flex items-center justify-between">
+                <div>
+                  <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-semibold">Need formal scope?</div>
+                  <div className="text-xs text-foreground font-medium">Use the quote builder for itemized pricing</div>
+                </div>
+                <Button
+                  size="sm"
+                  onClick={() => navigate("/quotation")}
+                  className="rounded-md bg-primary text-primary-foreground font-semibold shadow-sm hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                >
+                  <ReceiptText size={14} className="mr-1.5" /> Quote
+                </Button>
+              </div>
+            </motion.div>
+
+            {/* Direct Channels List */}
+            <motion.ul
+              {...enterProps(reduce, 0.12)}
+              className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1"
+              aria-label="Direct contact channels"
+            >
+              {channels.map(({ Icon, label, value, href, external }) => {
+                const content = (
+                  <>
+                    <span
+                      className="grid size-9 shrink-0 place-items-center rounded-lg bg-gold/10 text-gold transition-colors group-hover:bg-gold/20"
+                      aria-hidden="true"
                     >
-                      {content}
-                    </a>
-                  ) : (
-                    <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-sm">
-                      {content}
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </motion.ul>
+                      <Icon size={16} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                        {label}
+                      </span>
+                      <span className="block truncate text-xs font-medium text-foreground">{value}</span>
+                    </span>
+                    {external ? (
+                      <ArrowUpRight
+                        size={13}
+                        className="ml-auto shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-gold"
+                        aria-hidden="true"
+                      />
+                    ) : null}
+                  </>
+                );
+
+                return (
+                  <li key={label}>
+                    {href ? (
+                      <a
+                        href={href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        className="group flex items-center gap-3 rounded-xl border border-border/80 bg-card p-3 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div className="flex items-center gap-3 rounded-xl border border-border/80 bg-card p-3 shadow-xs">
+                        {content}
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </motion.ul>
+          </div>
         </div>
       </Section>
 
@@ -224,7 +452,7 @@ export function ContactPage() {
             ))}
           </Accordion>
           <p className="mt-5 text-center text-xs text-muted-foreground">
-            Something else? Email{" "}
+            Have a custom requirement? Email{" "}
             <a
               href={`mailto:${identity.email}`}
               className="font-medium text-gold transition-colors duration-200 hover:text-gold-light"
