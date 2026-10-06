@@ -3,7 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Menu, Github, Gavel, LogIn, LogOut, ReceiptText, User, UserRound } from "lucide-react";
+import { Moon, Sun, Menu, Github, Gavel, LogIn, LogOut, Mail, ReceiptText, User, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -27,19 +27,19 @@ import { useRouterStore } from "@/store/router";
 
 const subscribeNoop = () => () => {};
 
-function SiteLogo({ size = 38 }: { size?: number }) {
+function SiteLogo({ size = 36 }: { size?: number }) {
   return (
     <span
-      className="relative block overflow-hidden rounded-full ring-2 ring-emerald-500/80 shadow-md shadow-emerald-500/20 transition-transform duration-300 group-hover:scale-105"
+      className="relative block overflow-hidden rounded-full ring-2 ring-orange-500 shadow-md shadow-orange-500/25 transition-transform duration-300 group-hover:scale-105"
       style={{ width: size, height: size }}
     >
       <Image
-        src="/logo.png"
-        alt="Muhammad Ikram Logo"
+        src="/images/profile/modern-tech-hero-portrait.webp"
+        alt="Muhammad Ikram"
         width={size}
         height={size}
         priority
-        className="h-full w-full object-cover"
+        className="h-full w-full object-cover object-top"
       />
     </span>
   );
@@ -52,25 +52,17 @@ function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon"
-      /* Static label — resolvedTheme differs between server and client render,
-         and a dynamic label would cause a hydration mismatch. */
       aria-label="Toggle light and dark theme"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="size-9 rounded-md hover:bg-gold/10 hover:text-gold"
+      className="size-8 rounded-full text-neutral-300 hover:bg-white/10 hover:text-white"
     >
-      {/* CSS-driven swap — hydration-safe, no mounted state needed */}
-      <Sun size={18} className="hidden dark:block" aria-hidden="true" />
-      <Moon size={18} className="block dark:hidden" aria-hidden="true" />
+      <Sun size={16} className="hidden dark:block" aria-hidden="true" />
+      <Moon size={16} className="block dark:hidden" aria-hidden="true" />
     </Button>
   );
 }
 
-/** Auth-aware account area: sign-in button or profile dropdown.
- *  Mount-gated so server and client trees match at hydration (session
- *  status resolves only on the client, after the session fetch). */
 function AccountArea() {
-  // Hydration-safe "mounted" — false on the server, true after hydration,
-  // with no effect-body setState (React compiler friendly).
   const mounted = useSyncExternalStore(
     subscribeNoop,
     () => true,
@@ -81,7 +73,7 @@ function AccountArea() {
 
   if (!mounted) {
     return (
-      <span className="hidden size-9 rounded-full border border-border/70 sm:block" aria-hidden="true" />
+      <span className="hidden size-8 rounded-full border border-white/20 sm:block" aria-hidden="true" />
     );
   }
 
@@ -93,70 +85,65 @@ function AccountArea() {
         <DropdownMenuTrigger asChild>
           <button
             aria-label="Account menu"
-            className="grid size-9 place-items-center rounded-full border border-gold/50 bg-gold/10 font-mono text-xs font-bold text-gold transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="grid size-8 place-items-center rounded-full border border-orange-500/60 bg-orange-500/20 font-mono text-xs font-bold text-orange-400 transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             {initial}
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel>
-            <p className="truncate text-sm font-semibold">{session.user.name}</p>
-            <p className="truncate text-xs font-normal text-muted-foreground">{session.user.email}</p>
+        <DropdownMenuContent align="end" className="w-56 rounded-xl border border-white/10 bg-[#16181D] text-white p-1.5 shadow-2xl">
+          <DropdownMenuLabel className="px-3 py-2">
+            <p className="truncate text-xs font-semibold text-white">{session.user.name ?? "Signed in"}</p>
+            <p className="truncate text-[11px] font-normal text-neutral-400">{session.user.email}</p>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/account")}>
-            <User size={14} aria-hidden="true" /> My account
-          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-white/10" />
+
+          {ACCOUNT_NAV_ITEMS.map((item) => (
+            <DropdownMenuItem
+              key={item.path}
+              onClick={() => navigate(item.path)}
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-neutral-200 hover:bg-white/10 hover:text-white"
+            >
+              <User size={13} aria-hidden="true" /> {item.label}
+            </DropdownMenuItem>
+          ))}
+
           {isAdmin ? (
-            <DropdownMenuItem onClick={() => navigate("/admin")}>
-              <Gavel size={14} aria-hidden="true" /> Quotation dashboard
+            <DropdownMenuItem
+              onClick={() => navigate("/admin")}
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-orange-400 hover:bg-orange-500/10"
+            >
+              <Gavel size={13} aria-hidden="true" /> Quotation Manager (Admin)
             </DropdownMenuItem>
           ) : null}
-          <DropdownMenuSeparator />
+
+          <DropdownMenuSeparator className="bg-white/10" />
           <DropdownMenuItem
-            variant="destructive"
-            onClick={() => void signOut({ redirect: false })}
+            onClick={() => signOut({ redirect: false }).then(() => navigate("/"))}
+            className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-rose-400 hover:bg-rose-500/10"
           >
-            <LogOut size={14} aria-hidden="true" /> Sign out
+            <LogOut size={13} aria-hidden="true" /> Sign out
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     );
   }
 
-  if (status === "loading") {
-    return (
-      <span className="grid size-9 place-items-center rounded-full border border-border/70 bg-secondary/40" aria-hidden="true">
-        <UserRound size={15} className="text-muted-foreground/60" />
-      </span>
-    );
-  }
-
   return (
-    <Button
-      variant="outline"
-      size="sm"
+    <button
       onClick={() => navigate("/login")}
-      className="hidden h-9 rounded-md border-gold/50 px-3.5 text-sm font-semibold text-foreground transition-colors duration-200 hover:bg-gold/10 hover:text-gold sm:inline-flex"
-      aria-label="Sign in to your account"
+      aria-label="Sign in"
+      className="hidden items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-white/15 active:scale-95 sm:inline-flex"
     >
-      <LogIn size={15} aria-hidden="true" /> Sign in
-    </Button>
+      <LogIn size={13} aria-hidden="true" />
+      <span>Sign in</span>
+    </button>
   );
 }
 
 export function SiteHeader() {
-  const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
   const page = useRouterStore((s) => s.page);
   const navigate = useRouterStore((s) => s.navigate);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const [open, setOpen] = useState(false);
 
   const go = (path: string) => {
     setOpen(false);
@@ -164,31 +151,27 @@ export function SiteHeader() {
   };
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border/70 bg-background/85 backdrop-blur-md shadow-sm"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+    <header className="fixed inset-x-0 top-3 sm:top-5 z-50 pointer-events-none px-3 sm:px-4">
+      <div className="pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-2 sm:gap-4 rounded-full border border-white/10 bg-[#16181D]/95 px-3 sm:px-4 py-2 sm:py-2.5 shadow-2xl backdrop-blur-xl transition-all">
+        {/* Left: Avatar + Identity */}
         <button
           onClick={() => go("/")}
-          className="group flex items-center gap-3 rounded-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
+          className="group flex items-center gap-2.5 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
           aria-label="Muhammad Ikram — home"
         >
-          <SiteLogo size={38} />
+          <SiteLogo size={36} />
           <span className="hidden flex-col leading-tight sm:flex text-left">
-            <span className="text-sm font-bold tracking-tight text-foreground transition-colors group-hover:text-gold">
+            <span className="text-xs sm:text-sm font-bold tracking-tight text-white transition-colors group-hover:text-orange-400">
               {identity.name}
             </span>
-            <span className="text-[11px] text-muted-foreground">
+            <span className="text-[10px] sm:text-[11px] font-medium text-neutral-400">
               {identity.role}
             </span>
           </span>
         </button>
 
-        <nav aria-label="Primary" className="hidden lg:block">
+        {/* Center: Navigation Links */}
+        <nav aria-label="Primary navigation" className="hidden lg:block">
           <ul className="flex items-center gap-1">
             {NAV_ITEMS.map((link) => {
               const active = isActivePage(page, link.path);
@@ -197,18 +180,13 @@ export function SiteHeader() {
                   <button
                     onClick={() => go(link.path)}
                     aria-current={active ? "page" : undefined}
-                    className={`relative rounded-md px-3 py-2 text-sm font-medium transition-colors duration-200 hover:bg-gold/10 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
-                      active ? "text-gold" : "text-muted-foreground"
+                    className={`rounded-full px-3.5 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 ${
+                      active
+                        ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold shadow-sm shadow-orange-500/30"
+                        : "text-neutral-300 hover:text-white hover:bg-white/10"
                     }`}
                   >
                     {link.label}
-                    {/* Active indicator */}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-gold transition-opacity duration-200 ${
-                        active ? "opacity-100" : "opacity-0"
-                      }`}
-                    />
                   </button>
                 </li>
               );
@@ -216,103 +194,79 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-1.5">
-          {/* Quotation CTA — the "come here for a quotation" entry point */}
-          <Button
-            size="sm"
+        {/* Right: Actions */}
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          {/* Get a Quote Button */}
+          <button
             onClick={() => go("/quotation")}
             aria-label="Request a project quotation"
-            className="hidden h-9 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 md:inline-flex"
+            className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-orange-500 via-orange-500 to-amber-600 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-orange-500/25 transition-all duration-200 hover:scale-[1.02] hover:shadow-orange-500/40 active:scale-[0.98]"
           >
-            <ReceiptText size={15} aria-hidden="true" /> Get a Quote
-          </Button>
+            <Mail size={13} className="hidden xs:inline shrink-0" aria-hidden="true" />
+            <span>Get a Quote</span>
+          </button>
 
+          {/* GitHub link */}
           <a
             href={identity.socials.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub profile (opens in new tab)"
-            className="hidden size-9 place-items-center rounded-md text-muted-foreground transition-colors duration-200 hover:bg-gold/10 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none lg:grid"
+            className="hidden size-8 place-items-center rounded-full text-neutral-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 md:grid"
           >
-            <Github size={18} />
+            <Github size={16} />
           </a>
+
           <ThemeToggle />
           <AccountArea />
 
+          {/* Mobile hamburger menu */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button
                 variant="ghost"
                 size="icon"
-                className="size-9 lg:hidden hover:bg-gold/10 hover:text-gold"
+                className="size-8 rounded-full text-neutral-300 hover:bg-white/10 hover:text-white lg:hidden"
                 aria-label="Open navigation menu"
               >
-                <Menu size={20} />
+                <Menu size={18} />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" aria-describedby={undefined} className="w-72">
+            <SheetContent side="right" aria-describedby={undefined} className="w-72 border-white/10 bg-[#14161B] text-white">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-3">
                   <SiteLogo size={36} />
-                  <span className="text-left font-bold">{identity.name}</span>
+                  <span className="text-left font-bold text-white">{identity.name}</span>
                 </SheetTitle>
               </SheetHeader>
-              <nav aria-label="Mobile" className="mt-2 overflow-y-auto px-4 pb-6" style={{ maxHeight: "calc(100dvh - 6rem)" }}>
-                {/* Quotation CTA first on mobile */}
+              <nav aria-label="Mobile" className="mt-4 overflow-y-auto px-4 pb-6" style={{ maxHeight: "calc(100dvh - 6rem)" }}>
                 <button
                   onClick={() => go("/quotation")}
-                  className={`mb-3 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 ${
-                    isActivePage(page, "/quotation") ? "ring-2 ring-gold ring-offset-2" : ""
-                  }`}
+                  className="mb-4 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-600 px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-orange-500/30"
                 >
-                  <ReceiptText size={16} aria-hidden="true" /> Get a Quote
+                  <ReceiptText size={15} aria-hidden="true" /> Get a Quote
                 </button>
 
-                <ul className="flex flex-col gap-1">
+                <ul className="space-y-1">
                   {NAV_ITEMS.map((link) => {
                     const active = isActivePage(page, link.path);
                     return (
                       <li key={link.path}>
                         <button
                           onClick={() => go(link.path)}
-                          aria-current={active ? "page" : undefined}
-                          className={`block w-full rounded-md px-3 py-3 text-left text-base font-medium transition-colors duration-200 hover:bg-gold/10 hover:text-gold ${
-                            active ? "bg-gold/10 text-gold" : "text-foreground"
+                          className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                            active
+                              ? "bg-orange-500/20 text-orange-400 font-semibold"
+                              : "text-neutral-300 hover:bg-white/10 hover:text-white"
                           }`}
                         >
-                          {link.label}
+                          <span>{link.label}</span>
+                          {active ? <span className="size-1.5 rounded-full bg-orange-500" /> : null}
                         </button>
                       </li>
                     );
                   })}
                 </ul>
-
-                <p className="mb-1.5 mt-5 px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                  Account
-                </p>
-                <ul className="flex flex-col gap-1">
-                  {ACCOUNT_NAV_ITEMS.map((link) => (
-                    <li key={link.path}>
-                      <button
-                        onClick={() => go(link.path)}
-                        className={`block w-full rounded-md px-3 py-2.5 text-left text-sm font-medium transition-colors duration-200 hover:bg-gold/10 hover:text-gold ${
-                          isActivePage(page, link.path) ? "bg-gold/10 text-gold" : "text-muted-foreground"
-                        }`}
-                      >
-                        {link.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href={identity.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-4 flex items-center gap-2 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors duration-200 hover:bg-gold/10 hover:text-gold"
-                >
-                  <Github size={16} /> github.com/ikram-3
-                </a>
               </nav>
             </SheetContent>
           </Sheet>

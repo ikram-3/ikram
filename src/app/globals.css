@@ -49,79 +49,79 @@
 }
 
 :root {
-  --radius: 0.5rem;
-  --gold: #15803D;
-  --gold-light: #16A34A;
-  --emerald-brand: #15803D;
-  --emerald-light: #16A34A;
+  --radius: 0.75rem;
+  --gold: #EA580C;
+  --gold-light: #F97316;
+  --emerald-brand: #EA580C;
+  --emerald-light: #F97316;
   --charcoal: #111827;
-  --background: #FAFAF9;
-  --foreground: #111827;
+  --background: #FAF8F5;
+  --foreground: #181A1E;
   --card: #FFFFFF;
-  --card-foreground: #111827;
+  --card-foreground: #181A1E;
   --popover: #FFFFFF;
-  --popover-foreground: #111827;
-  --primary: #15803D;
+  --popover-foreground: #181A1E;
+  --primary: #EA580C;
   --primary-foreground: #ffffff;
-  --secondary: #F3F4F6;
-  --secondary-foreground: #111827;
-  --muted: #F3F4F6;
-  --muted-foreground: #5B6472;
-  --accent: #F0FDF4;
-  --accent-foreground: #14532D;
+  --secondary: #F4EFEA;
+  --secondary-foreground: #181A1E;
+  --muted: #F4EFEA;
+  --muted-foreground: #64748B;
+  --accent: #FFF7ED;
+  --accent-foreground: #9A3412;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #E5E7EB;
-  --input: #E5E7EB;
-  --ring: #16A34A;
-  --chart-1: #16A34A;
-  --chart-2: #22C55E;
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: #4ADE80;
-  --chart-5: #15803D;
-  --sidebar: oklch(0.985 0.004 155);
-  --sidebar-foreground: oklch(0.18 0.015 155);
-  --sidebar-primary: oklch(0.55 0.18 152);
+  --border: #EAE5DE;
+  --input: #EAE5DE;
+  --ring: #F97316;
+  --chart-1: #EA580C;
+  --chart-2: #F97316;
+  --chart-3: #FB923C;
+  --chart-4: #FDBA74;
+  --chart-5: #C2410C;
+  --sidebar: #FAF8F5;
+  --sidebar-foreground: #181A1E;
+  --sidebar-primary: #EA580C;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: oklch(0.94 0.02 155);
-  --sidebar-accent-foreground: oklch(0.20 0.03 155);
-  --sidebar-border: oklch(0.89 0.02 155);
-  --sidebar-ring: oklch(0.60 0.18 152);
+  --sidebar-accent: #F4EFEA;
+  --sidebar-accent-foreground: #181A1E;
+  --sidebar-border: #EAE5DE;
+  --sidebar-ring: #F97316;
 }
 
 .dark {
-  --gold: #22C55E;
-  --gold-light: #4ADE80;
-  --background: #0E1013;
+  --gold: #F97316;
+  --gold-light: #FB923C;
+  --background: #0B0D10;
   --foreground: #F3F4F6;
-  --card: #15181C;
+  --card: #13161C;
   --card-foreground: #F3F4F6;
-  --popover: #15181C;
+  --popover: #13161C;
   --popover-foreground: #F3F4F6;
-  --primary: #22C55E;
-  --primary-foreground: #052E16;
-  --secondary: #1E2227;
+  --primary: #F97316;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1C2027;
   --secondary-foreground: #F3F4F6;
-  --muted: #1E2227;
-  --muted-foreground: #9CA3AF;
-  --accent: #13251A;
-  --accent-foreground: #DCFCE7;
+  --muted: #1C2027;
+  --muted-foreground: #94A3B8;
+  --accent: #2A170A;
+  --accent-foreground: #FFEDD5;
   --destructive: oklch(0.637 0.237 25.331);
-  --border: #262A30;
-  --input: #2A2F36;
-  --ring: #22C55E;
-  --chart-1: #22C55E;
-  --chart-2: #16A34A;
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: #4ADE80;
-  --chart-5: #15803D;
-  --sidebar: oklch(0.18 0.015 155);
-  --sidebar-foreground: oklch(0.96 0.01 155);
-  --sidebar-primary: oklch(0.72 0.18 152);
-  --sidebar-primary-foreground: #0b1d12;
-  --sidebar-accent: oklch(0.24 0.018 155);
-  --sidebar-accent-foreground: oklch(0.96 0.01 155);
-  --sidebar-border: oklch(0.26 0.02 155);
-  --sidebar-ring: oklch(0.70 0.17 152);
+  --border: #222731;
+  --input: #222731;
+  --ring: #FB923C;
+  --chart-1: #F97316;
+  --chart-2: #EA580C;
+  --chart-3: #FB923C;
+  --chart-4: #FDBA74;
+  --chart-5: #C2410C;
+  --sidebar: #13161C;
+  --sidebar-foreground: #F3F4F6;
+  --sidebar-primary: #F97316;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1C2027;
+  --sidebar-accent-foreground: #F3F4F6;
+  --sidebar-border: #222731;
+  --sidebar-ring: #FB923C;
 }
 
 @layer base {
@@ -130,13 +130,13 @@
   }
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-background text-foreground;
   }
   ::selection {
-    background: #16A34A;
+    background: #EA580C;
     color: #ffffff;
   }
   h1, h2, h3 {
@@ -144,7 +144,7 @@
   }
 }
 
-/* Thin themed scrollbar (FRONTEND_CONTEXT §3) */
+/* Thin themed scrollbar */
 * {
   scrollbar-width: thin;
   scrollbar-color: color-mix(in oklch, var(--gold) 55%, transparent) transparent;
@@ -164,11 +164,15 @@
   background: color-mix(in oklch, var(--gold) 80%, transparent);
 }
 
-/* Accent text — solid, restrained brand emerald (corporate minimal). Class names kept for compatibility. */
+/* Gradient accent text */
+.text-gradient-orange,
 .text-gradient-gold,
 .text-gradient-emerald,
 .text-gradient-emerald-gold {
-  color: var(--gold);
+  background: linear-gradient(120deg, #FF7A1A 0%, #FA5D00 50%, #EA580C 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* ── 3D Character presentation filters & lighting (Realistic Studio Depth — No Green Shadows) ── */

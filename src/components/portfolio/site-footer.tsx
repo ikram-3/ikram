@@ -15,22 +15,22 @@ export function SiteFooter() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6 md:flex-row md:items-start md:justify-between">
         <div className="space-y-3">
           <div className="flex items-center gap-3">
-            <span className="relative block size-9 overflow-hidden rounded-full ring-2 ring-emerald-500/70 shadow-md shadow-emerald-500/20">
+            <span className="relative block size-9 overflow-hidden rounded-full ring-2 ring-orange-500/70 shadow-md shadow-orange-500/20">
               <Image
-                src="/logo.png"
-                alt="Muhammad Ikram Logo"
+                src="/images/profile/modern-tech-hero-portrait.webp"
+                alt="Muhammad Ikram"
                 fill
                 sizes="36px"
-                className="object-cover"
+                className="object-cover object-top"
               />
             </span>
             <div>
               <p className="text-sm font-bold tracking-tight">{identity.name}</p>
-              <p className="text-[11px] text-muted-foreground">{identity.role} · Applied AI</p>
+              <p className="text-[11px] text-muted-foreground">{identity.role} · Full-Stack &amp; AI</p>
             </div>
           </div>
           <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <MapPin size={12} className="text-emerald-500" aria-hidden="true" /> {identity.location}
+            <MapPin size={12} className="text-orange-500" aria-hidden="true" /> {identity.location}
           </p>
           <p className="max-w-xs text-xs leading-relaxed text-muted-foreground">
             © {year} Muhammad Ikram.

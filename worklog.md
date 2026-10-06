@@ -364,5 +364,42 @@ Work Log:
 Stage Summary:
 - Login and Register authentication pages fully match the corporate-minimal design system.
 - Accessible, clean, and distraction-free experience for client quotation tracking.
+---
+Task ID: 13
+Agent: antigravity-agent
+Task: Modern tech portfolio hero integration (Modern Tech Portfolio Hero Portrait.png), floating pill dark navbar, and vibrant sunset orange color theme enhancement
+
+Work Log:
+- Hero Asset Pipeline:
+  - Discovered and copied `Modern Tech Portfolio Hero Portrait.png` from `C:\Users\ikram\Downloads` to `public/images/profile/modern-tech-hero-portrait.png`.
+  - Converted and optimized high-resolution WebP equivalent at `public/images/profile/modern-tech-hero-portrait.webp` (`2034 x 2048`, 92% quality) for fast loading without loss of detail.
+- Floating Pill Dark Navbar (`src/components/portfolio/site-header.tsx`):
+  - Re-architected site header into a floating dark pill container (`max-w-5xl rounded-full bg-[#16181D]/95 backdrop-blur-xl border border-white/10 shadow-2xl`) matching the reference image.
+  - Left: Circular avatar of Muhammad Ikram with warm orange ring (`ring-2 ring-orange-500`), name, and role subtitle.
+  - Center: Pill navigation links with active orange gradient background (`bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold shadow-sm`).
+  - Right: Gradient "Get a Quote" pill button, GitHub link, theme toggle, and rounded pill sign-in button.
+  - Updated `src/components/site-shell.tsx` main padding to `pt-20 sm:pt-24` for fluid breathing space.
+- Landing Page Modern Tech Redesign (`src/views/home-page.tsx`):
+  - Hero layout reconstructed to faithfully match the reference mockup:
+    - Status pill: `🟠 Available for Opportunities`.
+    - Headline: `Hi, I'm Muhammad Ikram Software Engineer` with vibrant gradient on "Ikram".
+    - Bio paragraph matching the user reference copy.
+    - Pill action buttons: `</> View My Projects ➔` (orange gradient pill with drop shadow) and `⬇ Download Resume` (bordered pill).
+    - 4-Item stats strip card: `5+ Projects Completed`, `BSc Computer Science Eng.`, `1st AI Training (KPITB)`, `Swat, Pakistan Based In`.
+    - "Let's Connect ➔" row with GitHub, LinkedIn, X, and Email icon pills.
+    - Right graphic showcase displaying `modern-tech-hero-portrait.webp` with ambient warm backlight glow.
+    - Bottom subtle organic wave transition to content.
+- Color Theme Enhancement (`src/app/globals.css`):
+  - Transitioned color tokens to vibrant Sunset Orange & Warm Amber (`#EA580C` / `#F97316` / `#FB923C` / `#FF7A1A`).
+  - Warm luminous off-white background (`#FAF8F5`) in light mode and deep obsidian charcoal (`#0B0D10` / `#13161C`) in dark mode.
+  - Updated footer logo badge to match warm orange theme.
+- Verification:
+  - `npx tsc --noEmit` passed with 0 errors.
+
+Stage Summary:
+- Modern tech portfolio hero image copied to profile and displayed in high definition.
+- Floating dark pill navigation bar deployed matching reference mockup.
+- Warm sunset orange and amber color palette active across the entire site.
+
 
 
