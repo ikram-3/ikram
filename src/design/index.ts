@@ -15,3 +15,5 @@ export { BackLink } from "./components/back-link";
 export { ScrollProgress } from "./components/scroll-progress";
 export { BackToTop } from "./components/back-to-top";
 export { GoldCursor } from "./components/gold-cursor";
+export { FeatureCard } from "@/components/ui/feature-card";
+export type { FeatureCardProps } from "@/components/ui/feature-card";
