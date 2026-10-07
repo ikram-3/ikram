@@ -67,34 +67,23 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
         className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--border)_75%,transparent)] bg-[rgba(255,255,255,0.55)] dark:bg-[rgba(19,22,28,0.65)] backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_12px_36px_-10px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_20px_45px_-15px_rgba(0,0,0,0.45)] transition-all duration-300 hover:shadow-2xl"
       >
         {/* ── Glowing Perimeter Beam Trace (Animates on Hover) ─────────────── */}
+        {/* Strictly on the 1.5px border edge with zero center circulation */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10"
+          className="pointer-events-none absolute inset-0 rounded-2xl p-[1.5px] overflow-hidden opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10"
+          style={{
+            ...perimeterMaskStyle,
+            filter: "drop-shadow(0 0 5px var(--primary)) drop-shadow(0 0 10px color-mix(in srgb, var(--gold-light) 60%, transparent))",
+          }}
         >
-          {/* Ambient soft glow trail */}
           <div
             className="absolute -inset-[150%]"
             style={{
               background:
-                "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 310deg, var(--gold-light) 345deg, transparent 360deg)",
-              filter: "blur(8px)",
+                "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 315deg, var(--gold-light) 345deg, transparent 360deg)",
               animation: reduce ? "none" : "spin 5s linear infinite",
             }}
           />
-          {/* Crisp 1.5px border trace line */}
-          <div
-            className="absolute inset-0 rounded-2xl p-[1.5px]"
-            style={perimeterMaskStyle}
-          >
-            <div
-              className="absolute -inset-[150%]"
-              style={{
-                background:
-                  "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 315deg, var(--gold-light) 345deg, transparent 360deg)",
-                animation: reduce ? "none" : "spin 5s linear infinite",
-              }}
-            />
-          </div>
         </div>
 
         {image ? (

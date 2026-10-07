@@ -277,7 +277,7 @@ export function HomePage() {
                   badge={badges[idx]}
                   title={service.title}
                   description={service.description}
-                  actionText={`Case study: ${service.proof}`}
+                  actionText={`Case Study: ${service.proof.split(" — ")[0]}`}
                   onAction={() => navigate(`/projects/${service.proofSlug}`)}
                   showCursor={showCursor}
                   cursorCorner="top-right"

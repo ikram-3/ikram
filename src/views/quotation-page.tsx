@@ -142,7 +142,6 @@ export function QuotationPage() {
   function next() {
     if (!validate(STEP_FIELDS[step])) return;
     setStep((s) => Math.min(4, s + 1));
-    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
   }
 
   function back() {

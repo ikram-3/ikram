@@ -99,36 +99,27 @@ export function FeatureCard({
       `}
     >
       {/* ── Glowing Border Line Trace Animation (Border-Beam) ─────────────── */}
+      {/* STRICTLY ON BORDER — Center is 100% masked out to eliminate any center circulation */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden rounded-[var(--radius)]"
+        className="pointer-events-none absolute inset-0 rounded-[var(--radius)] p-[1.5px] overflow-hidden"
+        style={{
+          ...perimeterMaskStyle,
+          filter: isHovered
+            ? "drop-shadow(0 0 5px var(--primary)) drop-shadow(0 0 10px color-mix(in srgb, var(--gold-light) 60%, transparent))"
+            : "drop-shadow(0 0 2px color-mix(in srgb, var(--primary) 70%, transparent))",
+          opacity: isHovered ? 1 : 0.65,
+          transition: "opacity 0.3s ease, filter 0.3s ease",
+        }}
       >
-        {/* Soft warm light trail / ambient glow around perimeter */}
         <div
-          className="absolute -inset-[150%] transition-opacity duration-500"
+          className="absolute -inset-[150%]"
           style={{
             background:
-              "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 310deg, var(--gold-light) 345deg, transparent 360deg)",
-            filter: "blur(10px)",
-            opacity: isHovered ? 0.85 : 0.45,
+              "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 315deg, var(--gold-light) 345deg, transparent 360deg)",
             animation: reduce ? "none" : `spin ${isHovered ? "4s" : "7s"} linear infinite`,
           }}
         />
-
-        {/* Crisp glowing 1.5px perimeter beam line */}
-        <div
-          className="absolute inset-0 rounded-[var(--radius)] p-[1.5px]"
-          style={perimeterMaskStyle}
-        >
-          <div
-            className="absolute -inset-[150%]"
-            style={{
-              background:
-                "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 315deg, var(--gold-light) 345deg, transparent 360deg)",
-              animation: reduce ? "none" : `spin ${isHovered ? "4s" : "7s"} linear infinite`,
-            }}
-          />
-        </div>
       </div>
 
       {/* ── Corner Simulated Cursor & Radial Spotlight Glow ──────────────── */}
@@ -300,43 +291,42 @@ export function FeatureCard({
       </div>
 
       {/* ── Card Footer Action ───────────────────────────────────────────── */}
-      <div className="relative z-10 pt-6 mt-2 border-t border-[color-mix(in_srgb,var(--border)_50%,transparent)]">
+      <div className="relative z-10 pt-5 mt-auto border-t border-[color-mix(in_srgb,var(--border)_50%,transparent)] flex items-center justify-between gap-3">
         {actionHref ? (
           <a
             href={actionHref}
-            className="group/btn inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            style={{
-              backgroundColor: "var(--primary)",
-              color: "var(--primary-foreground)",
-              boxShadow: "0 4px 14px color-mix(in srgb, var(--primary) 28%, transparent)",
-            }}
+            className="group/btn inline-flex items-center gap-2.5 rounded-full border border-orange-500/35 bg-gradient-to-r from-orange-500/10 via-orange-500/15 to-amber-500/10 hover:from-orange-500 hover:to-orange-600 px-4 py-2 text-xs sm:text-sm font-semibold text-foreground hover:text-white transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-orange-500/30 hover:scale-[1.02] active:scale-[0.98]"
           >
             <span>{actionText}</span>
-            <ArrowRight
-              size={14}
-              aria-hidden="true"
-              className="transition-transform duration-200 group-hover/btn:translate-x-0.5"
-            />
+            <span className="grid size-5 place-items-center rounded-full bg-orange-500/15 group-hover/btn:bg-white/20 transition-colors">
+              <ArrowRight
+                size={12}
+                aria-hidden="true"
+                className="transition-transform duration-200 group-hover/btn:translate-x-0.5"
+              />
+            </span>
           </a>
         ) : (
           <button
             type="button"
             onClick={onAction}
-            className="group/btn inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            style={{
-              backgroundColor: "var(--primary)",
-              color: "var(--primary-foreground)",
-              boxShadow: "0 4px 14px color-mix(in srgb, var(--primary) 28%, transparent)",
-            }}
+            className="group/btn inline-flex items-center gap-2.5 rounded-full border border-orange-500/35 bg-gradient-to-r from-orange-500/10 via-orange-500/15 to-amber-500/10 hover:from-orange-500 hover:to-orange-600 px-4 py-2 text-xs sm:text-sm font-semibold text-foreground hover:text-white transition-all duration-300 shadow-2xs hover:shadow-md hover:shadow-orange-500/30 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <span>{actionText}</span>
-            <ArrowRight
-              size={14}
-              aria-hidden="true"
-              className="transition-transform duration-200 group-hover/btn:translate-x-0.5"
-            />
+            <span className="grid size-5 place-items-center rounded-full bg-orange-500/15 group-hover/btn:bg-white/20 transition-colors">
+              <ArrowRight
+                size={12}
+                aria-hidden="true"
+                className="transition-transform duration-200 group-hover/btn:translate-x-0.5"
+              />
+            </span>
           </button>
         )}
+
+        <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-mono text-muted-foreground/80">
+          <span className="size-1.5 rounded-full bg-orange-500 animate-pulse" />
+          <span>Active</span>
+        </span>
       </div>
     </motion.div>
   );
