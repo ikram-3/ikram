@@ -13,8 +13,8 @@ function hashPassword(password: string): string {
   return `scrypt$16384$8$1$${salt.toString("hex")}$${hash.toString("hex")}`;
 }
 
-const EMAIL = (process.env.ADMIN_EMAIL ?? "admin@ikram.local").toLowerCase();
-const PASSWORD = process.env.ADMIN_PASSWORD ?? "IkramAdmin2025";
+const EMAIL = (process.env.ADMIN_EMAIL ?? "ikram.dataengineer.info@gmail.com").toLowerCase();
+const PASSWORD = process.env.ADMIN_PASSWORD ?? "iamastudent1122";
 const NAME = process.env.ADMIN_NAME ?? "Muhammad Ikram";
 
 async function main() {

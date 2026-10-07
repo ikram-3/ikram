@@ -32,7 +32,7 @@ export const identity = {
    * Official studio portrait used on the About page.
    */
   avatarAbout: {
-    src: "/images/profile/avatar-headshot.png",
+    src: "/images/profile/profile.webp",
     alt: "Muhammad Ikram, Software Engineer",
   },
   /** Official brand logo badge. */

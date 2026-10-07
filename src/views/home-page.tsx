@@ -59,17 +59,8 @@ export function HomePage() {
 
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8 pt-4 sm:pt-6">
-            
-            {/* Left Content Column (7 cols) */}
             <div className="lg:col-span-7 max-w-xl">
-              {/* Available pill badge */}
-              <motion.div
-                {...enterProps(reduce, 0)}
-                className="mb-5 inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 dark:bg-orange-500/15 px-3.5 py-1 text-xs font-semibold text-orange-600 dark:text-orange-400 shadow-xs"
-              >
-                <span className="size-2 rounded-full bg-orange-500 animate-pulse" aria-hidden="true" />
-                <span>Available for Opportunities</span>
-              </motion.div>
+            
 
               {/* Headline */}
               <motion.div {...enterProps(reduce, 0.05)} className="space-y-1">
@@ -233,7 +224,7 @@ export function HomePage() {
               />
 
               {/* Hero Image Artwork - seamless, borderless, blends realistically with background */}
-              <div className="relative aspect-square w-full transition-transform duration-300 hover:scale-[1.01]">
+              <div className="relative aspect-[1416/1111] w-full transition-transform duration-300 hover:scale-[1.01]">
                 <Image
                   src="/images/profile/modern-tech-hero-portrait.webp"
                   alt="Muhammad Ikram — Software Engineer"
