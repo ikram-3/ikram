@@ -50,109 +50,151 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
   const repo = project.links.repo;
   const open = () => navigate(`/projects/${project.slug}`);
 
+  // Perimeter mask style for cross-browser hardware-accelerated glowing border trace
+  const perimeterMaskStyle: React.CSSProperties = {
+    mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+    maskComposite: "exclude",
+    WebkitMaskComposite: "xor",
+  };
+
   if (variant === "featured") {
     return (
       <motion.article
         variants={staggerItem(reduce)}
-        whileHover={reduce ? undefined : { y: -4 }}
-        transition={{ duration: 0.2, ease: "easeOut" }}
-        className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-shadow duration-200 hover:shadow-md"
+        whileHover={reduce ? undefined : { y: -5 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-[color-mix(in_srgb,var(--border)_75%,transparent)] bg-[rgba(255,255,255,0.55)] dark:bg-[rgba(19,22,28,0.65)] backdrop-blur-xl backdrop-saturate-150 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.18),0_12px_36px_-10px_rgba(0,0,0,0.06)] dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_20px_45px_-15px_rgba(0,0,0,0.45)] transition-all duration-300 hover:shadow-2xl"
       >
+        {/* ── Glowing Perimeter Beam Trace (Animates on Hover) ─────────────── */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10"
+        >
+          {/* Ambient soft glow trail */}
+          <div
+            className="absolute -inset-[150%]"
+            style={{
+              background:
+                "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 310deg, var(--gold-light) 345deg, transparent 360deg)",
+              filter: "blur(8px)",
+              animation: reduce ? "none" : "spin 5s linear infinite",
+            }}
+          />
+          {/* Crisp 1.5px border trace line */}
+          <div
+            className="absolute inset-0 rounded-2xl p-[1.5px]"
+            style={perimeterMaskStyle}
+          >
+            <div
+              className="absolute -inset-[150%]"
+              style={{
+                background:
+                  "conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 270deg, var(--primary) 315deg, var(--gold-light) 345deg, transparent 360deg)",
+                animation: reduce ? "none" : "spin 5s linear infinite",
+              }}
+            />
+          </div>
+        </div>
+
         {image ? (
-          <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border/60 bg-muted">
+          <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border/60 bg-muted/30">
             <Image
               src={image.src}
               alt={image.alt}
               fill
               sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent pointer-events-none" />
 
             {/* Quick action buttons floating on image hover */}
-            <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-[2px]">
+            <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-black/45 opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-[3px] z-20">
               {live ? (
                 <a
                   href={live}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-md transition-all duration-200 hover:bg-primary/90 hover:scale-105 active:scale-95"
                 >
-                  <ExternalLink size={14} aria-hidden="true" /> Open Live Project
+                  <ExternalLink size={13} aria-hidden="true" /> Open Live Project
                 </a>
               ) : null}
               <button
                 onClick={open}
-                className="inline-flex items-center gap-1.5 rounded-md border border-white/20 bg-background/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm backdrop-blur-md transition-colors duration-200 hover:bg-background"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-background/90 px-4 py-2 text-xs font-semibold text-foreground shadow-md backdrop-blur-md transition-all duration-200 hover:bg-background hover:scale-105 active:scale-95"
               >
-                Case Study <ArrowRight size={14} aria-hidden="true" />
+                Case Study <ArrowRight size={13} aria-hidden="true" />
               </button>
             </div>
           </div>
         ) : null}
 
-        <div className="flex flex-1 flex-col p-6">
+        <div className="relative z-10 flex flex-1 flex-col p-6 sm:p-7">
           <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <button
               onClick={open}
-              className="rounded-sm text-left text-base font-semibold tracking-tight text-foreground transition-colors duration-200 hover:text-gold focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:text-lg"
+              className="rounded-sm text-left text-base font-bold tracking-tight text-foreground transition-colors duration-200 hover:text-orange-500 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none md:text-lg font-[family-name:var(--font-heading)]"
             >
               {project.name}
             </button>
             <StatusBadge project={project} />
           </div>
 
-          <p className="text-sm font-medium italic leading-relaxed text-gold/90">{project.tagline}</p>
+          <p className="text-sm font-medium italic leading-relaxed text-orange-600 dark:text-orange-400/90">{project.tagline}</p>
 
           {project.whatIDid ? (
-            <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-muted-foreground">{project.whatIDid}</p>
+            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{project.whatIDid}</p>
           ) : null}
 
           {project.whyItMatters ? (
-            <p className="mt-3 flex items-start gap-1.5 text-xs leading-relaxed text-foreground/80">
-              
+            <p className="mt-3 flex items-start gap-1.5 text-xs leading-relaxed text-foreground/85">
               {project.whyItMatters}
             </p>
           ) : null}
 
-          <div className="mt-4 flex flex-wrap gap-1.5 pt-1">
+          <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
             {project.tech.slice(0, 4).map((t) => (
-              <Badge key={t} variant="outline" className="rounded-full text-[11px] font-normal">
+              <Badge
+                key={t}
+                variant="outline"
+                className="rounded-full text-[11px] font-medium border-border/80 bg-background/50 font-[family-name:var(--font-mono)]"
+              >
                 {t}
               </Badge>
             ))}
             {project.tech.length > 4 ? (
-              <Badge variant="outline" className="rounded-full text-[11px] font-normal text-muted-foreground">
+              <Badge variant="outline" className="rounded-full text-[11px] font-normal text-muted-foreground border-border/60">
                 +{project.tech.length - 4}
               </Badge>
             ) : null}
           </div>
 
           {/* Action Row — Direct Live link + Case study */}
-          <div className="mt-6 flex flex-wrap items-center gap-2.5 pt-2 border-t border-border/50">
+          <div className="mt-6 flex flex-wrap items-center gap-2.5 pt-4 border-t border-border/40">
             {live ? (
               <a
                 href={live}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3.5 py-1.5 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+                className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm shadow-orange-500/25 transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
-                <ExternalLink size={14} aria-hidden="true" /> Visit Live Project
+                <ExternalLink size={13} aria-hidden="true" /> Visit Live
               </a>
             ) : null}
 
             <button
               onClick={open}
-              className={`inline-flex items-center gap-1.5 rounded-md border px-3.5 py-1.5 text-xs font-semibold transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
+              className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${
                 live
-                  ? "border-border text-foreground hover:bg-muted"
-                  : "bg-primary text-primary-foreground hover:bg-primary/90"
+                  ? "border-border text-foreground hover:bg-muted/80"
+                  : "bg-primary text-primary-foreground shadow-sm shadow-orange-500/25 hover:bg-primary/90"
               }`}
               aria-label={`View case study: ${project.name}`}
             >
-              Case study <ArrowRight size={14} aria-hidden="true" />
+              Case study <ArrowRight size={13} aria-hidden="true" />
             </button>
 
             {repo ? (
@@ -161,10 +203,10 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 px-3 py-2 text-xs font-medium text-muted-foreground transition-colors hover:border-foreground/40 hover:text-foreground"
+                className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-border/80 px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:border-foreground/40 hover:text-foreground hover:scale-105"
                 aria-label={`View source code for ${project.name}`}
               >
-                <Github size={14} aria-hidden="true" /> Code
+                <Github size={13} aria-hidden="true" /> Code
               </a>
             ) : null}
           </div>
@@ -178,7 +220,7 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
       variants={staggerItem(reduce, 10)}
       whileHover={reduce ? undefined : { y: -4 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-200 hover:border-gold/40 hover:shadow-md"
+      className="group flex h-full flex-col overflow-hidden rounded-xl border border-[color-mix(in_srgb,var(--border)_75%,transparent)] bg-[rgba(255,255,255,0.45)] dark:bg-[rgba(19,22,28,0.55)] backdrop-blur-xl shadow-xs transition-all duration-300 hover:border-orange-500/40 hover:-translate-y-1 hover:shadow-lg"
     >
       {image ? (
         <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border/60 bg-muted">

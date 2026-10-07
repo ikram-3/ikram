@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -43,7 +44,16 @@ const SERVICE_ICONS = {
 export function HomePage() {
   const reduce = useReducedMotion();
   const navigate = useRouterStore((s) => s.navigate);
-  const featuredSnapshot = getFeaturedProjects().slice(0, 3);
+  const [activeFilter, setActiveFilter] = useState<"all" | "ai" | "web" | "automation">("all");
+  const allFeatured = useMemo(() => getFeaturedProjects(), []);
+
+  const displayedProjects = useMemo(() => {
+    if (activeFilter === "ai") return allFeatured.filter((p) => p.category === "ai-ml");
+    if (activeFilter === "web") return allFeatured.filter((p) => p.category === "business");
+    if (activeFilter === "automation")
+      return allFeatured.filter((p) => p.category === "automation" || p.category === "mobile");
+    return allFeatured.slice(0, 6);
+  }, [allFeatured, activeFilter]);
 
   return (
     <>
@@ -310,25 +320,61 @@ export function HomePage() {
           <SectionHeading
             eyebrow="Featured Projects"
             title="Real software built and deployed"
-            description="A selection of full-stack web platforms and intelligent AI applications."
+            description="A curated selection of live platforms, RAG agents, and full-stack business applications."
             className="mb-0 md:mb-0"
           />
           <Button
             variant="outline"
             onClick={() => navigate("/projects")}
-            className="h-10 shrink-0 rounded-full border-border px-5 font-semibold text-foreground hover:bg-muted"
+            className="h-10 shrink-0 rounded-full border-border/80 bg-card/60 backdrop-blur-md px-5 font-semibold text-foreground hover:bg-muted"
           >
             All {stats.projectsTotal} projects <ArrowRight size={15} aria-hidden="true" />
           </Button>
         </div>
+
+        {/* Interactive Category Filter Tabs */}
+        <div className="mt-8 flex flex-wrap items-center gap-2.5">
+          {[
+            { id: "all", label: "All Featured", count: Math.min(6, allFeatured.length) },
+            { id: "ai", label: "AI & RAG Agents", count: allFeatured.filter((p) => p.category === "ai-ml").length },
+            { id: "web", label: "Web & POS Platforms", count: allFeatured.filter((p) => p.category === "business").length },
+            { id: "automation", label: "Automation & Systems", count: allFeatured.filter((p) => p.category === "automation" || p.category === "mobile").length },
+          ].map((tab) => {
+            const isActive = activeFilter === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveFilter(tab.id as typeof activeFilter)}
+                className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+                  isActive
+                    ? "bg-primary text-primary-foreground shadow-md shadow-orange-500/25 scale-[1.02]"
+                    : "border border-border/80 bg-card/60 backdrop-blur-md text-muted-foreground hover:bg-card hover:text-foreground hover:border-orange-500/40"
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span
+                  className={`rounded-full px-1.5 py-0.5 text-[10px] font-mono leading-none ${
+                    isActive
+                      ? "bg-white/20 text-white"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Featured Projects Grid with Glassmorphic Cards & Glow Trace */}
         <motion.div
+          key={activeFilter}
           variants={staggerContainer(reduce, 0.08)}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-60px" }}
-          className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          animate="show"
+          className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          {featuredSnapshot.map((p) => (
+          {displayedProjects.map((p) => (
             <ProjectCard key={p.id} project={p} variant="featured" />
           ))}
         </motion.div>
