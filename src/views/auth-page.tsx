@@ -287,7 +287,7 @@ export function RegisterPage() {
               onChange={(e) => setName(e.target.value)}
               autoComplete="name"
               required
-              placeholder="e.g. Alex Morgan"
+              placeholder="Name"
               aria-invalid={Boolean(fieldErrors.name)}
               className="pl-9"
               disabled={submitting}
@@ -307,7 +307,7 @@ export function RegisterPage() {
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               required
-              placeholder="you@company.com"
+              placeholder="Email"
               aria-invalid={Boolean(fieldErrors.email)}
               className="pl-9"
               disabled={submitting}

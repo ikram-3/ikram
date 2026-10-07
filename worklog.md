@@ -490,6 +490,29 @@ Stage Summary:
 - Admin account configured with ikram.dataengineer.info@gmail.com / iamastudent1122.
 - Profile directory cleaned of all unused assets.
 
+---
+Task ID: 17
+Agent: antigravity-agent
+Task: Embed official CV Muhammad_Ikram.pdf on the /cv route with interactive viewer and download toolbar
+
+Work Log:
+- CV Route Redesign (`src/app/cv/page.tsx`):
+  - Embedded `public/document/Muhammad_Ikram.pdf` directly into the `/cv` route using an `<object>` / `<iframe>` PDF viewer.
+  - Added a responsive top toolbar with:
+    - "Back to Portfolio" navigation link
+    - Document metadata indicator (`Muhammad_Ikram.pdf`)
+    - "Open in New Tab" external link button
+    - Orange gradient "Download Resume" action button
+  - Provided interactive fallback card with direct download and open buttons for mobile browsers without inline PDF plugins.
+  - Copied `Muhammad_Ikram.pdf` to `public/` root as well to guarantee universal path resolution (`/cv`, `/Muhammad_Ikram.pdf`, and `/document/Muhammad_Ikram.pdf`).
+- Verification:
+  - `npx tsc --noEmit` verified clean with 0 errors.
+  - Local endpoint check: `/cv` returns 200, `/document/Muhammad_Ikram.pdf` returns 200 `application/pdf`.
+
+Stage Summary:
+- The /cv route now embeds and displays Muhammad_Ikram.pdf with direct download and print capabilities.
+
+
 
 
 

@@ -134,7 +134,7 @@ export function HomePage() {
                     </span>
                     <p className="font-mono text-xl sm:text-2xl font-black text-foreground">BSc</p>
                     <p className="text-[11px] font-medium text-muted-foreground leading-tight mt-0.5">
-                      Computer Science Eng.
+                      Software Engineering.
                     </p>
                   </div>
 

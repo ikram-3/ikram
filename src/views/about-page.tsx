@@ -47,10 +47,7 @@ export function AboutPage() {
                   className="object-cover object-center transition-transform duration-500 hover:scale-105"
                 />
                 {/* Official Portrait badge */}
-                <span className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-background/90 px-3 py-1 text-[11px] font-semibold text-foreground shadow-sm backdrop-blur-md">
-                  <span className="size-1.5 rounded-full bg-orange-500" />
-                  Official Portrait
-                </span>
+                
               </div>
               <div className="space-y-3 p-5">
                 <div>

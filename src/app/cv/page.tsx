@@ -1,140 +1,103 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Printer, Mail, MapPin, Phone, Globe } from "lucide-react";
-import { identity, summary, skillGroups } from "@/profile";
-import { getFeaturedProjects } from "@/profile/projects";
+import { ArrowLeft, Download, ExternalLink, FileText, Printer } from "lucide-react";
+import { identity } from "@/profile";
 import { Button } from "@/components/ui/button";
 
 export default function CvPage() {
-  const featured = getFeaturedProjects();
+  const pdfUrl = "/document/Muhammad_Ikram.pdf";
 
   return (
-    <div className="min-h-screen bg-neutral-900 text-neutral-100 py-8 px-4 sm:px-6 print:bg-white print:text-black print:p-0">
-      {/* Top Action Bar — hidden when printing */}
-      <div className="mx-auto max-w-4xl mb-6 flex items-center justify-between print:hidden">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+    <div className="flex h-screen flex-col bg-[#0B0D10] text-foreground antialiased">
+      {/* Top Header / Action Toolbar */}
+      <header className="z-10 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[#13161C]/95 px-4 backdrop-blur-md sm:px-6">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-neutral-200 transition-all hover:border-orange-500/50 hover:bg-orange-500/10 hover:text-orange-400"
+          >
+            <ArrowLeft size={14} />
+            <span>Back to Portfolio</span>
+          </Link>
+
+          <div className="hidden items-center gap-2 border-l border-white/10 pl-3 sm:flex">
+            <span className="grid size-7 place-items-center rounded-md bg-orange-500/10 text-orange-500">
+              <FileText size={15} />
+            </span>
+            <div>
+              <p className="text-xs font-bold leading-tight text-white">{identity.name} — Curriculum Vitae</p>
+              <p className="text-[10px] text-neutral-400">Muhammad_Ikram.pdf</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex items-center gap-2">
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="hidden border-white/10 bg-white/5 text-xs text-neutral-200 hover:bg-white/10 hover:text-white sm:inline-flex"
+          >
+            <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+              <ExternalLink size={13} className="mr-1.5" />
+              Open in New Tab
+            </a>
+          </Button>
+
+          <Button
+            asChild
+            size="sm"
+            className="rounded-lg bg-gradient-to-r from-orange-500 to-amber-500 text-xs font-semibold text-white shadow-md shadow-orange-500/20 hover:from-orange-600 hover:to-amber-600"
+          >
+            <a href={pdfUrl} download="Muhammad_Ikram.pdf">
+              <Download size={14} className="mr-1.5" />
+              Download Resume
+            </a>
+          </Button>
+        </div>
+      </header>
+
+      {/* Embedded PDF Viewer Frame */}
+      <main className="relative flex-1 w-full bg-[#181A1E]">
+        <object
+          data={`${pdfUrl}#toolbar=1&navpanes=0`}
+          type="application/pdf"
+          className="h-full w-full"
         >
-          <ArrowLeft size={16} /> Back to Portfolio
-        </Link>
-        <Button
-          onClick={() => window.print()}
-          className="bg-emerald-500 hover:bg-emerald-400 text-neutral-950 font-bold gap-2 rounded-xl shadow-lg shadow-emerald-500/20"
-        >
-          <Printer size={16} /> Print or Save as PDF
-        </Button>
-      </div>
-
-      {/* CV Sheet */}
-      <main className="mx-auto max-w-4xl bg-neutral-950 border border-neutral-800 rounded-2xl p-8 sm:p-12 shadow-2xl print:border-none print:shadow-none print:p-0 print:bg-white">
-        
-        {/* Header */}
-        <header className="border-b border-neutral-800 pb-6 print:border-neutral-300">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white print:text-black">
-                {identity.name}
-              </h1>
-              <p className="text-lg font-semibold text-emerald-400 mt-1 print:text-emerald-700">
-                {identity.role} · Full-Stack × Applied AI
-              </p>
-            </div>
-            <div className="space-y-1 text-xs sm:text-sm text-neutral-400 print:text-neutral-700">
-              <p className="flex items-center gap-2">
-                <MapPin size={14} className="text-emerald-400 print:text-emerald-700" /> {identity.location}
-              </p>
-              <p className="flex items-center gap-2">
-                <Mail size={14} className="text-emerald-400 print:text-emerald-700" />
-                <a href={`mailto:${identity.email}`} className="hover:underline">{identity.email}</a>
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone size={14} className="text-emerald-400 print:text-emerald-700" /> {identity.phone}
-              </p>
-              <p className="flex items-center gap-2">
-                <Globe size={14} className="text-emerald-400 print:text-emerald-700" />
-                <a href={identity.socials.linkedin} target="_blank" rel="noreferrer" className="hover:underline">
-                  linkedin.com/in/ikramds
-                </a>
-              </p>
-            </div>
-          </div>
-          <p className="mt-4 text-sm leading-relaxed text-neutral-300 print:text-neutral-800">
-            {summary.headline} {summary.subheadline}
-          </p>
-        </header>
-
-        {/* Core Technical Skills */}
-        <section className="py-6 border-b border-neutral-800 print:border-neutral-300">
-          <h2 className="text-xs uppercase tracking-widest font-bold text-emerald-400 print:text-emerald-800 mb-3">
-            Core Competencies &amp; Technical Stack
-          </h2>
-          <div className="grid gap-3 sm:grid-cols-2">
-            {skillGroups.map((s) => (
-              <div key={s.category} className="text-xs">
-                <span className="font-semibold text-neutral-200 print:text-black">{s.category}: </span>
-                <span className="text-neutral-400 print:text-neutral-700">{s.items.join(" · ")}</span>
+          {/* Fallback iframe */}
+          <iframe
+            src={`${pdfUrl}#toolbar=1`}
+            title="Muhammad Ikram CV"
+            className="h-full w-full border-0"
+          >
+            {/* Fallback message if PDF cannot be rendered inline */}
+            <div className="flex h-full flex-col items-center justify-center p-6 text-center">
+              <div className="grid size-16 place-items-center rounded-2xl bg-orange-500/10 text-orange-500 mb-4">
+                <FileText size={32} />
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Featured Production Systems */}
-        <section className="py-6 border-b border-neutral-800 print:border-neutral-300">
-          <h2 className="text-xs uppercase tracking-widest font-bold text-emerald-400 print:text-emerald-800 mb-4">
-            Featured Systems &amp; Delivered Projects
-          </h2>
-          <div className="space-y-5">
-            {featured.slice(0, 5).map((p) => (
-              <div key={p.slug} className="space-y-1.5">
-                <div className="flex items-baseline justify-between gap-2">
-                  <h3 className="text-sm font-bold text-white print:text-black">
-                    {p.name}
-                  </h3>
-                  <span className="text-xs font-mono text-emerald-400 print:text-emerald-700">
-                    {p.category} · {p.type}
-                  </span>
-                </div>
-                <p className="text-xs text-neutral-300 leading-relaxed print:text-neutral-800">
-                  {p.tagline}
-                </p>
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {p.tech.slice(0, 7).map((t) => (
-                    <span
-                      key={t}
-                      className="px-2 py-0.5 rounded-md bg-neutral-900 border border-neutral-800 text-[10px] text-neutral-300 print:border-neutral-300 print:text-black print:bg-neutral-100"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+              <h2 className="text-lg font-bold text-white mb-2">Muhammad Ikram — Resume (PDF)</h2>
+              <p className="max-w-md text-xs text-neutral-400 mb-6">
+                Your browser does not support embedded PDF previews. You can download the file or open it directly in a new tab.
+              </p>
+              <div className="flex gap-3">
+                <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
+                  <a href={pdfUrl} download="Muhammad_Ikram.pdf">
+                    <Download size={14} className="mr-2" />
+                    Download PDF
+                  </a>
+                </Button>
+                <Button asChild variant="outline" className="border-white/10 text-neutral-200">
+                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink size={14} className="mr-2" />
+                    Open PDF in New Tab
+                  </a>
+                </Button>
               </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Education & Fellowship */}
-        <section className="pt-6">
-          <h2 className="text-xs uppercase tracking-widest font-bold text-emerald-400 print:text-emerald-800 mb-3">
-            Education &amp; Fellowships
-          </h2>
-          <div className="space-y-3 text-xs">
-            <div>
-              <p className="font-bold text-white print:text-black">KPITB Generative AI Fellow</p>
-              <p className="text-neutral-400 print:text-neutral-700">
-                Khyber Pakhtunkhwa Information Technology Board (KPITB) · Applied AI Specialization
-              </p>
             </div>
-            <div>
-              <p className="font-bold text-white print:text-black">Bachelor of Science in Software Engineering</p>
-              <p className="text-neutral-400 print:text-neutral-700">
-                University of Swat, Pakistan
-              </p>
-            </div>
-          </div>
-        </section>
-
+          </iframe>
+        </object>
       </main>
     </div>
   );
