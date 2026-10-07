@@ -22,10 +22,10 @@ export const identity = {
   /** Affiliation line shown under portrait — both facts from PERSONAL_PROFILE.md. */
   affiliations: "KPITB Generative AI Fellow · University of Swat",
   /**
-   * Primary authentic portrait used on the Home page & navbar.
+   * Primary authentic portrait / logo used on the website.
    */
   avatar: {
-    src: "/images/profile/avatar-headshot-circle.webp",
+    src: "/logo.png",
     alt: "Portrait of Muhammad Ikram, Software Engineer",
   },
   /**
@@ -37,7 +37,7 @@ export const identity = {
   },
   /** Official brand logo badge. */
   logo: {
-    src: "/images/profile/avatar-headshot-circle.webp",
+    src: "/logo.png",
     alt: "Muhammad Ikram Logo Badge",
   },
 } as const;

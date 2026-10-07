@@ -17,7 +17,7 @@ export function SiteFooter() {
           <div className="flex items-center gap-3">
             <span className="relative block size-9 overflow-hidden rounded-full ring-2 ring-orange-500/70 shadow-md shadow-orange-500/20">
               <Image
-                src="/images/profile/avatar-headshot-circle.webp"
+                src="/logo.png"
                 alt="Muhammad Ikram"
                 fill
                 sizes="36px"

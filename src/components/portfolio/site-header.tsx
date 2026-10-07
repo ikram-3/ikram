@@ -34,7 +34,7 @@ function SiteLogo({ size = 36 }: { size?: number }) {
       style={{ width: size, height: size }}
     >
       <Image
-        src="/images/profile/avatar-headshot-circle.webp"
+        src="/logo.png"
         alt="Muhammad Ikram"
         width={size}
         height={size}

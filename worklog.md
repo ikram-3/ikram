@@ -432,6 +432,37 @@ Stage Summary:
 - Consistent authentic portrait and avatar active across Home, About, Header, Footer, and Favicon.
 - Unused legacy avatar files deleted.
 
+---
+Task ID: 15
+Agent: antigravity-agent
+Task: User-supplied logo.png integration across entire website logo and site-wide favicons
+
+Work Log:
+- Logo Asset Processing (`public/logo.png`, `public/logo.webp`, `public/images/profile/logo.*`):
+  - Ingested user-provided `logo.png` (stylized vector portrait emblem on orange wave).
+  - Masked outer rectangular boundary with clean circular alpha mask, removing corner artifacts and exporting optimized PNG and WebP formats.
+- Favicon and App Icon Pipeline:
+  - Generated full suite of favicon and app icons from the new logo:
+    - `public/favicon.ico` & `public/favicon-32x32.png` (32x32)
+    - `public/icon.png` & `public/icon-192.png` (192x192)
+    - `public/icon-512.png` (512x512)
+    - `public/apple-icon.png` (180x180)
+    - `src/app/favicon.ico` (32x32)
+    - `src/app/icon.png` (192x192)
+    - `src/app/apple-icon.png` (180x180)
+- Site-Wide Logo Updates:
+  - Updated `src/profile/identity.ts`: `logo.src = "/logo.png"` and `avatar.src = "/logo.png"`.
+  - Updated `src/components/portfolio/site-header.tsx`: `SiteLogo` component now renders `/logo.png`.
+  - Updated `src/components/portfolio/site-footer.tsx`: footer avatar/brand badge now renders `/logo.png`.
+  - Retained `/logo.png` usage on `src/views/contact-page.tsx`.
+- Verification:
+  - `npx tsc --noEmit` verified clean with 0 errors.
+
+Stage Summary:
+- User-supplied logo.png active as official brand logo on header, footer, and contact page.
+- All browser favicons, apple touch icons, and PWA icon manifests updated with new logo.
+
+
 
 
 
