@@ -68,11 +68,16 @@ export function FeatureCard({
 
   const renderIcon = () => {
     if (!Icon) return null;
-    if (typeof Icon === "function") {
-      const LucideComponent = Icon as LucideIcon;
-      return <LucideComponent size={22} aria-hidden="true" />;
+    if (React.isValidElement(Icon)) {
+      return Icon;
     }
-    return Icon;
+    // Component passed as function or forwardRef object (e.g. LucideIcon)
+    const IconComponent = Icon as React.ComponentType<{
+      size?: number;
+      className?: string;
+      "aria-hidden"?: boolean | "true" | "false";
+    }>;
+    return <IconComponent size={22} aria-hidden={true} />;
   };
 
   return (
