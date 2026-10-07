@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, ExternalLink, Github, Lock, ServerCog, Sparkles } from "lucide-react";
+import { ArrowRight, ExternalLink, Github, Lock, ServerCog } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { staggerItem } from "@/design/motion";
 import { getProjectImage, getDeployNote, type Project } from "@/profile";
@@ -14,23 +14,11 @@ interface ProjectCardProps {
   variant?: "featured" | "compact";
 }
 
-/** Live / deployment badge — exact wording from the kit (never invent deploy notes). */
+/** Live / deployment badge — only displays deployment notes for non-live projects (e.g. Docker, Enterprise) */
 function StatusBadge({ project }: { project: Project }) {
   const live = project.links.live;
   if (live) {
-    return (
-      <a
-        href={live}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${project.name} — open live deployment in new tab`}
-        onClick={(e) => e.stopPropagation()}
-        className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600 transition-all duration-200 hover:bg-emerald-500/25 hover:border-emerald-500/60 dark:border-emerald-400/40 dark:text-emerald-400 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-      >
-        <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
-        Live Demo <ExternalLink size={11} aria-hidden="true" />
-      </a>
-    );
+    return null;
   }
   const note = getDeployNote(project.id);
   return (
@@ -87,7 +75,10 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
         </div>
 
         {image ? (
-          <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border/60 bg-muted/30">
+          <div
+            onClick={open}
+            className="group/img relative aspect-[16/9] w-full cursor-pointer overflow-hidden border-b border-border/60 bg-muted/30"
+          >
             <Image
               src={image.src}
               alt={image.alt}
@@ -97,25 +88,14 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent pointer-events-none" />
 
-            {/* Quick action buttons floating on image hover */}
-            <div className="absolute inset-0 flex items-center justify-center gap-2.5 bg-black/45 opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-[3px] z-20">
-              {live ? (
-                <a
-                  href={live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-md transition-all duration-200 hover:bg-primary/90 hover:scale-105 active:scale-95"
-                >
-                  <ExternalLink size={13} aria-hidden="true" /> Open Live Project
-                </a>
-              ) : null}
-              <button
-                onClick={open}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-background/90 px-4 py-2 text-xs font-semibold text-foreground shadow-md backdrop-blur-md transition-all duration-200 hover:bg-background hover:scale-105 active:scale-95"
+            {/* Quick action button on image hover — clean case study arrow, no live demo overlay */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-[2px] z-20">
+              <span
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-background/90 px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-md backdrop-blur-md transition-all duration-200 hover:bg-background hover:scale-105 active:scale-95"
+                aria-hidden="true"
               >
-                Case Study <ArrowRight size={13} aria-hidden="true" />
-              </button>
+                <ArrowRight size={13} />
+              </span>
             </div>
           </div>
         ) : null}
@@ -170,7 +150,7 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
                 onClick={(e) => e.stopPropagation()}
                 className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm shadow-orange-500/25 transition-all duration-200 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
               >
-                <ExternalLink size={13} aria-hidden="true" /> Visit Live
+                <ExternalLink size={13} aria-hidden="true" /> Live Demo
               </a>
             ) : null}
 
@@ -183,7 +163,7 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
               }`}
               aria-label={`View case study: ${project.name}`}
             >
-              Case study <ArrowRight size={13} aria-hidden="true" />
+              <ArrowRight size={13} aria-hidden="true" />
             </button>
 
             {repo ? (
@@ -212,7 +192,10 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
       className="group flex h-full flex-col overflow-hidden rounded-xl border border-[color-mix(in_srgb,var(--border)_75%,transparent)] bg-[rgba(255,255,255,0.45)] dark:bg-[rgba(19,22,28,0.55)] backdrop-blur-xl shadow-xs transition-all duration-300 hover:border-orange-500/40 hover:-translate-y-1 hover:shadow-lg"
     >
       {image ? (
-        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border/60 bg-muted">
+        <div
+          onClick={open}
+          className="relative aspect-[16/9] w-full cursor-pointer overflow-hidden border-b border-border/60 bg-muted"
+        >
           <Image
             src={image.src}
             alt={image.alt}
@@ -223,24 +206,10 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
           <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent pointer-events-none" />
 
           {/* Quick hover link */}
-          <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/40 opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-[2px]">
-            {live ? (
-              <a
-                href={live}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="inline-flex items-center gap-1 rounded-md bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90"
-              >
-                <ExternalLink size={12} aria-hidden="true" /> Open Live
-              </a>
-            ) : null}
-            <button
-              onClick={open}
-              className="inline-flex items-center gap-1 rounded-md border border-white/20 bg-background/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur-md transition-colors duration-200 hover:bg-background"
-            >
+          <div className="absolute inset-0 flex items-center justify-center bg-black/35 opacity-0 transition-opacity duration-200 group-hover:opacity-100 backdrop-blur-[2px]">
+            <span className="inline-flex items-center gap-1 rounded-md border border-white/20 bg-background/90 px-2.5 py-1 text-xs font-semibold text-foreground shadow-sm backdrop-blur-md transition-colors duration-200 hover:bg-background">
               Details <ArrowRight size={12} aria-hidden="true" />
-            </button>
+            </span>
           </div>
         </div>
       ) : null}

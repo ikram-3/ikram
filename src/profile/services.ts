@@ -55,7 +55,7 @@ export const services: Service[] = [
     title: "Data & Analytics",
     description:
       "Analysis pipelines, visualization boards, and reporting tools that turn raw records into decisions — from exam analytics to logins and traffic.",
-    proof: "SSC Exam Analysis board",
+    proof: "Analysis board",
     proofSlug: "ssc-exam-analysis",
   },
   {
@@ -64,7 +64,7 @@ export const services: Service[] = [
     title: "Computer Vision Systems",
     description:
       "Real-time detection pipelines — YOLO-based violation detection across multi-camera feeds, deployed in a control-room setting.",
-    proof: "Nexus Traffic Management System",
+    proof: "Traffic Management System",
     proofSlug: "nexus-traffic-management",
   },
 ] as const;
