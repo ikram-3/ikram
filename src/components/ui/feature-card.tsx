@@ -25,6 +25,8 @@ export interface FeatureCardProps {
   cursorCorner?: "top-left" | "top-right";
   /** Optional pill label next to the simulated cursor (e.g. "Agent", "Interactive", "AI") */
   cursorLabel?: string;
+  /** Whether to show the simulated corner cursor and spotlight (defaults to true) */
+  showCursor?: boolean;
   /** Additional CSS class names for the outer container */
   className?: string;
 }
@@ -49,6 +51,7 @@ export function FeatureCard({
   onAction,
   cursorCorner = "top-right",
   cursorLabel = "Interactive",
+  showCursor = true,
   className = "",
 }: FeatureCardProps) {
   const reduce = useReducedMotion();
@@ -124,105 +127,107 @@ export function FeatureCard({
       </div>
 
       {/* ── Corner Simulated Cursor & Radial Spotlight Glow ──────────────── */}
-      <div
-        className={`pointer-events-none absolute ${
-          isRight ? "-top-3.5 -right-3.5" : "-top-3.5 -left-3.5"
-        } z-20 flex items-center`}
-      >
-        {/* Pulsing radial spotlight under cursor */}
-        <motion.div
-          aria-hidden="true"
-          className="absolute -inset-6 -z-10 rounded-full blur-xl"
-          style={{
-            background:
-              "radial-gradient(circle, color-mix(in srgb, var(--primary) 55%, transparent) 0%, color-mix(in srgb, var(--gold-light) 25%, transparent) 40%, transparent 75%)",
-          }}
-          animate={
-            reduce
-              ? undefined
-              : {
-                  scale: isHovered ? [1.1, 1.35, 1.1] : [0.85, 1.2, 0.85],
-                  opacity: isHovered ? 0.95 : [0.55, 0.9, 0.55],
-                }
-          }
-          transition={{
-            duration: isHovered ? 1.8 : 3.2,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-
-        {/* Swooping & Floating Pointer Cursor */}
-        <motion.div
-          initial={
-            reduce
-              ? undefined
-              : {
-                  x: isRight ? 24 : -24,
-                  y: -24,
-                  opacity: 0,
-                  scale: 0.8,
-                }
-          }
-          animate={
-            reduce
-              ? { opacity: 1 }
-              : {
-                  x: isHovered ? (isRight ? -2 : 2) : [0, isRight ? 2 : -2, 0],
-                  y: isHovered ? 2 : [0, -3.5, 0],
-                  opacity: 1,
-                  scale: isHovered ? 0.94 : 1,
-                }
-          }
-          transition={
-            reduce
-              ? undefined
-              : isHovered
-              ? { duration: 0.2, ease: "easeOut" }
-              : {
-                  y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                  x: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-                  default: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
-                }
-          }
-          className={`relative flex items-center gap-1.5 select-none ${
-            isRight ? "flex-row-reverse" : "flex-row"
-          }`}
+      {showCursor && (
+        <div
+          className={`pointer-events-none absolute ${
+            isRight ? "-top-3.5 -right-3.5" : "-top-3.5 -left-3.5"
+          } z-20 flex items-center`}
         >
-          {/* Crisp Mouse Cursor Arrow */}
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="drop-shadow-[0_3px_8px_rgba(0,0,0,0.4)]"
-          >
-            <path
-              d="M4.5 3L18.5 11L11.5 13L8 20L4.5 3Z"
-              fill="var(--foreground)"
-              stroke="var(--card)"
-              strokeWidth="1.5"
-              strokeLinejoin="round"
-            />
-            <circle cx="4.5" cy="3" r="2.5" fill="var(--primary)" />
-          </svg>
+          {/* Pulsing radial spotlight under cursor */}
+          <motion.div
+            aria-hidden="true"
+            className="absolute -inset-6 -z-10 rounded-full blur-xl"
+            style={{
+              background:
+                "radial-gradient(circle, color-mix(in srgb, var(--primary) 55%, transparent) 0%, color-mix(in srgb, var(--gold-light) 25%, transparent) 40%, transparent 75%)",
+            }}
+            animate={
+              reduce
+                ? undefined
+                : {
+                    scale: isHovered ? [1.1, 1.35, 1.1] : [0.85, 1.2, 0.85],
+                    opacity: isHovered ? 0.95 : [0.55, 0.9, 0.55],
+                  }
+            }
+            transition={{
+              duration: isHovered ? 1.8 : 3.2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
 
-          {/* Optional cursor label tag */}
-          {cursorLabel && (
-            <motion.span
-              animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
-              className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold tracking-tight shadow-md border border-white/20 whitespace-nowrap"
-              style={{
-                backgroundColor: "var(--primary)",
-                color: "var(--primary-foreground)",
-              }}
+          {/* Swooping & Floating Pointer Cursor */}
+          <motion.div
+            initial={
+              reduce
+                ? undefined
+                : {
+                    x: isRight ? 24 : -24,
+                    y: -24,
+                    opacity: 0,
+                    scale: 0.8,
+                  }
+            }
+            animate={
+              reduce
+                ? { opacity: 1 }
+                : {
+                    x: isHovered ? (isRight ? -2 : 2) : [0, isRight ? 2 : -2, 0],
+                    y: isHovered ? 2 : [0, -3.5, 0],
+                    opacity: 1,
+                    scale: isHovered ? 0.94 : 1,
+                  }
+            }
+            transition={
+              reduce
+                ? undefined
+                : isHovered
+                ? { duration: 0.2, ease: "easeOut" }
+                : {
+                    y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                    x: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+                    default: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
+                  }
+            }
+            className={`relative flex items-center gap-1.5 select-none ${
+              isRight ? "flex-row-reverse" : "flex-row"
+            }`}
+          >
+            {/* Crisp Mouse Cursor Arrow */}
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="drop-shadow-[0_3px_8px_rgba(0,0,0,0.4)]"
             >
-              {cursorLabel}
-            </motion.span>
-          )}
-        </motion.div>
-      </div>
+              <path
+                d="M4.5 3L18.5 11L11.5 13L8 20L4.5 3Z"
+                fill="var(--foreground)"
+                stroke="var(--card)"
+                strokeWidth="1.5"
+                strokeLinejoin="round"
+              />
+              <circle cx="4.5" cy="3" r="2.5" fill="var(--primary)" />
+            </svg>
+
+            {/* Optional cursor label tag */}
+            {cursorLabel && (
+              <motion.span
+                animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+                className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold tracking-tight shadow-md border border-white/20 whitespace-nowrap"
+                style={{
+                  backgroundColor: "var(--primary)",
+                  color: "var(--primary-foreground)",
+                }}
+              >
+                {cursorLabel}
+              </motion.span>
+            )}
+          </motion.div>
+        </div>
+      )}
 
       {/* ── Card Content Body ────────────────────────────────────────────── */}
       <div className="relative z-10 space-y-4">

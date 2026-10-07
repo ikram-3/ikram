@@ -28,6 +28,7 @@ import { Section, SectionHeading } from "@/design/components/section";
 import { identity, stats, services, processSteps } from "@/profile";
 import { getFeaturedProjects } from "@/profile/projects";
 import { useRouterStore } from "@/store/router";
+import { FeatureCard } from "@/components/ui/feature-card";
 import { ProjectCard } from "./project-card";
 
 const SERVICE_ICONS = {
@@ -247,37 +248,33 @@ export function HomePage() {
           description="Full-stack web applications, practical AI tools, and automated business workflows."
         />
         <motion.div
-          variants={staggerContainer(reduce, 0.05)}
+          variants={staggerContainer(reduce, 0.08)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-60px" }}
-          className="grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {services.map((service) => {
+          {services.map((service, idx) => {
             const Icon = SERVICE_ICONS[service.icon];
+            const badges = ["Full-Stack", "AI Pipeline", "Automation", "Mobile", "Analytics", "Computer Vision"];
+            const showCursor = idx === 0 || idx === 1;
+            const cursorLabel = idx === 0 ? "Production" : "AI Agent";
+
             return (
-              <motion.article
-                key={service.id}
-                variants={staggerItem(reduce)}
-                className="group flex h-full flex-col bg-card p-6 transition-colors duration-200 hover:bg-accent/40"
-              >
-                <span
-                  className="mb-4 grid size-10 place-items-center rounded-xl border border-orange-500/20 bg-orange-500/10 text-orange-600 dark:text-orange-400"
-                  aria-hidden="true"
-                >
-                  <Icon size={18} />
-                </span>
-                <h3 className="text-[15px] font-semibold tracking-tight text-foreground">{service.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">{service.description}</p>
-                <button
-                  onClick={() => navigate(`/projects/${service.proofSlug}`)}
-                  className="mt-5 inline-flex w-fit items-center gap-1.5 text-xs font-semibold text-orange-600 dark:text-orange-400 transition-colors hover:text-orange-500 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
-                  aria-label={`Case study: ${service.proof}`}
-                >
-                  Case study: {service.proof}
-                  <ArrowRight size={12} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
-                </button>
-              </motion.article>
+              <motion.div key={service.id} variants={staggerItem(reduce)} className="h-full">
+                <FeatureCard
+                  icon={Icon}
+                  badge={badges[idx]}
+                  title={service.title}
+                  description={service.description}
+                  actionText={`Case study: ${service.proof}`}
+                  onAction={() => navigate(`/projects/${service.proofSlug}`)}
+                  showCursor={showCursor}
+                  cursorCorner="top-right"
+                  cursorLabel={cursorLabel}
+                  className="h-full"
+                />
+              </motion.div>
             );
           })}
         </motion.div>
