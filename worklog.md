@@ -537,6 +537,28 @@ Work Log:
 Stage Summary:
 - The /cv route now embeds and previews Muhammad_Ikram.pdf seamlessly on Vercel without 'refused to connect' blocking.
 
+---
+Task ID: 19
+Agent: antigravity-agent
+Task: Implement transparent glassmorphic header for light theme with refined typography and navigation contrast
+
+Work Log:
+- Light Theme Glassmorphism (`src/components/portfolio/site-header.tsx`):
+  - Upgraded floating pill container to luminous semi-transparent frosted glass in light mode:
+    `border border-black/10 bg-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.8)] backdrop-blur-xl backdrop-saturate-150`.
+  - Preserved sleek obsidian pill styling in dark mode:
+    `dark:border-white/10 dark:bg-[#16181D]/90 dark:shadow-2xl`.
+- Typography & Control Contrast:
+  - Adjusted logo identity label: `text-neutral-900 group-hover:text-orange-600 dark:text-white dark:group-hover:text-orange-400`.
+  - Inactive navigation links: `text-neutral-600 hover:text-neutral-900 hover:bg-black/5 dark:text-neutral-300 dark:hover:text-white dark:hover:bg-white/10`.
+  - Theme toggle, GitHub link, Account dropdown menu, and mobile navigation drawer updated with cohesive light/dark glassmorphic styling.
+- Verification:
+  - `npx tsc --noEmit` verified clean with 0 errors.
+
+Stage Summary:
+- Header pill now features an ultra-premium transparent glassmorphic aesthetic on light theme while maintaining dark mode contrast.
+
+
 
 
 

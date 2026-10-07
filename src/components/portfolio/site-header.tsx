@@ -54,7 +54,7 @@ function ThemeToggle() {
       size="icon"
       aria-label="Toggle light and dark theme"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="size-8 rounded-full text-neutral-300 hover:bg-white/10 hover:text-white"
+      className="size-8 rounded-full text-neutral-600 hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-white"
     >
       <Sun size={16} className="hidden dark:block" aria-hidden="true" />
       <Moon size={16} className="block dark:hidden" aria-hidden="true" />
@@ -85,23 +85,23 @@ function AccountArea() {
         <DropdownMenuTrigger asChild>
           <button
             aria-label="Account menu"
-            className="grid size-8 place-items-center rounded-full border border-orange-500/60 bg-orange-500/20 font-mono text-xs font-bold text-orange-400 transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="grid size-8 place-items-center rounded-full border border-orange-500/60 bg-orange-500/20 font-mono text-xs font-bold text-orange-600 dark:text-orange-400 transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             {initial}
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-56 rounded-xl border border-white/10 bg-[#16181D] text-white p-1.5 shadow-2xl">
+        <DropdownMenuContent align="end" className="w-56 rounded-xl border border-black/10 bg-white/95 text-neutral-900 p-1.5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-[#16181D] dark:text-white">
           <DropdownMenuLabel className="px-3 py-2">
-            <p className="truncate text-xs font-semibold text-white">{session.user.name ?? "Signed in"}</p>
-            <p className="truncate text-[11px] font-normal text-neutral-400">{session.user.email}</p>
+            <p className="truncate text-xs font-semibold text-neutral-900 dark:text-white">{session.user.name ?? "Signed in"}</p>
+            <p className="truncate text-[11px] font-normal text-neutral-500 dark:text-neutral-400">{session.user.email}</p>
           </DropdownMenuLabel>
-          <DropdownMenuSeparator className="bg-white/10" />
+          <DropdownMenuSeparator className="bg-black/5 dark:bg-white/10" />
 
           {ACCOUNT_NAV_ITEMS.map((item) => (
             <DropdownMenuItem
               key={item.path}
               onClick={() => navigate(item.path)}
-              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-neutral-200 hover:bg-white/10 hover:text-white"
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-neutral-700 hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-200 dark:hover:bg-white/10 dark:hover:text-white"
             >
               <User size={13} aria-hidden="true" /> {item.label}
             </DropdownMenuItem>
@@ -110,16 +110,16 @@ function AccountArea() {
           {isAdmin ? (
             <DropdownMenuItem
               onClick={() => navigate("/admin")}
-              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-orange-400 hover:bg-orange-500/10"
+              className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-orange-600 dark:text-orange-400 hover:bg-orange-500/10"
             >
               <Gavel size={13} aria-hidden="true" /> Quotation Manager (Admin)
             </DropdownMenuItem>
           ) : null}
 
-          <DropdownMenuSeparator className="bg-white/10" />
+          <DropdownMenuSeparator className="bg-black/5 dark:bg-white/10" />
           <DropdownMenuItem
             onClick={() => signOut({ redirect: false }).then(() => navigate("/"))}
-            className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-rose-400 hover:bg-rose-500/10"
+            className="flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-rose-500 hover:bg-rose-500/10"
           >
             <LogOut size={13} aria-hidden="true" /> Sign out
           </DropdownMenuItem>
@@ -132,7 +132,7 @@ function AccountArea() {
     <button
       onClick={() => navigate("/login")}
       aria-label="Sign in"
-      className="hidden items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-white/15 active:scale-95 sm:inline-flex"
+      className="hidden items-center gap-1.5 rounded-full border border-neutral-300/80 bg-black/[0.04] px-3 py-1.5 text-xs font-semibold text-neutral-800 transition-all hover:bg-black/[0.08] active:scale-95 dark:border-white/20 dark:bg-white/5 dark:text-white dark:hover:bg-white/15 sm:inline-flex"
     >
       <LogIn size={13} aria-hidden="true" />
       <span>Sign in</span>
@@ -152,7 +152,7 @@ export function SiteHeader() {
 
   return (
     <header className="fixed inset-x-0 top-3 sm:top-5 z-50 pointer-events-none px-3 sm:px-4">
-      <div className="pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-2 sm:gap-4 rounded-full border border-white/10 bg-[#16181D]/95 px-3 sm:px-4 py-2 sm:py-2.5 shadow-2xl backdrop-blur-xl transition-all">
+      <div className="pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-2 sm:gap-4 rounded-full border border-black/10 bg-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.06),inset_0_1px_1px_rgba(255,255,255,0.8)] backdrop-blur-xl backdrop-saturate-150 transition-all dark:border-white/10 dark:bg-[#16181D]/90 dark:shadow-2xl px-3 sm:px-4 py-2 sm:py-2.5">
         {/* Left: Avatar + Identity */}
         <button
           onClick={() => go("/")}
@@ -161,10 +161,10 @@ export function SiteHeader() {
         >
           <SiteLogo size={36} />
           <span className="hidden flex-col leading-tight sm:flex text-left">
-            <span className="text-xs sm:text-sm font-bold tracking-tight text-white transition-colors group-hover:text-orange-400">
+            <span className="text-xs sm:text-sm font-bold tracking-tight text-neutral-900 transition-colors group-hover:text-orange-600 dark:text-white dark:group-hover:text-orange-400">
               {identity.name}
             </span>
-            <span className="text-[10px] sm:text-[11px] font-medium text-neutral-400">
+            <span className="text-[10px] sm:text-[11px] font-medium text-neutral-500 dark:text-neutral-400">
               {identity.role}
             </span>
           </span>
@@ -183,7 +183,7 @@ export function SiteHeader() {
                     className={`rounded-full px-3.5 py-1.5 text-xs sm:text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 ${
                       active
                         ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold shadow-sm shadow-orange-500/30"
-                        : "text-neutral-300 hover:text-white hover:bg-white/10"
+                        : "text-neutral-600 hover:text-neutral-900 hover:bg-black/5 dark:text-neutral-300 dark:hover:text-white dark:hover:bg-white/10"
                     }`}
                   >
                     {link.label}
@@ -212,7 +212,7 @@ export function SiteHeader() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub profile (opens in new tab)"
-            className="hidden size-8 place-items-center rounded-full text-neutral-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 md:grid"
+            className="hidden size-8 place-items-center rounded-full text-neutral-600 transition-colors hover:bg-black/5 hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-white md:grid"
           >
             <Github size={16} />
           </a>
@@ -226,17 +226,17 @@ export function SiteHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="size-8 rounded-full text-neutral-300 hover:bg-white/10 hover:text-white lg:hidden"
+                className="size-8 rounded-full text-neutral-700 hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-white lg:hidden"
                 aria-label="Open navigation menu"
               >
                 <Menu size={18} />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" aria-describedby={undefined} className="w-72 border-white/10 bg-[#14161B] text-white">
+            <SheetContent side="right" aria-describedby={undefined} className="w-72 border-neutral-200/80 bg-white/95 text-neutral-900 backdrop-blur-xl dark:border-white/10 dark:bg-[#14161B] dark:text-white">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-3">
                   <SiteLogo size={36} />
-                  <span className="text-left font-bold text-white">{identity.name}</span>
+                  <span className="text-left font-bold text-neutral-900 dark:text-white">{identity.name}</span>
                 </SheetTitle>
               </SheetHeader>
               <nav aria-label="Mobile" className="mt-4 overflow-y-auto px-4 pb-6" style={{ maxHeight: "calc(100dvh - 6rem)" }}>
@@ -256,8 +256,8 @@ export function SiteHeader() {
                           onClick={() => go(link.path)}
                           className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                             active
-                              ? "bg-orange-500/20 text-orange-400 font-semibold"
-                              : "text-neutral-300 hover:bg-white/10 hover:text-white"
+                              ? "bg-orange-500/15 text-orange-600 dark:bg-orange-500/20 dark:text-orange-400 font-semibold"
+                              : "text-neutral-700 hover:bg-black/5 hover:text-neutral-900 dark:text-neutral-300 dark:hover:bg-white/10 dark:hover:text-white"
                           }`}
                         >
                           <span>{link.label}</span>

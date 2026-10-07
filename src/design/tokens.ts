@@ -70,30 +70,30 @@ export const PAGE_META: Record<PageKey, { title: string; description: string }> 
     description: "Where I've built and studied — roles, degrees, and certifications.",
   },
   contact: {
-    title: "Contact — Muhammad Ikram",
+    title: "Contact",
     description:
       "Have a system that needs building end-to-end? One developer, entire product: frontend, backend, payments, deployment.",
   },
   quotation: {
-    title: "Get a Quote — Muhammad Ikram",
+    title: "Get a Quote",
     description:
       "Request a project quotation: scope, budget range, timeline. Straight pricing for full-stack, AI, and automation builds.",
   },
   register: {
-    title: "Create Account — Muhammad Ikram",
+    title: "Create Account",
     description: "Register to submit and track quotation requests with Muhammad Ikram.",
   },
   login: {
-    title: "Sign In — Muhammad Ikram",
+    title: "Sign In ",
     description: "Sign in to your account to submit and track quotation requests.",
   },
   account: {
-    title: "My Account — Muhammad Ikram",
+    title: "My Account ",
     description: "Your account and quotation requests.",
   },
   admin: {
-    title: "Quotation Dashboard — Muhammad Ikram",
-    description: "Admin dashboard — incoming quotation requests and statuses.",
+    title: "Quotation Dashboard",
+    description: "Admin dashboard incoming quotation requests and statuses.",
   },
 };
 

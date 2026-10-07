@@ -60,7 +60,7 @@ export function HomePage() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-8 pt-4 sm:pt-6">
             <div className="lg:col-span-7 max-w-xl">
-            
+
 
               {/* Headline */}
               <motion.div {...enterProps(reduce, 0.05)} className="space-y-1">
@@ -155,7 +155,7 @@ export function HomePage() {
                       <MapPin size={18} />
                     </span>
                     <p className="font-sans text-sm sm:text-base font-bold text-foreground truncate">
-                      Swat, Pakistan
+                      Pakistan
                     </p>
                     <p className="text-[11px] font-medium text-muted-foreground leading-tight mt-0.5">
                       Based In
@@ -351,7 +351,7 @@ export function HomePage() {
           className="relative overflow-hidden flex flex-col items-start justify-between gap-6 rounded-3xl bg-gradient-to-br from-[#1C1815] via-[#161412] to-[#1F1914] p-8 text-white md:flex-row md:items-center md:p-12 border border-white/10 shadow-xl"
         >
           <div className="absolute right-0 top-0 size-80 rounded-full bg-orange-500/10 blur-3xl pointer-events-none" />
-          
+
           <div className="max-w-xl relative z-10">
             <span className="text-xs font-semibold uppercase tracking-wider text-orange-400">Ready to build?</span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mt-1 text-white">Have a project in mind?</h2>
@@ -359,7 +359,7 @@ export function HomePage() {
               Share the outline and receive a written scope with a fixed price — usually within 24 hours.
             </p>
           </div>
-          
+
           <div className="flex flex-wrap gap-3 relative z-10">
             <button
               onClick={() => navigate("/quotation")}
