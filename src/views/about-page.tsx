@@ -21,13 +21,13 @@ export function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="About"
+        eyebrow="About Me"
         title={
           <>
-            Grounded AI. Complete products. <span className="text-gradient-gold">Shipped.</span>
+            Building modern web apps and <span className="text-gradient-gold">practical AI.</span>
           </>
         }
-        description="Applied AI and full product engineering — refuse to keep them separate."
+        description="Software engineer focused on clean architecture, intuitive interfaces, and real-world results."
         breadcrumb={[{ label: "Home", path: "/" }, { label: "About" }]}
       />
 

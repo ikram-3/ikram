@@ -237,21 +237,14 @@ export function HomePage() {
             </motion.div>
           </div>
         </div>
-
-        {/* Bottom organic curve accent */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 overflow-hidden leading-none opacity-40 dark:opacity-20" aria-hidden="true">
-          <svg viewBox="0 0 1200 120" preserveAspectRatio="none" className="relative block h-8 w-full fill-orange-500/20">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,152.47,131.5,217,118.8,252.12,112,286.72,62.88,321.39,56.44Z" />
-          </svg>
-        </div>
       </section>
 
       {/* ── Services ─────────────────────────────────────────────────────── */}
       <Section ariaLabel="Services">
         <SectionHeading
           eyebrow="Services"
-          title="What I build for clients"
-          description="Six service lines — each one backed by a delivered system you can open and inspect."
+          title="What I can build for you"
+          description="Full-stack web applications, practical AI tools, and automated business workflows."
         />
         <motion.div
           variants={staggerContainer(reduce, 0.05)}
@@ -294,8 +287,8 @@ export function HomePage() {
       <Section ariaLabel="How an engagement runs" className="border-y border-border bg-card/50">
         <SectionHeading
           eyebrow="Process"
-          title="From first message to production"
-          description="Clear scope, visible milestones and a documented handover — the same path on every project."
+          title="From first conversation to launch"
+          description="Clear goals, continuous updates, and thorough testing from start to finish."
         />
         <motion.ol
           variants={staggerContainer(reduce, 0.06)}
@@ -318,9 +311,9 @@ export function HomePage() {
       <Section ariaLabel="Featured projects">
         <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
           <SectionHeading
-            eyebrow="Selected work"
-            title="Built end-to-end, deployed for real"
-            description="Three representative systems from a registry of 35 delivered projects."
+            eyebrow="Featured Projects"
+            title="Real software built and deployed"
+            description="A selection of full-stack web platforms and intelligent AI applications."
             className="mb-0 md:mb-0"
           />
           <Button

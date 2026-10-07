@@ -111,7 +111,7 @@ export function ProjectCard({ project, variant = "compact" }: ProjectCardProps) 
 
           {project.whyItMatters ? (
             <p className="mt-3 flex items-start gap-1.5 text-xs leading-relaxed text-foreground/80">
-              <Sparkles size={13} className="mt-0.5 shrink-0 text-gold" aria-hidden="true" />
+              
               {project.whyItMatters}
             </p>
           ) : null}

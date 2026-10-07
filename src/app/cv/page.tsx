@@ -1,16 +1,20 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Download, ExternalLink, FileText, Printer } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink, FileText, RefreshCw, Eye } from "lucide-react";
 import { identity } from "@/profile";
 import { Button } from "@/components/ui/button";
 
 export default function CvPage() {
+  const [viewerMode, setViewerMode] = useState<"native" | "google">("native");
   const pdfUrl = "/document/Muhammad_Ikram.pdf";
+  const livePdfUrl = "https://ikram-neon.vercel.app/document/Muhammad_Ikram.pdf";
+  const googleViewerUrl = `https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(livePdfUrl)}`;
 
   return (
     <div className="flex h-screen flex-col bg-[#0B0D10] text-foreground antialiased">
-      {/* Top Header / Action Toolbar */}
+      {/* Top Action Toolbar */}
       <header className="z-10 flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[#13161C]/95 px-4 backdrop-blur-md sm:px-6">
         <div className="flex items-center gap-3">
           <Link
@@ -27,18 +31,30 @@ export default function CvPage() {
             </span>
             <div>
               <p className="text-xs font-bold leading-tight text-white">{identity.name} — Curriculum Vitae</p>
-              <p className="text-[10px] text-neutral-400">CV</p>
+              <p className="text-[10px] text-neutral-400">Muhammad_Ikram.pdf</p>
             </div>
           </div>
         </div>
 
         {/* Action Buttons */}
         <div className="flex items-center gap-2">
+          {/* Toggle viewer fallback */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setViewerMode(viewerMode === "native" ? "google" : "native")}
+            className="hidden border-white/10 bg-white/5 text-xs text-neutral-200 hover:bg-white/10 hover:text-white md:inline-flex"
+            title="Switch between native PDF viewer and Google Docs cloud viewer"
+          >
+            <RefreshCw size={13} className="mr-1.5" />
+            {viewerMode === "native" ? "Cloud Viewer Mode" : "Native PDF Mode"}
+          </Button>
+
           <Button
             asChild
             variant="outline"
             size="sm"
-            className="hidden border-white/10 bg-white/5 text-xs text-neutral-200 hover:bg-white/10 hover:text-white sm:inline-flex"
+            className="border-white/10 bg-white/5 text-xs text-neutral-200 hover:bg-white/10 hover:text-white"
           >
             <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink size={13} className="mr-1.5" />
@@ -62,7 +78,8 @@ export default function CvPage() {
       {/* Embedded PDF Viewer Frame */}
       <main className="relative flex-1 w-full bg-[#181A1E]">
         <iframe
-          src={`${pdfUrl}#toolbar=1&navpanes=0`}
+          key={viewerMode}
+          src={viewerMode === "native" ? `${pdfUrl}#toolbar=1&navpanes=0` : googleViewerUrl}
           title="Muhammad Ikram — Curriculum Vitae"
           className="h-full w-full border-0"
         />
