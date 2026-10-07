@@ -27,7 +27,7 @@ export default function CvPage() {
             </span>
             <div>
               <p className="text-xs font-bold leading-tight text-white">{identity.name} — Curriculum Vitae</p>
-              <p className="text-[10px] text-neutral-400">Muhammad_Ikram.pdf</p>
+              <p className="text-[10px] text-neutral-400">CV</p>
             </div>
           </div>
         </div>
@@ -61,43 +61,11 @@ export default function CvPage() {
 
       {/* Embedded PDF Viewer Frame */}
       <main className="relative flex-1 w-full bg-[#181A1E]">
-        <object
-          data={`${pdfUrl}#toolbar=1&navpanes=0`}
-          type="application/pdf"
-          className="h-full w-full"
-        >
-          {/* Fallback iframe */}
-          <iframe
-            src={`${pdfUrl}#toolbar=1`}
-            title="Muhammad Ikram CV"
-            className="h-full w-full border-0"
-          >
-            {/* Fallback message if PDF cannot be rendered inline */}
-            <div className="flex h-full flex-col items-center justify-center p-6 text-center">
-              <div className="grid size-16 place-items-center rounded-2xl bg-orange-500/10 text-orange-500 mb-4">
-                <FileText size={32} />
-              </div>
-              <h2 className="text-lg font-bold text-white mb-2">Muhammad Ikram — Resume (PDF)</h2>
-              <p className="max-w-md text-xs text-neutral-400 mb-6">
-                Your browser does not support embedded PDF previews. You can download the file or open it directly in a new tab.
-              </p>
-              <div className="flex gap-3">
-                <Button asChild className="bg-orange-500 hover:bg-orange-600 text-white font-semibold">
-                  <a href={pdfUrl} download="Muhammad_Ikram.pdf">
-                    <Download size={14} className="mr-2" />
-                    Download PDF
-                  </a>
-                </Button>
-                <Button asChild variant="outline" className="border-white/10 text-neutral-200">
-                  <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink size={14} className="mr-2" />
-                    Open PDF in New Tab
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </iframe>
-        </object>
+        <iframe
+          src={`${pdfUrl}#toolbar=1&navpanes=0`}
+          title="Muhammad Ikram — Curriculum Vitae"
+          className="h-full w-full border-0"
+        />
       </main>
     </div>
   );
